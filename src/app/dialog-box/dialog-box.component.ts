@@ -29,7 +29,7 @@ export class DialogBoxComponent implements OnInit {
       this.dbService.checkPW(item)
       .subscribe(
         (data) => {
-          if("OK" === "OK"){
+          if(data.pw === "OK"){
             this.log.setToken('TOKEN');
             this.dialogRef.close();
             this.router.navigateByUrl('/user-control');
