@@ -1,0 +1,25 @@
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>INŠTRUKTORJI</mat-card-title>
+     </mat-card-header>
+<div style="border-color:  black; border-style: solid; border-width: 1px"> </div>
+
+
+<mat-card  class="person" style="margin-top:10px;width:25%; margin-left:5%" *ngFor="let person of iPeople; let i = index" (click)="showInfo(i)">
+    <mat-card-header>
+    <div mat-card-avatar class="mateja-image"></div>
+    <mat-card-title><span [ngStyle]="{'color':person.woman === true ? '#e83e8c' : '#1E90FF' }">{{person.name}}</span> - {{person.job}}</mat-card-title>
+    <mat-card-subtitle>{{person.description}}</mat-card-subtitle>
+    </mat-card-header>
+    <div [@slideInOut]="person.show ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px">
+      <div>Profesorica športne vzgoje, diplomirana kondicijska trenerka (FŠ), trenerka aerobike, pilatesa in fitnesa 3. stopnje (FZS)</div>
+      <img src="assets/mateja.jpg">
+      <div>Sem inštruktorica aerobike (FŠ, GZS) in pilatesa (FZS), kondicijska trenerka in maserka. Redno se udeležujem izobraževanj in seminarjev na temo skupinskih vadb, fitnesa, kondicijske priprave, funkcionalne vadbe, rehabilitacije ter masaž pri nas in v tujini.
+Z vodenjem vadb se ukvarjam že od srednješolskih let, ko sem nabirala izkušnje po številnih drugih centrih. Sedaj pa se mi je izpolnila moja velika želja saj to izvajam v svojem centru, v sodelovanju s super ekipo.
+V preteklosti sem delala tudi kot kondicijska trenerka po športnih klubih, ter ogromno ur preživela z našimi najmlajšimi na tečajih plavanja, smučanja, rolanja ter najrazličnejših taborih. Sčasoma sem ugotovila, da je moj največji užitek delo s skupinami odraslih, kjer poskušam vadečim izpolniti njihove cilje in sanje z zmanjšanjem telesne teže, oblikovanjem postave, izboljšanjem njihovih motoričnih sposobnosti ter jim pomagati na  poti do sreče in zadovoljstva.
+Tudi sicer je moj prosti čas prepleten s športom, saj ga najraje preživim v naravi, na kolesu, v gorah, v teku … Imam srečo, da je moj hobi moj poklic.
+</div>
+    </div>
+</mat-card>
+</mat-card>

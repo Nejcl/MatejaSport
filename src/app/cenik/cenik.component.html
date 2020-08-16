@@ -1,0 +1,153 @@
+<div id="top" style="position:absolute; top:-150px;"></div>
+
+<mat-card class="card" style="margin-bottom:30px;">
+  <mat-card-header>
+      <mat-card-title>Cenik</mat-card-title>
+   </mat-card-header>
+<div style="border-color:  black; border-style: solid; border-width: 1px"> </div>
+
+<mat-card  class="person" style="margin-top:10px;"  (click)="showInfo(0)">
+
+  <div class="CenikGroup" style="color:#00a7c0"> <mat-icon class="expand_icon" style="vertical-align: top;">expand_more</mat-icon>Skupinske vadbe</div>
+  <div [@slideInOut]="iShow[0] ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px;">
+    <div class="soloitem" style="margin-bottom: 10px;"><b style="color: #e83e8c">1 obisk</b><div class="itemM"></div><div class="price">8 €</div></div>
+    <b style="color: #e83e8c">Mesečne karte:</b>
+    <ul>
+      <li><div>4 vadbe</div><div class="itemM"></div><div class="price">26 €</div></li>
+      <li><div>8 vadb</div><div class="itemM"></div><div class="price">42 €</div></li>
+      <li><div>12 vadb</div><div class="itemM"></div><div class="price">52 €</div></li>
+      <li><div>Neomejena</div><div class="itemM"></div><div class="price">55 €</div></li>
+    </ul>
+    <div class="soloitem"><b style="color: #e83e8c">Paket 12 obiskov</b><div class="itemM"></div><div class="price">70 €</div></div>
+    <div class="extra" style="margin-bottom: 10px;">(Veljavnost do konca sezone)</div>
+    <b style="color: #e83e8c">Polletne karte:</b>
+    <div class="extra">(21 tednov - od 2.9.2019 do 26.1.2020 in od 27.1.2020 do 21.6.2020)</div>
+    <ul>
+      <li><div>1x na teden (19 vadb)</div><div class="itemM"></div><div class="price">107 €</div></li>
+      <li><div>2x na teden (38 vadb)</div><div class="itemM"></div><div class="price">175 €</div></li>
+      <li><div>3x na teden (57 vadb)</div><div class="itemM"></div><div class="price">220 €</div></li>
+      <li><div>Neomejena</div><div class="itemM"></div><div class="price">235 €</div></li>
+    </ul>
+
+    <b style="color: #e83e8c">Letne karte:</b>
+    <div class="extra">(od 2.9.2019 do 21.6.2020)</div>
+    <ul>
+      <li><div>1x na teden (38 vadb)</div><div class="itemM"></div><div class="price">214 €</div></li>
+      <li><div>2x na teden (76 vadb)</div><div class="itemM"></div><div class="price">350 €</div></li>
+      <li><div>3x na teden (114 vadb)</div><div class="itemM"></div><div class="price">440 €</div></li>
+      <li><div>Neomejena</div><div class="itemM"></div><div class="price">470 €</div></li>
+    </ul>
+    <div style="margin-bottom: 10px; font-weight: 600;">Polletnih in letnih kart se ne podaljšuje!!</div>
+    <div class="soloitem" style="margin-bottom: 10px;"><b style="color: #e83e8c">Vpisnina</b><div class="itemM"></div><div class="price">8 €</div></div>
+    <div style="margin-bottom:20px; margin-top:20px">* Z vsemi kartami lahko poljubno menjate vadbe in termine.</div>
+  </div>
+</mat-card>
+
+<mat-card  class="person" style="margin-top:10px;"  (click)="showInfo(1)">
+  <div class="CenikGroup" style="color: #00a7c0"><mat-icon class="expand_icon" style="vertical-align: top;">expand_more</mat-icon>Individualna vadba / Terapevtska obravnava</div>
+  <div [@slideInOut]="iShow[1] ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px">
+    <div class="soloitem" style="margin-bottom: 10px;"><b style="color: #e83e8c">1 ura</b><div class="itemM"></div><div class="price">35 €</div></div>
+    <b style="color: #e83e8c">Paketi:</b>
+    <ul>
+      <li><div>5 vadb / obravnav</div><div class="itemM"></div><div>165 €</div></li>
+      <li><div>10 vadb / obravnav</div><div class="itemM"></div><div>300 €</div></li>
+    </ul>
+    <div class="soloitem" style="margin-bottom: 10px;"><b style="color: #e83e8c">Kinesiotape</b><div class="itemM"></div><div class="price">10-15 €</div></div>
+
+    <b style="color: #e83e8c">Vadbe v manjših skupinah:</b>
+    <ul>
+      <li>-20% na osebo</li>
+    </ul>
+
+  </div>
+</mat-card>
+
+<mat-card  class="person" style="margin-top:10px;"  (click)="showInfo(2)">
+  <div class="CenikGroup" style="color: #00a7c0"><mat-icon class="expand_icon" style="vertical-align: top;">expand_more</mat-icon>Sestava programov treninga</div>
+  <div [@slideInOut]="iShow[2] ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px">
+    <div class="soloitem"><b style="color: #e83e8c; margin-top:10px;">Sestava programov treninga</b><div class="itemM"></div><div class="price" style="margin-top:10px;">35-60 €/mesec</div></div>
+
+  </div>
+</mat-card>
+
+<mat-card  class="person" style="margin-top:10px;"  (click)="showInfo(3)">
+  <div class="CenikGroup" style="color: #00a7c0"><mat-icon class="expand_icon" style="vertical-align: top;">expand_more</mat-icon>Rojstnodnevne zabave</div>
+  <div [@slideInOut]="iShow[3] ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px">
+    <div class="soloitem" style="margin-top:10px;"><b style="color: #e83e8c;">3-urna animacija</b><div class="itemM"></div><div class="price">88 €</div></div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Paket</b><div class="itemM"></div><div class="price">120 €</div></div>
+    <div class="extra" style="margin-bottom:10px;">(3-urna animacija, pijača, hrana)</div>
+    <div class="soloitem"  style="margin-top:10px;margin-bottom:20px"><b style="color: #e83e8c;">2 URNI rojstni dan</b><div class="itemM"></div><div class="price">-20 %</div></div>
+    <b style="color: #e83e8c;">Doplačila:</b>
+    <ul>
+      <li><div>Tematski rojstni dan</div><div class="itemM"></div><div class="price">30 €</div></li>
+      <li><div>Dodatni animator</div><div class="itemM"></div><div class="price">20 €</div></li>
+      <li><div>Vsak dodatni otrok</div><div class="itemM"></div><div class="price">5 €</div></li>
+      <div class="extra" style="margin-left: -30px;">(Do 10 otrok brez doplačila)</div>
+    </ul>
+
+  </div>
+</mat-card>
+
+<mat-card  class="person" style="margin-top:10px;"  (click)="showInfo(4)">
+  <div class="CenikGroup" style="color: #00a7c0"><mat-icon class="expand_icon" style="vertical-align: top;">expand_more</mat-icon>Masaže</div>
+  <div [@slideInOut]="iShow[4] ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px">
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Klasična masaža</b><div class="itemM"></div><div class="price">35 €</div></div>
+    <div class="extra">(60 min)</div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Športna masaža</b><div class="itemM"></div><div class="price">40 €</div></div>
+    <div class="extra">(60 min)</div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Terapevtska masaža</b><div class="itemM"></div><div class="price">30 €</div></div>
+    <div class="extra">(30 min)</div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Terapevtska masaža</b><div class="itemM"></div><div class="price">45 €</div></div>
+    <div class="extra">(60 min)</div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Masaža dela telesa</b><div class="itemM"></div><div class="price">25 €</div></div>
+    <div class="extra">(30 min)</div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Refleksna masaža stopal</b><div class="itemM"></div><div class="price">30 €</div></div>
+    <div class="extra">(45 min)</div>
+  </div>
+</mat-card>
+
+<mat-card  class="person" style="margin-top:10px;"  (click)="showInfo(5)">
+  <div class="CenikGroup" style="color: #00a7c0"><mat-icon class="expand_icon" style="vertical-align: top;">expand_more</mat-icon>FMS testiranje</div>
+  <div [@slideInOut]="iShow[5] ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px">
+    <div class="soloitem"><b style="color: #e83e8c">test + interpretacija rezultatov + svetovanje</b><div class="itemM"></div><div>45 €</div></div>
+    <div class="extra">(60 min)</div>
+  </div>
+</mat-card>
+
+<mat-card  class="person" style="margin-top:10px;"  (click)="showInfo(6)">
+  <div class="CenikGroup" style="color: #00a7c0"><mat-icon class="expand_icon" style="vertical-align: top;">expand_more</mat-icon>Ostalo</div>
+  <div [@slideInOut]="iShow[6] ? 'in' : 'out'"  style="border-top: 1px solid black;  padding-top: 10px">
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Ponovna izdelava članske izkaznice</b><div class="itemM"></div><div class="price">3 €</div></div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Izposoja brisače</b><div class="itemM"></div><div class="price">2 €</div></div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Voda</b><div class="itemM"></div><div class="price">0,7 €</div></div>
+    <div class="extra">(plastenka)</div>
+    <div class="soloitem"  style="margin-top:10px;"><b style="color: #e83e8c;">Voda z okusom</b><div class="itemM"></div><div class="price">2 €</div></div>
+  </div>
+</mat-card>
+<div class="soloitem"  style="margin-top:30px;">Plačilo je možno samo z GOTOVINO ali z nakazilom na TRR po predračunu.</div>
+
+<div class="soloitem"  style="margin-top:50px;"><b style="color: #e83e8c;">MOŽNOST NAKUPA DARILNIH BONOV!</b></div>
+<div style=" margin-top:50px;">
+<b style="color: #e83e8c;">POPUSTI:</b>
+<ul style="padding-left: 0; margin-left: 0;">
+  <li style="padding-left: 0; margin-left: 0;"><div>Upokojenci, dijaki, študentje </div><div class="itemM"></div><div class="price">-10 %</div></li>
+  <div class="extra">(ob predložitvi dokazila)</div>
+  <li style="padding-left: 0; margin-left: 0;"><div>Družinski popust</div><div class="itemM"></div><div class="price">-10 %</div></li>
+  (ob nakupu treh kart ali več)
+  <li style="padding-left: 0; margin-left: 0;"><div>Popust za člane KŠK</div><div class="itemM"></div><div class="price">-15 %</div></li>
+</ul>
+</div>
+<div style="font-family: 'Roboto';margin-top:50px; ">
+  <b>SPLOŠNI POGOJI POSLOVANJA</b><br>
+  – Cenik začne veljati 05.03.2020.<br>
+  – Mesečno karto za vadbo lahko aktivirate kadar koli v mesecu in je veljavna en mesec (primer: od 15. marca do vključno 14. aprila).<br>
+  – KART NE PODALJŠUJEMO!<br>
+  – KARTE NISO PRENOSLJIVE!<br>
+  – KARTO PLAČATE OB PRVEM OBISKU, brez plačila obisk na vadbi ni možen.<br>
+  – OBVEZNE SO PRIJAVE NA VSE VADBE IN OSTALE STORITVE!<br>
+  – Polletne in letne karte veljajo do navedenega datuma in se ne podaljšujejo!<br>
+  <br>
+  Pridržujemo si pravico do spremembe cenika.<br>
+</div>
+</mat-card>
+

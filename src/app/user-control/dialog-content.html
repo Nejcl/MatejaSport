@@ -1,0 +1,68 @@
+<mat-dialog-content class="mat-typography">
+  
+    <table>
+        <tr>
+          <th>DAN</th>
+          <th>OD</th>
+          <th>DO</th>
+          <th>NAZIV</th>
+          <th>VODI</th>
+          <th>BARVA</th>
+        </tr>
+        <tr>
+            <td>
+              <mat-form-field style="width:100%; ">
+                  <mat-select [(ngModel)]="data.diagData.dan" style="background-color:white;">
+                    <mat-option value="ponedeljek">ponedeljek</mat-option>
+                    <mat-option value="torek">torek</mat-option>
+                    <mat-option value="sreda">sreda</mat-option>
+                    <mat-option value="četrtek">četrtek</mat-option>
+                    <mat-option value="petek">petek</mat-option>
+                    <mat-option value="sobota">sobota</mat-option>
+                    <mat-option value="nedelja">nedelja</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <div style="display: flex; justify-content: center; align-items: center">
+                <input [ngxTimepicker]="picker"
+                [format]="24"
+                min="5:00 am"
+                max="10:30 pm"
+                style="width:80%"
+                readonly
+                [(ngModel)]="data.diagData.od"
+                >
+                <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker #picker></ngx-material-timepicker>
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; justify-content: center; align-items: center">
+                <input [ngxTimepicker]="picker2"
+                [format]="24"
+                min="5:00 am"
+                max="10:30 pm"
+                style="width:80%"
+                readonly
+                [(ngModel)]="data.diagData.do">
+                <ngx-material-timepicker-toggle [for]="picker2"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker #picker2></ngx-material-timepicker>
+            </div>
+            </td>
+            <td><input [(ngModel)]="data.diagData.naziv" style="width:80%"></td>
+            <td><input [(ngModel)]="data.diagData.vodi" style="width:80%"></td>
+            <td><input [value]="data.diagData.color"
+              [style.background]="data.diagData.color"
+              [(colorPicker)]="data.diagData.color"
+              style="width:80%"
+              />
+            </td>
+        </tr>
+        </table>
+ 
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>OK</button>
+</mat-dialog-actions>

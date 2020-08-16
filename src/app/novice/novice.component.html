@@ -1,0 +1,43 @@
+<div id="top" style="position:absolute; top:-150px;"></div>
+<mat-card class="card" style="margin-bottom:30px;z-index: 2;">
+    <img src="/assets/background4.png" style="width:10%; height: auto;float:right; right:10px">
+
+    <div *ngFor="let item of Novica; let i = index" >
+    <div style="margin-right:5%; padding-top:10px; padding-left: 20px; flex-grow:1; margin-bottom: 30px; flex: 400px">
+        <div>
+            <div class="header" [innerHTML]="Novica[i].naslov | safehtml" id="Novica[i].id"></div>
+            <div style="width: 80%;border-bottom: 2px solid black; margin-bottom: 30px; margin-top:5px;"> </div>
+        </div>
+            <div class="headertext"  [innerHTML]="Novica[i].vsebina | safehtml"></div>
+        </div>
+  </div>
+<!--
+  <div style="margin-right:5%; padding-top:10px; padding-left: 20px; flex-grow:1; margin-bottom: 30px; flex: 400px">
+    <div>
+        <div class="header">Nova sezona!</div>
+        <div style="width: 80%;border-bottom: 2px solid black; margin-bottom: 30px; margin-top:5px;"> </div>
+    </div>
+    <div class="headertext" >
+      Z novo sezono vadb začnemo že v ponedeljek 2.9. popoldan. Na vse ure se je potrebno prijaviti.<br>
+       Urnik si lahko ogledate <a routerLink="/urnik" routerLinkActive="active-list-item" style="color:#00a7c0; font-size:5px; cursor: pointer">tukaj</a>.
+       <br><br>Od 2.9. do 6.9. lahko koristite 10% popust na vse karte za skupinske vadbe in majice Mateja šport.
+   </div>
+  </div>
+
+  <div style="margin-right:5%; padding-top:10px; padding-left: 20px; flex-grow:1; margin-bottom: 30px; flex: 400px">
+    <div>
+        <div class="header">Ponovno zbiramo prijave za trimesečni program zdravega hujšanja</div>
+        <div style="width: 80%;border-bottom: 2px solid black; margin-bottom: 30px; margin-top:5px;"> </div>
+    </div>
+    <div class="headertext" >
+      Za vse tiste, ki se sami ne zmorete znebiti odvečnih kilogramov in bi radi postali zdravi, fit in postavni na pravilen in zdrav način.
+      <br><br><span style="color: #e83e8c">V SKUPINI IN POD STROKOVNIM NADZOROM JE LAŽJE IN BOLJ UČINKOVITO!</span>
+      <br><br>Program vsebuje:
+      <br>- 3x predavanje na temo hujšanje, zdrava prehrana in vadba;
+      <br>- 3x individulna obravnava z meritvami in svetovanjem;
+      <br>- 3-mesečno karto za 3x tedensko vadbo (plan vadbe naredimo glede na vaše želje, cilje in potrebe)
+      <br>Cena paketa je 215 evrov. <br>
+   </div>
+  </div>
+-->
+</mat-card>

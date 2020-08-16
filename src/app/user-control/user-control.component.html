@@ -1,0 +1,139 @@
+<div id="top" style="position:absolute; top:-150px;"></div>
+
+<mat-card class="card" style="margin-bottom: 50px;" >
+  <button mat-button (click)="MenuClick(false)">Urnik</button>
+  <button mat-button (click)="MenuClick(true)">Novice</button>
+  <div style="border-bottom: 1px solid black; margin-bottom: 20px;"></div>
+ 
+  <div *ngIf="!showNovice">
+      <div style="margin-bottom:30px; color: green">{{urnikTekst}}</div>
+      <button (click)="save()" style="margin-left:0%; width:70px; height:30px"><i class="fa fa-save" style="color:blue;"></i></button>
+      <button (click)="reload()" style="margin-left:40px; width:70px; height:30px"><i class="fa fa-refresh" style="color:green;"></i></button>
+  <table style="margin-top: 30px">
+    <tr>
+      <th>DAN</th>
+      <th>OD</th>
+      <th>DO</th>
+      <th>NAZIV</th>
+      <th>VODI</th>
+      <th>BARVA</th>
+      <th>Dodaj</th>
+    </tr>
+    <tr>
+        <td>
+          <mat-form-field style="width:60%; ">
+              <mat-select [(ngModel)]="danValue" style="background-color:white;">
+                <mat-option value="ponedeljek">ponedeljek</mat-option>
+                <mat-option value="torek">torek</mat-option>
+                <mat-option value="sreda">sreda</mat-option>
+                <mat-option value="četrtek">četrtek</mat-option>
+                <mat-option value="petek">petek</mat-option>
+                <mat-option value="sobota">sobota</mat-option>
+                <mat-option value="nedelja">nedelja</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <div style="display: flex; justify-content: center; align-items: center">
+            <input [ngxTimepicker]="picker"
+            [format]="24"
+            min="5:00 am"
+            max="10:30 pm"
+            style="width:80%"
+            readonly
+            [(ngModel)]="odTime"
+            >
+            <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #picker></ngx-material-timepicker>
+          </div>
+        </td>
+        <td>
+          <div style="display: flex; justify-content: center; align-items: center">
+            <input [ngxTimepicker]="picker2"
+            [format]="24"
+            min="5:00 am"
+            max="10:30 pm"
+            style="width:80%"
+            readonly
+            [(ngModel)]="doTime">
+            <ngx-material-timepicker-toggle [for]="picker2"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #picker2></ngx-material-timepicker>
+        </div>
+        </td>
+        <td><input [(ngModel)]="nazivValue" style="width:80%"></td>
+        <td><input [(ngModel)]="vodiValue" style="width:80%"></td>
+        <td><input [value]="colorValue"
+          [style.background]="colorValue"
+          [(colorPicker)]="colorValue"
+          style="width:80%"
+          />
+        </td>
+        <td><button mat-button style="color:green; font-size:30px"  (click)="AddItem()">+</button></td>
+    </tr>
+    </table>
+
+
+   <div style="margin-top:30px;font-weight: 700">Urnik:</div>
+    <table>
+        <tr>
+          <th>DAN</th>
+          <th>OD</th>
+          <th>DO</th>
+          <th>NAZIV</th>
+          <th>VODI</th>
+          <th>BARVA</th>
+          <th>Uredi</th>
+          <th>Kopiraj</th>
+          <th>Odstrani</th>
+        </tr>
+        <tr  *ngFor="let item of Vadba; let i = index">
+            <td>{{item.dan}}</td>
+            <td>{{item.od}}</td>
+            <td>{{item.do}}</td>
+            <td>{{item.naziv}}</td>
+            <td>{{item.vodi}}</td>
+            <td  [ngStyle]="{'background-color':item.color}">{{item.color}}</td>
+            <td><button mat-button (click)="openDialog(i)"><i class="fa fa-edit" style="color:white;"></i></button></td>
+            <td><button mat-button (click)="CopyItem(i)"><i class="fa fa-clone" style="color:white;"></i></button></td>
+            <td><button mat-button style="color:red; font-size:20px"  (click)="RemoveItem(i)">X</button></td>
+        </tr>
+        </table>
+          </div>
+
+    <div *ngIf="showNovice">
+        <div style="margin-bottom:30px; color: green">{{noviceTekst}}</div>
+        <button (click)="saveNovica()" style="margin-left:0%; width:70px; height:30px"><i class="fa fa-save" style="color:blue;"></i></button>
+        <button (click)="reloadNovica()" style="margin-left:40px; width:70px; height:30px"><i class="fa fa-refresh" style="color:green;"></i></button>
+        <div style="margin-top: 30px;">
+        <div style="font-size: 12px; margin-bottom:30px">linki strani: /home,/novice,/storitve,/cenik,/kjesmo,/instruktorji,/galerija,/urnik,/individualnavadba,/masaze,rehabilitacija,/rojstnodnevne,/sestavatreninga,/skupinskevadbe</div>
+        <div>Naslovna stran:</div>
+        <ckeditor name="editor1" [(ngModel)]="naslovna.editorData" data="" editorUrl="/assets/ckeditor/ckeditor.js"  [config]="configCE4"></ckeditor>
+        <div style="margin-top:30px;">Naslov novice:</div>
+        <ckeditor [(ngModel)]="naslov.editorData"  data="" editorUrl="/assets/ckeditor/ckeditor.js"  [config]="configCE4"></ckeditor>
+        <div style="margin-top:30px;">Vsebina:</div>
+        <ckeditor [(ngModel)]="vsebina.editorData" data="" editorUrl="/assets/ckeditor/ckeditor.js"  [config]="configCE42"></ckeditor>
+        <button (click)="addNovica()" style="margin-top:30px;width:70px; height:30px; color:green;"><i class="fa fa-plus" style="color:green;"></i></button>
+        </div>
+        <div *ngFor="let item of Novica; let i = index" style="margin-top: 50px; border: 1px solid white;">
+        <div style="display:flex; justify-content: space-between"><div style="font-weight: 700;color: #00a7c0;padding: 5px 5px 5px 5px">Novica {{Novica[i].position}}</div>
+
+        <div title="Up" (click)="upNovica(i)" class="remX" style="cursor: pointer; font-weight: 700;padding: 5px 5px 5px 5px"><i class="fa fa-arrow-up" style="color:white;"></i></div>
+        <div title="Down" (click)="downNovica(i)" class="remX" style="cursor: pointer; font-weight: 700;padding: 5px 5px 5px 5px"><i class="fa fa-arrow-down" style="color:white;"></i></div>
+      
+
+        <div title="Edit" (click)="editNovica(i)" class="remX" style="cursor: pointer; font-weight: 700;padding: 5px 5px 5px 5px"><i class="fa fa-edit" style="color:white;"></i></div>
+        <div title="Copy" (click)="copyNovica(i)" class="remX" style="cursor: pointer; font-weight: 700;padding: 5px 5px 5px 5px"><i class="fa fa-copy" style="color:white;"></i></div>
+        <div title="Remove" (click)="removeNovica(i)" class="remX" style="color:red; cursor: pointer; font-weight: 700;padding: 5px 5px 5px 5px">X</div>
+      </div>
+        <div style="border-bottom: 1px solid white; margin-bottom: 20px;"></div>
+        <div style="border-bottom: 1px solid white; margin-bottom: 5px; margin-top:20px; color:gray ">Naslovna novica:</div>
+        <div [innerHTML]="Novica[i].naslovna | safehtml"></div>
+        <div style="border-bottom: 1px solid white; margin-bottom: 5px; margin-top:20px; color:gray ">Naslov:</div>
+        <div [innerHTML]="Novica[i].naslov | safehtml"></div>
+        <div style="border-bottom: 1px solid white; margin-bottom: 5px; margin-top:20px; color:gray ">Vsebina:</div>
+        <div [innerHTML]="Novica[i].vsebina | safehtml"></div>
+      </div>
+    </div>
+
+
+</mat-card>

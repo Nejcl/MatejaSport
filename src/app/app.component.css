@@ -1,0 +1,183 @@
+
+.my-overlay {
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10000 !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed !important;
+  background-color: rgba(0,0,0,0.9) !important;
+  cursor: pointer !important;
+  visibility: visible !important;
+  transition: visibility 0s, opacity 0.4s linear !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: wait !important;
+}
+.my-overlay i.fa.fa-spinner.fa-spin, .spinner-big {
+  font-size: 50px !important;
+  color: white;
+}
+
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 375px;    /* Footer height */
+
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: black !important;
+  color: white;
+
+}
+
+:focus {outline:0 !important;}
+
+.mat-toolbar
+{
+  background-color: black;
+  color: white;
+  position: fixed;
+  top:0;
+  z-index:1050;
+}
+
+a{
+  font-size: 20px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.menuHover:hover{
+  color:#e83e8c;
+}
+
+.sticky{
+  position: fixed;
+  top: 0px;
+  width: 100%
+}
+
+.linkActive{
+  background-color: #e83e8c !important;
+}
+.linkActive:hover{
+  color:white  !important;;
+}
+
+.active-list-item{
+  background-color: #e83e8c !important;
+}
+
+button.active-mat-list-item{
+  background-color: #e83e8c !important;
+}
+button.active-mat-list-item:hover {
+  color:white  !important;;
+}
+
+.mat-button:hover{
+  color:#e83e8c;
+}
+
+.mat-menu-content {
+  background-color: black !important;
+}
+
+.mat-menu-item {
+  color: white !important;
+  background-color: black !important;
+}
+button.mat-menu-item{
+  background-color: black;
+}
+
+
+button.mat-menu-item:hover {
+    background-color: black;
+    color: #e83e8c !important;
+}
+
+
+.active-list-item:hover {
+  color:white;
+}
+
+.mat-button{
+  height: 100%;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
+
+
+
+
+.my-grid {
+  padding-top: 24px !important;
+  background-color: gray;
+  height: 100px !important;
+
+}
+
+.background {
+
+  background-color: black;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  position: absolute;
+  background-size: cover;
+  background-repeat: repeat-y;
+  -webkit-filter: blur(10px);
+  background-image: url("/assets/back2.jpg");
+}
+
+.background2 {
+
+  background-color: black;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  position: absolute;
+  background-size: cover;
+  background-repeat: repeat-y;
+  -webkit-filter: grayscale();
+  background-image: url("/assets/back3.jpg");
+}
+
+
+.accordion {
+ transition: 0.4s;
+}
+
+.panel {
+
+  display: block;
+  background-color: white;
+  overflow: hidden;
+}
+
+.panel.button.active-mat-list-item:hover {
+  color:white  !important;;
+}
+
+.fhover:hover{
+  color: #e83e8c !important;
+}
+
+.linkhover:hover{
+  opacity: 0.7;
+}

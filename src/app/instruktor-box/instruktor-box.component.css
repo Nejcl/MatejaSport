@@ -1,0 +1,18 @@
+.close:hover{
+  color: #e83e8c;
+  cursor: pointer;
+}
+
+
+@media only screen and (max-width: 750px) {
+  .slika{
+    display:inline-block;
+     vertical-align: top;
+  }
+
+  .vsebina{
+
+    display:inline-block;
+  }
+
+}

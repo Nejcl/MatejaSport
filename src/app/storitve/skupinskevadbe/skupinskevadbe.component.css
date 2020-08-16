@@ -1,0 +1,66 @@
+.card{
+  border-radius: 10px;
+  width:80%;
+
+  margin: 0 auto;
+   top:30px;
+   background-color: rgba(255, 255, 255, 0.7);
+   box-shadow: 4px 4px 14px #000;
+   font-family: 'Roboto';
+   padding: 10px 10px 10px 10px;
+    color:black;
+    background-color: rgba(0, 0, 0, 0.7);
+    color:ghostwhite;
+  }
+
+  .cardimg{
+    content:url(/assets/background4.png);
+    width:10%;
+    height: auto;
+    float:right;
+     right:10px;
+  }
+
+  .headertext{
+    text-align: justify;
+     margin-right:10%;
+  }
+
+  .header{
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  li{
+    color: white;
+  }
+
+  .tema
+  {
+    color:#00a7c0;
+     font-weight:700;
+     font-size: 16px;
+      margin-bottom: 20px;
+
+  }
+
+  .tema1
+  {
+
+    color:black;
+    color: white;
+     font-size: 16px;
+      margin-bottom: 20px;
+
+  }
+
+  .tema2
+  {
+    font-weight:600;
+    color:black;
+    color: white;
+     font-size: 16px;
+      margin-bottom: 20px
+  }
+

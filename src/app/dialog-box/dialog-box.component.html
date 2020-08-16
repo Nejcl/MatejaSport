@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  <p>Vnesi geslo:</p>
+  <mat-form-field>
+    <input matInput  type="password" [(ngModel)]="data">
+  </mat-form-field>
+  <div [hidden]="!show" style="color:red; font-size: 10px">Napačno geslo!</div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onOkClick()">Ok</button>
+</div>

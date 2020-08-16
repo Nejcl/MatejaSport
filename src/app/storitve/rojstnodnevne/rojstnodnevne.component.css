@@ -1,0 +1,19 @@
+
+
+  .headertext{
+    text-align: justify;
+     margin-right:10%;
+  }
+
+.tema
+{
+  color: #00a7c0;
+  font-weight:700;
+}
+
+.itemM{
+  border-bottom: 1px dotted white;
+  flex-grow: 1;
+  min-width: 20px;
+
+}

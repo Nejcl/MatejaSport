@@ -1,0 +1,53 @@
+<div id="top" style="position:absolute; top:-150px;"></div>
+<div class="my-overlay" *ngIf="showOverlay">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+  </div>
+
+  <div style="background-color:black">
+    <app-slideshow ></app-slideshow>
+  </div>
+
+  <div id="novice">
+    <div style="padding-left: 30px;padding-right: 30px;">
+      <span id="novice1tekst">NOVICE: </span><br>
+      <ul>
+
+        <li *ngFor="let item of Novica; let i = index"><span class="novicetekst" [innerHTML]="Novica[i].naslovna | safehtml" ></span><a class="novicelink" style="margin-left: 30px;" routerLink="/novice" [state]="{id:Novica[i].id}" routerLinkActive="active-mat-list-item">Več... </a></li>
+ <!--
+        <li><span class="novicetekst">Z novo sezono vadb začnemo že v<span style="color: #e83e8c"> ponedeljek, 2.9.!</span> 10% popust na vse karte za skupinske vadbe!</span><a class="novicelink" style="padding-left: 30px;" routerLink="/novice" routerLinkActive="active-mat-list-item">Več... </a></li>
+        <li><span class="novicetekst">Zbiramo prijave za trimesečni program zdravega hujšanja.</span><a class="novicelink" style="padding-left: 30px;" routerLink="/novice" routerLinkActive="active-mat-list-item">Več... </a></li>
+-->
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="clearfix" >
+    <div id="card" class="grow" style="margin-top: 50px;" routerLink="/skupinskevadbe" routerLinkActive="active-mat-list-item" >
+      <div id="slika" style="background-image: url(/assets/sv.jpg);"></div>
+      <div id="tekst">SKUPINSKE VADBE</div>
+    </div>
+    <div id="card" class="grow" style="margin-top: 50px;" routerLink="/individualnavadba" routerLinkActive="active-mat-list-item" >
+      <div id="slika" style="background-image: url(/assets/inv.jpg);"></div>
+      <div id="tekst">INDIVIDUALNA VADBA</div>
+    </div>
+    <div id="card" class="grow" style="margin-top: 50px;" routerLink="/rehabilitacija" routerLinkActive="active-mat-list-item">
+      <div id="slika" style="background-image: url(/assets/rehab.jpg);"></div>
+      <div id="tekst">REHABILITACIJA PRI BOLEČINAH IN POŠKODBAH</div>
+    </div>
+
+      <div id="card" class="grow" style="margin-top: 50px;" routerLink="/sestavatreninga" routerLinkActive="active-mat-list-item" >
+        <div id="slika" style="background-image: url(/assets/schedule.jpg);"></div>
+        <div id="tekst">SESTAVA PROGRAMOV TRENINGA</div>
+      </div>
+      <div id="card" class="grow" style="margin-top: 50px;" routerLink="/masaze" routerLinkActive="active-mat-list-item" >
+        <div id="slika" style="background-image: url(/assets/massage.jpg);"></div>
+        <div id="tekst">MASAŽE</div>
+      </div>
+      <div id="card" class="grow" style="margin-top: 50px;" routerLink="/rojstnodnevne" routerLinkActive="active-mat-list-item" >
+        <div id="slika" style="background-image: url(/assets/birthday.jpg);"></div>
+        <div id="tekst">ROJSTNODNEVNE ZABAVE ZA OTROKE</div>
+      </div>
+
+  </div>
+

@@ -1,0 +1,11 @@
+
+.mateja-image {
+    background-image: url('figure.png');
+    background-size: cover;
+  }
+
+  .person:hover{
+      background-color: lightgray;
+      cursor: pointer;
+  }
+

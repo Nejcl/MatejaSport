@@ -1,0 +1,23 @@
+<div id="top" style="position:absolute; top:-150px;"></div>
+     <div class="clearfix">
+      <div id="card" style="margin-top: 50px;" class='grow' (click)="openDialog(i)"
+      *ngFor="let person of iPeople; let i = index">
+        <div id="front"  >
+          <div id="top-pic"></div>
+            <div id="avatar"  [ngStyle]="{'background-image': 'url(' + person.src + ')'}"></div>
+            <div id="info-box" [ngStyle]="{'background-color':person.woman === true ? '#e83e8c' : '#1E90FF' }">
+              <div class="info">
+                <div id="name">{{person.name}}</div>
+                <div id="job">{{person.description}}</div>
+              </div>
+            </div>
+            <div id="social-bar">
+                <i class="fa fa-user"></i>
+            </div>
+          </div>
+      </div>
+
+    </div>
+
+
+

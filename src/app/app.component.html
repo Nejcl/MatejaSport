@@ -1,0 +1,113 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<header>
+<mat-toolbar class="sticky" style="height:80px">
+  <img src="assets/logo.png" routerLink="/home" style="height:80%;">
+  <span class="fill-space"></span>
+  <div fxShow="true" fxHide.gt-sm="true">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon class="menuHover" style="font-size: 30px;">menu</mat-icon>
+      </button>
+    </div>
+  <span style="height: 100%" fxShow="true" fxHide.lt-md="true">
+    <button mat-button routerLink="/home" routerLinkActive="active-list-item" >DOMOV</button>
+    <button mat-button routerLinkActive="active-list-item" [ngClass]="{'linkActive': storitveActive }"
+     [matMenuTriggerFor]="storitve" #storitveTrigger="matMenuTrigger"  (mouseenter)="handleOpen()" (mouseleave)="handleClose()" (click)="handleClick()">STORITVE</button>
+    <mat-menu #storitve="matMenu"  >
+      <span (mouseleave)="handleClose2()" (mouseenter)="handleOpen2()">
+        <button mat-menu-item routerLink="skupinskevadbe" routerLinkActive="active-mat-list-item" >Skupinske vadbe</button>
+        <button mat-menu-item routerLink="individualnavadba" routerLinkActive="active-mat-list-item" >Individualna vadba</button>
+        <button mat-menu-item routerLink="rehabilitacija" routerLinkActive="active-mat-list-item" >Rehabilitacija pri bolečinah in poškodbah</button>
+        <button mat-menu-item routerLink="sestavatreninga" routerLinkActive="active-mat-list-item" >Sestava programov treninga</button>
+        <button mat-menu-item routerLink="masaze" routerLinkActive="active-mat-list-item" >Masaže</button>
+        <button mat-menu-item routerLink="rojstnodnevne" routerLinkActive="active-mat-list-item" >Rojstnodnevne zabave za otroke</button>
+      </span>
+     </mat-menu>
+    <button mat-button routerLink="/galerija" routerLinkActive="active-list-item" >GALERIJA</button>
+    <button mat-button routerLink="/urnik" routerLinkActive="active-list-item" >URNIK</button>
+    <button mat-button routerLink="/cenik" routerLinkActive="active-list-item" >CENIK</button>
+    <button mat-button routerLinkActive="active-list-item" #onasTrigger="matMenuTrigger" [ngClass]="{'linkActive': oNasActive }"
+    [matMenuTriggerFor]="onas"  (mouseenter)="handleOpenO()" (mouseleave)="handleCloseO()" (click)="handleClick2()">O NAS</button>
+    <mat-menu #onas="matMenu"  >
+      <span (mouseleave)="handleCloseO2()" (mouseenter)="handleOpenO2()">
+        <button mat-menu-item routerLink="/kjesmo" routerLinkActive="active-mat-list-item" >Kje smo</button>
+        <button mat-menu-item routerLink="/instruktorji" routerLinkActive="active-mat-list-item" >Ekipa</button>
+      </span>
+     </mat-menu>
+     <button mat-button routerLink="/prijava" routerLinkActive="active-list-item" >    <mat-icon style="color: #e83e8c; cursor: pointer;" (click)="openDialog()">person</mat-icon></button>
+  </span>
+</mat-toolbar>
+
+</header>
+<mat-sidenav-container fxFlexFill class="example-container">
+    <mat-sidenav style="background-color: black; width: 50%;" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column" style="margin-top:70px; background-color: black; color: white">
+          <a mat-button  routerLink="/home" routerLinkActive="active-list-item" (click)="sidenav.close()">DOMOV</a>
+          <a mat-button class="accordion" (click)="storitveMobile()"><mat-icon style="margin-bottom:5px">expand_more</mat-icon>STORITVE</a>
+          <div class="panel" [ngStyle]="{'display': openStoritve === true ? 'block' : 'none' }">
+            <button mat-menu-item routerLink="skupinskevadbe" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Skupinske vadbe</button>
+            <button mat-menu-item routerLink="individualnavadba" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Individualna vadba</button>
+            <button mat-menu-item routerLink="rehabilitacija" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Rehabilitacija pri bolečinah in poškodbah</button>
+            <button mat-menu-item routerLink="sestavatreninga" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Sestava programov treninga</button>
+            <button mat-menu-item routerLink="masaze" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Masaže</button>
+            <button mat-menu-item routerLink="rojstnodnevne" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Rojstnodnevne zabave za otroke</button>
+          </div>
+          <a mat-button routerLink="/galerija" routerLinkActive="active-list-item" (click)="sidenav.close()">GALERIJA</a>
+          <a mat-button routerLink="/urnik" routerLinkActive="active-list-item" (click)="sidenav.close()">URNIK</a>
+          <a mat-button routerLink="/cenik" routerLinkActive="active-list-item" (click)="sidenav.close()">CENIK</a>
+          <a mat-button class="accordion" (click)="oNasMobile()"><mat-icon style="margin-bottom:5px">expand_more</mat-icon>O NAS</a>
+          <div class="panel" [ngStyle]="{'display': openOnas === true ? 'block' : 'none' }">
+            <button mat-menu-item routerLink="/kjesmo" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Kje smo</button>
+            <button mat-menu-item routerLink="/instruktorji" routerLinkActive="active-mat-list-item" (click)="sidenav.close()">Ekipa</button>
+          </div>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content fxFlexFill id="content">
+<div style="padding-top:80px">
+  <div id="page-container">
+      <div class="my-overlay" *ngIf="showOverlay">
+          <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+        </div>
+
+      <div [ngClass]="grayBG ? 'background2' : 'background'" ></div>
+      <div id="content-wrap">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+    </div>
+<footer class="footer">
+      <div style="display: flex; justify-content: space-between;flex-wrap: wrap; width: 90%;margin-left:5%;  margin-top:20px">
+         <div style="display:table;flex-shrink:0;padding-bottom: 20px;">
+            <img src="assets/logo.png" style="height:60px;">
+            <span style="color:#00a7c0; padding-left:30px;font-style: italic;font-size: 20px;display:table-cell;vertical-align:middle;">Najboljša vadba v mestu! </span>
+         </div>
+         <div style="padding-bottom: 20px;">
+            <a href="https://www.facebook.com/matejasport1/"><img class="linkhover" src="/assets/facebook.png" style="height:40px;cursor: pointer; margin-right:10px;"></a>
+            <a href="https://www.instagram.com/matejasport/"><img  class="linkhover" src="/assets/instagram.png" style="height:40px;cursor: pointer;"> </a>
+         </div>
+         <div style="display:flex;">
+            <div class="fhover" style="flex-shrink:0; cursor: pointer; margin-right:50px" routerLink="/kjesmo" routerLinkActive="active-mat-list-item">
+                Lokacija:<br><br>
+                <mat-icon style="font-size: 20px;vertical-align: top;">location_on</mat-icon>Jelenčeva ulica 1,4000 Kranj<br>
+            </div>
+            <div class="fhover" style="flex-shrink:0; cursor: pointer" routerLink="/kjesmo" routerLinkActive="active-mat-list-item" >
+              Kontakt:<br><br>
+              <mat-icon style="font-size: 20px;vertical-align: top;">phone</mat-icon>068 125 275<br>
+              <mat-icon style="font-size: 20px;vertical-align: top;">email</mat-icon>info@matejasport.si<br>
+            </div>
+      </div>
+    </div>
+
+    <div style="display: flex;justify-content: flex-start; margin-top:20px">
+    <mat-icon style="color: #e83e8c; cursor: pointer;" (click)="openDialog()">vpn_key</mat-icon>
+    <div style="position: relative; margin: auto; left: -20px">Copyright © <i style="color: #e83e8c;">LL</i>, All Rights Reserved</div>
+    <div></div>
+  </div>
+
+
+</footer>
+</div>
+</div>
+</mat-sidenav-content>
+</mat-sidenav-container>
+
+
+

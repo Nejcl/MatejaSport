@@ -1,0 +1,21 @@
+
+<div mat-dialog-content style="max-height: 75vh !important;">
+  <div style="display:flex; justify-content: space-between;">
+    <div class="header" [ngStyle]="{'color':spol === true ? '#e83e8c' : '#1E90FF' }">{{ime}}</div>
+    <div class="close" style="font-size: 25px;" (click)="Close()">X</div>
+  </div>
+    <div style="width: 90%;border-bottom: 2px solid white; margin-bottom: 30px; margin-top:5px;"> </div>
+    <div style="width: 90%; margin-bottom: 20px;">{{job}}</div>
+
+    <div style="height:auto;">
+      <div class="slika" >
+        <img src={{image}} style="float:left;margin-right:20px !important; margin-bottom: 20px; width:30%;min-width: 300px;">
+      </div>
+      <div class="vsebina" id="opis" style="margin-right: 10%; text-align:  justify"></div>
+
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-button (click)="Close()">Zapri</button>
+    </div>
+
+</div>
