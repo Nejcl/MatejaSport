@@ -1,0 +1,11 @@
+  @media only screen and (max-width: 600px) {
+    .mobile-width {
+        width: 100%;
+      }
+      .cdk-overlay-pane {
+        background-color: #000;
+        max-width: unset;
+        width: 80%;
+        height: 70%;
+    }
+  }

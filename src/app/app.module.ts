@@ -33,6 +33,7 @@ import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { LoginDialogComponent} from './login-dialog/login-dialog.component'
 import { NgxGalleryModule } from 'ngx-gallery';
 import { NeedAuthGuard } from './need-auth-guard.service';
 import { InstruktorBoxComponent } from './instruktor-box/instruktor-box.component';
@@ -66,6 +67,7 @@ import { DialogContent2 } from './user-control/user-control.component';
     SkupinskevadbeComponent,
     UserControlComponent,
     DialogBoxComponent,
+    LoginDialogComponent,
     InstruktorBoxComponent,
     SafehtmlPipe,
     TestComponent,
@@ -96,6 +98,7 @@ import { DialogContent2 } from './user-control/user-control.component';
   ],
   entryComponents: [
     DialogBoxComponent,
+    LoginDialogComponent,
     InstruktorBoxComponent,
     DialogContent,
     DialogContent2,

@@ -3,6 +3,8 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationError,NavigationCancel, Event as RouterEvent, } from '@angular/router';
 import {MatDialog} from "@angular/material";
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+
 import { element } from 'protractor';
 
 
@@ -132,8 +134,14 @@ navigationInterceptor(event: RouterEvent): void {
   }
 
   openDialog(): void {
+    this.dialog.closeAll();
     const dialogRef = this.dialog.open(DialogBoxComponent, {
     });
+  }
+
+  openLoginDialog(): void {
+    this.dialog.closeAll();
+    const loginDialogRef = this.dialog.open(LoginDialogComponent,{})
   }
 
   oNasMobile(){

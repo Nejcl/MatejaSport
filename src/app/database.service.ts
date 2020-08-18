@@ -8,14 +8,19 @@ import { Observable, throwError } from 'rxjs';
 })
 export class DatabaseService {
 
-  //baseUrl = 'http://127.0.0.1:80/php';
-  baseUrl = 'http://www.matejasport.si/php';
+  //baseUrl = 'http://localhost:4200/php';
+  baseUrl = 'http://127.0.0.1:80/php'
+  //baseUrl = 'http://www.matejasport.si/php';
   data: any;
 
   constructor(private http: HttpClient) { }
 
   checkPW(InData: any):Observable<any>{
     return this.http.post<any>(`${this.baseUrl}/checkpw.php`, InData);
+  }
+
+  checkUserandPassword(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/checkUserandPassword.php`,InData); 
   }
 
   readUrnik(): Observable<any[]>{
