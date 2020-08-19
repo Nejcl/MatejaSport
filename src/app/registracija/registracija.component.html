@@ -39,7 +39,7 @@
         </mat-card-content>        
         <button mat-stroked-button color="accent" class="btn-block">Registracija</button>
         <div class="row preklici">
-            <button mat-button cdkFocusInitial>Prekliči</button>
+                <button mat-button cdkFocusInitial (click)="router.navigate(['/home']);">Prekliči</button>
         </div>
   
       </form>
