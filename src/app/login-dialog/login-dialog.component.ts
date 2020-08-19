@@ -23,7 +23,7 @@ export class LoginDialogComponent implements OnInit {
     onOkClick() {
       //let usr = {user: this.user}
       if(this.user.length > 0 && this.password.length > 0){
-        let item = {pw: this.password}
+        let item = {user: this.user, pw: this.password}
         this.dbService.checkUserandPassword(item)
         .subscribe(
           (data) => {

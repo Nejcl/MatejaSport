@@ -141,7 +141,7 @@ navigationInterceptor(event: RouterEvent): void {
 
   openLoginDialog(): void {
     this.dialog.closeAll();
-    const loginDialogRef = this.dialog.open(LoginDialogComponent,{})
+    const loginDialogRef = this.dialog.open(LoginDialogComponent,{width:'320px' ,panelClass: 'mobile-width'})
   }
 
   oNasMobile(){

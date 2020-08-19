@@ -1,0 +1,47 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Registracija</mat-card-title>
+      </mat-card-header>
+      <form class="example-form">
+        <mat-card-content>
+            <br>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Uporabniško ime">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+            <input matInput name="fname" placeholder="Ime">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+            <input matInput name="lname"placeholder="Priimek">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+            <input matInput name="email" type="email" placeholder="Email">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+            <input matInput name="phone" type="number" minlength="9" maxlength="13" placeholder="Telefon">
+          </mat-form-field>
+          <br>
+          <br>
+          <mat-form-field class="example-full-width">
+            <input matInput type="password" placeholder="Goslo">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+            <input matInput  type="password" placeholder="Ponovi geslo">
+          </mat-form-field>
+          <br>
+
+        </mat-card-content>        
+        <button mat-stroked-button color="accent" class="btn-block">Registracija</button>
+        <div class="row preklici">
+            <button mat-button cdkFocusInitial>Prekliči</button>
+        </div>
+  
+      </form>
+    </mat-card>
+  </div>

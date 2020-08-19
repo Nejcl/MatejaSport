@@ -43,6 +43,8 @@ import { TestComponent } from './test/test.component';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { DialogContent } from './user-control/user-control.component';
 import { DialogContent2 } from './user-control/user-control.component';
+import { ProfilComponent } from './profil/profil.component';
+import { RegistracijaComponent } from './registracija/registracija.component';
 
 
 @NgModule({
@@ -73,6 +75,8 @@ import { DialogContent2 } from './user-control/user-control.component';
     TestComponent,
     DialogContent,
     DialogContent2,
+    ProfilComponent,
+    RegistracijaComponent,
     
 
 

@@ -9,7 +9,8 @@
   </mat-form-field>
   <div [hidden]="!show" style="color:red; font-size: 10px">Napačno uporabniško ime ali geslo!</div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Prekliči</button>
+<a href="/registracija" class="registracija">Registracija</a>
+
+<div mat-dialog-actions style="float: right;">
   <button mat-button cdkFocusInitial (click)="onOkClick()">Ok</button>
 </div>
