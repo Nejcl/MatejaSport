@@ -3,7 +3,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { LoginService } from '../login.service';
 import { DatabaseService } from '../database.service';
-
+import { IUser } from '../entities/user';
+import { fromEventPattern } from 'rxjs';
+import { ShareDataService} from '../share-data.service';
+ 
 @Component({
   selector: 'app-dialog-box',
   templateUrl: './login-dialog.component.html',
@@ -18,10 +21,10 @@ export class LoginDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public bdata: string,
               public router: Router,
               private log: LoginService,
-              private dbService: DatabaseService) { }
+              private dbService: DatabaseService,
+              private shareService:ShareDataService) { }
 
     onOkClick() {
-      //let usr = {user: this.user}
       if(this.user.length > 0 && this.password.length > 0){
         let item = {user: this.user, pw: this.password}
         this.dbService.checkUserandPassword(item)
@@ -29,8 +32,19 @@ export class LoginDialogComponent implements OnInit {
           (data) => {
             if(data.pw === "OK"){
               this.log.setToken('TOKEN');
+              const currentUser:IUser = {
+                id:data.id,
+                username:data.username,
+                ime:data.ime,
+                priimek:data.priimek,
+                veljavnost:data.veljavnost,
+                obiski:data.obiski,
+                prijave:data.prijave
+              };
+              this.shareService.addItem(currentUser);
               this.dialogRef.close();
-              this.router.navigateByUrl('/user-control');
+
+              this.router.navigateByUrl('/profil');
             }
             else
             {

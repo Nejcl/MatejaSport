@@ -14,3 +14,4 @@ body{background-image:url(https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyA
 .login-wrapper .mat-stroked-button{border:1px solid currentColor;line-height:54px;background:#FFF7FA;}
 .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix{padding:0.8375em 0;}
 .preklici {    display: flex;justify-content: center;margin-top: 1rem;}
+.invalid-feedback {width: 100%;margin-top: -0.5rem;font-size: 80%;color: #dc3545;}

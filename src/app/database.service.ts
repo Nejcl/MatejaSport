@@ -23,6 +23,10 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/checkUserandPassword.php`,InData); 
   }
 
+  userRegistration(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/userRegistration.php`,InData); 
+  }
+
   readUrnik(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}/getdata.php`);
   }

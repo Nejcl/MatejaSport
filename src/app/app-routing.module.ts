@@ -20,7 +20,7 @@ import { TestComponent } from './test/test.component';
 import { UserControlComponent } from './user-control/user-control.component';
 import { NeedAuthGuard as AuthGuard} from './need-auth-guard.service';
 import { RegistracijaComponent } from './registracija/registracija.component';
-
+import { ProfilComponent } from './profil/profil.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -40,6 +40,7 @@ const routes: Routes = [
   { path: 'skupinskevadbe', component: SkupinskevadbeComponent },
   { path: 'registracija', component:RegistracijaComponent },
   { path: 'user-control', component: UserControlComponent, canActivate: [AuthGuard]},
+  { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard]},
   { path: 'test', component: TestComponent},
   { path: '**', redirectTo: '/home' }
 ];

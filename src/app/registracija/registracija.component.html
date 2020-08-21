@@ -3,45 +3,61 @@
       <mat-card-header>
         <mat-card-title>Registracija</mat-card-title>
       </mat-card-header>
-      <form class="example-form">
+      <form class="example-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <mat-card-content>
-            <br>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Uporabniško ime">
-          </mat-form-field>
           <br>
           <mat-form-field class="example-full-width">
-            <input matInput name="fname" placeholder="Ime">
+            <input matInput placeholder="Uporabniško ime" formControlName="userName" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }">
           </mat-form-field>
+          <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+            <div *ngIf="f.userName.errors.required">Prosim vnesite uporabniško ime</div>
+          </div>
+          <mat-form-field class="example-full-width">
+            <input matInput name="fname" formControlName="firstName" placeholder="Ime"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+          </mat-form-field>
+          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors.required">Prosim vnesite ime</div>
+          </div>
+          <mat-form-field class="example-full-width">
+            <input matInput name="lname"placeholder="Priimek" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+          </mat-form-field>
+          <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+            <div *ngIf="f.lastName.errors.required">Prosim vnesite priimek</div>
+          </div>
+          <mat-form-field class="example-full-width">
+            <input matInput name="email" type="email" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" >
+          </mat-form-field>
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Prosim vnesite email</div>
+            <div *ngIf="f.email.errors.email">Prosim vnesite pravilni email naslov</div>
+          </div>
+          <mat-form-field class="example-full-width">
+            <input matInput name="phone" type="number" minlength="9" maxlength="13" placeholder="Telefon" formControlName="phone">
+          </mat-form-field>
+          <br>
           <br>
           <mat-form-field class="example-full-width">
-            <input matInput name="lname"placeholder="Priimek">
+            <input matInput type="password" placeholder="Goslo" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
           </mat-form-field>
-          <br>
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Prosim vnesite geslo</div>
+            <div *ngIf="f.password.errors.minlength">Geslo mora vsebovati vsaj 6 znakov</div>
+         </div>
           <mat-form-field class="example-full-width">
-            <input matInput name="email" type="email" placeholder="Email">
+            <input matInput type="password" placeholder="Ponovi geslo" formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" >
           </mat-form-field>
+          <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.confirmPassword.errors.required">Prosim potrdite geslo</div>
+            <div *ngIf="f.confirmPassword.errors.mustMatch">Gesli se ne ujemata</div>
+          </div>
           <br>
-          <mat-form-field class="example-full-width">
-            <input matInput name="phone" type="number" minlength="9" maxlength="13" placeholder="Telefon">
-          </mat-form-field>
-          <br>
-          <br>
-          <mat-form-field class="example-full-width">
-            <input matInput type="password" placeholder="Goslo">
-          </mat-form-field>
-          <br>
-          <mat-form-field class="example-full-width">
-            <input matInput  type="password" placeholder="Ponovi geslo">
-          </mat-form-field>
-          <br>
-
-        </mat-card-content>        
-        <button mat-stroked-button color="accent" class="btn-block">Registracija</button>
+        </mat-card-content>  
+        <div class="form-group">
+          <button mat-stroked-button color="accent" class="btn-block">Registracija</button>
+      </div>      
         <div class="row preklici">
                 <button mat-button cdkFocusInitial (click)="router.navigate(['/home']);">Prekliči</button>
-        </div>
-  
+        </div> 
       </form>
     </mat-card>
   </div>
