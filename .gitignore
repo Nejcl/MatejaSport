@@ -24,3 +24,5 @@ dist/MatejaSport/styles.cced8b480d301b54283a.css
 dist/
 
 .vscode/launch.json
+
+node_modules/
