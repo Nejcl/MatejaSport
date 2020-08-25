@@ -1,11 +1,13 @@
 <div id="top" style="position:absolute; top:-150px;"></div>
 
 <mat-card class="card" style="margin-bottom: 50px;" >
-  <button mat-button (click)="MenuClick(false)">Urnik</button>
-  <button mat-button (click)="MenuClick(true)">Novice</button>
+  <button mat-button (click)="urnikClick()">Urnik</button>
+  <button mat-button (click)="noviceClick()">Novice</button>
+  <button mat-button (click)="aktivacijaClick()"class="float-right">Aktivacija uporabnikov</button>
+
   <div style="border-bottom: 1px solid black; margin-bottom: 20px;"></div>
  
-  <div *ngIf="!showNovice">
+  <div *ngIf="showUrnik">
       <div style="margin-bottom:30px; color: green">{{urnikTekst}}</div>
       <button (click)="save()" style="margin-left:0%; width:70px; height:30px"><i class="fa fa-save" style="color:blue;"></i></button>
       <button (click)="reload()" style="margin-left:40px; width:70px; height:30px"><i class="fa fa-refresh" style="color:green;"></i></button>
@@ -134,6 +136,8 @@
         <div [innerHTML]="Novica[i].vsebina | safehtml"></div>
       </div>
     </div>
-
+    <div *ngIf="showAktivacija">
+      <app-aktivacija-uporabnikov></app-aktivacija-uporabnikov>
+    </div>
 
 </mat-card>

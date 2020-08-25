@@ -24,13 +24,15 @@ if(isset($postdata) && !empty($postdata))
  $input = json_decode($postdata);
  $user = mysqli_real_escape_string($conn, trim($input->userName));
  $pw = mysqli_real_escape_string($conn, trim($input->password));
+ $hashed_password = password_hash($pw, PASSWORD_DEFAULT);
+
  $fname = mysqli_real_escape_string($conn, trim($input->firstName));
  $lname = mysqli_real_escape_string($conn, trim($input->lastName));
  $email = mysqli_real_escape_string($conn, trim($input->email));
  $phone = mysqli_real_escape_string($conn, trim($input->phone));
 
   // Store.
-  $sql = "INSERT INTO `uporabniki`(`uporabnik`,`ime`, `priimek`, `geslo`, `email`, `telefon`) VALUES ('{$user}','{$fname}','{$lname}','{$pw}','{$email}','{$phone}')";
+  $sql = "INSERT INTO `uporabniki`(`uporabnik`,`ime`, `priimek`, `geslo`, `email`, `telefon`) VALUES ('{$user}','{$fname}','{$lname}','{$hashed_password}','{$email}','{$phone}')";
 
   if(mysqli_query($conn,$sql))
   {

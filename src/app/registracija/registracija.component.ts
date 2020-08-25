@@ -44,8 +44,8 @@ export class RegistracijaComponent implements OnInit {
           .subscribe(
             (data) => {
               if(data.registration === "OK"){
-                this.log.setToken('TOKEN');
-                this.router.navigateByUrl('/profil');
+                alert("Registracija uspešna prosim počakajte na aktivacijo računa");
+                this.router.navigateByUrl('/home');
               } else{
                 alert("registracija uporabnika ni uspešna");
                 this.router.navigateByUrl('/home');
@@ -55,6 +55,15 @@ export class RegistracijaComponent implements OnInit {
             (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
          );
       } 
+
+      numberOnly(event): boolean {
+        const charCode = (event.which) ? event.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          return false;
+        }
+        return true;
+    
+      }
       
 
 }

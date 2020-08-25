@@ -45,6 +45,7 @@ import { DialogContent } from './user-control/user-control.component';
 import { DialogContent2 } from './user-control/user-control.component';
 import { ProfilComponent } from './profil/profil.component';
 import { RegistracijaComponent } from './registracija/registracija.component';
+import { AktivacijaUporabnikovComponent } from './user-control/aktivacija-uporabnikov/aktivacija-uporabnikov.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { RegistracijaComponent } from './registracija/registracija.component';
     DialogContent2,
     ProfilComponent,
     RegistracijaComponent,
+    AktivacijaUporabnikovComponent,
     
 
 

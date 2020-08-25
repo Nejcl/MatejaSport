@@ -39,12 +39,19 @@ export class LoginDialogComponent implements OnInit {
                 priimek:data.priimek,
                 veljavnost:data.veljavnost,
                 obiski:data.obiski,
-                prijave:data.prijave
+                prijave:data.prijave,
+                aktiviran: data.aktiviran,
+                email:data.email,
+                telefon:data.telefon
               };
               this.shareService.addItem(currentUser);
               this.dialogRef.close();
 
               this.router.navigateByUrl('/profil');
+            }
+            else if (data.pw ==="aktiviran") {
+              alert("Vaš uporabniški račun še ni aktiviran, informacije o aktivaciji dobite na recepciji")
+              this.dialogRef.close();
             }
             else
             {

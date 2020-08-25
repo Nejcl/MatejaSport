@@ -6,4 +6,7 @@ export interface IUser {
     prijave: number;
     obiski: number;
     veljavnost: string;
+    aktiviran: number;
+    email: string;
+    telefon:number;
 }

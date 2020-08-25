@@ -58,8 +58,6 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/editdata.php`, InData);
   }
 
-
-
   readNovice(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}/getnovice2.php`);
   }
@@ -87,4 +85,7 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/editnovice2.php`, InData);
   }
 
+  getNewUsers(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.baseUrl}/getNewUsers.php`);
+  }
 }

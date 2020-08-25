@@ -21,6 +21,7 @@ $postdata = file_get_contents("php://input");
  $input = json_decode($postdata);
  $user = mysqli_real_escape_string($conn, trim($input->user));
  $pw = mysqli_real_escape_string($conn, trim($input->pw));
+
   $sql = "SELECT * FROM `uporabniki` WHERE uporabnik='{$user}'";
 
   $data = [];
@@ -31,28 +32,38 @@ $postdata = file_get_contents("php://input");
       $userOk = false;
       while($row = mysqli_fetch_assoc($result))
       {
-        if($row['uporabnik'] == $user &&  $row['geslo'] == $pw )
+        if($row['uporabnik'] == $user && password_verify($pw,$row['geslo']))
         {
-          $data2 = [
-            'pw'    => 'OK',
-            'user' =>    $row['uporabnik'],
-            'id'    =>   $row['ID_uporabnik'],
-            'ime' =>  $row['ime'],
-            'priimek' =>  $row['priimek'],
-            'obiski'    =>    $row['obiski'],
-            'prijave' =>  $row['prijave'],
-            'veljavnost' => $row['veljavnost'],
-            ];
-          echo json_encode($data2);
-          $userOk = true;
-          break;
+          if($row['aktiviran'] > 0){
+            $data2 = [
+              'pw'    => 'OK',
+              'user' =>    $row['uporabnik'],
+              'id'    =>   $row['ID_uporabnik'],
+              'ime' =>  $row['ime'],
+              'priimek' =>  $row['priimek'],
+              'obiski'    =>    $row['obiski'],
+              'prijave' =>  $row['prijave'],
+              'veljavnost' => $row['veljavnost'],
+              ];
+            echo json_encode($data2);
+            $userOk = true;
+            break;
+          }
+          else {
+            $data2 = [
+              'pw'    => 'aktiviran',
+              ];
+            echo json_encode($data2);
+            $userOk = true;
+            break;
+          }
         }
         $cr++;
       }
       if(mysqli_num_rows($result) == 0 || $userOk == false )
       {
         $data2 = [
-          'pw'    => 'NOK'
+          'pw'    => 'NOK',
           ];
         echo json_encode($data2);
       }

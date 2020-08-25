@@ -19,9 +19,6 @@ export interface DialogData2 {
 
 })
 export class UserControlComponent implements OnInit, AfterViewInit {
-
-  
-
   public configCE4 = {
     removePlugins: 'elementspath,save,font,easyimage',
     placeholder: 'Type the content here!',
@@ -47,6 +44,9 @@ export class UserControlComponent implements OnInit, AfterViewInit {
       }
 
   showNovice: boolean = true;
+  showUrnik: boolean = false;
+  showAktivacija: boolean = false;
+
 
   danValue: string = '';
   odTime: string = '';
@@ -70,10 +70,7 @@ export class UserControlComponent implements OnInit, AfterViewInit {
 
   urnikTekst: string = '';
   noviceTekst: string = '';
-
   data: any[];
-
-
 
   constructor(private dbService: DatabaseService, public dialog: MatDialog) {
 
@@ -276,7 +273,6 @@ export class UserControlComponent implements OnInit, AfterViewInit {
    );
   }
 
-
   AddItem(){
     let item = {id: '', dan: this.danValue, od: this.odTime, do: this.doTime, naziv: this.nazivValue, vodi: this.vodiValue, color: this.colorValue};
     this.dbService.addUrnik(item)
@@ -312,27 +308,33 @@ export class UserControlComponent implements OnInit, AfterViewInit {
     );
   }
 
-  MenuClick(show: boolean){
-    this.showNovice = show;
+  urnikClick(show: boolean){
+    this.showNovice = false;
+    this.showUrnik = true;
+    this.showAktivacija = false;
   }
 
+  noviceClick(show: boolean){
+    this.showNovice = true;
+    this.showUrnik = false;
+    this.showAktivacija = false;
+  }
 
+  aktivacijaClick(show: boolean){
+    this.showNovice = false;
+    this.showUrnik = false;
+    this.showAktivacija = true;
+  }
 
   ngAfterViewInit()
   {
-
       let top = document.getElementById('top');
       if (top !== null) {
         top.scrollIntoView();
         top = null;
       }
   }
-
-
-
-
 }
-
 
 @Component({
   selector: 'dialog-content',
