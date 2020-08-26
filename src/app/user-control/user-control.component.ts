@@ -43,9 +43,9 @@ export class UserControlComponent implements OnInit, AfterViewInit {
     filebrowserUploadUrl: 'http://www.matejasport.si/php/ftp.php'
       }
 
-  showNovice: boolean = true;
+  showNovice: boolean = false;
   showUrnik: boolean = false;
-  showAktivacija: boolean = false;
+  showAktivacija: boolean = true;
 
 
   danValue: string = '';
@@ -308,19 +308,19 @@ export class UserControlComponent implements OnInit, AfterViewInit {
     );
   }
 
-  urnikClick(show: boolean){
+  urnikClick(){
     this.showNovice = false;
     this.showUrnik = true;
     this.showAktivacija = false;
   }
 
-  noviceClick(show: boolean){
+  noviceClick(){
     this.showNovice = true;
     this.showUrnik = false;
     this.showAktivacija = false;
   }
 
-  aktivacijaClick(show: boolean){
+  aktivacijaClick(){
     this.showNovice = false;
     this.showUrnik = false;
     this.showAktivacija = true;

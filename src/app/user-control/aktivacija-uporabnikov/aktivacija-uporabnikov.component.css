@@ -1,0 +1,67 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 15%;
+  }
+  .akcije {
+      width: 25%;
+  }
+  .mat-form-field-empty.mat-form-field-label {
+    color: green;
+}
+.mat-form-field-underline {
+    background-color: green;
+}
+
+/* input color class */
+::ng-deep input.mat-input-element {
+    color: white;
+  }
+  
+  /* Change label color on focused */
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: #e83e8c !important;
+  }
+  
+  /* underline border color on focused */
+  ::ng-deep .mat-focused .mat-form-field-underline .mat-form-field-ripple{
+    background-color: #e83e8c !important;
+  }
+
+  /* Border */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white;
+  }
+  /* Font color */
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+
+  }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th {
+    background-color: lightgray;
+    color:black;
+  }
+
+  .mat-header-cell {
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .mat-cell {
+    text-align: center;
+    justify-content:center;
+  }

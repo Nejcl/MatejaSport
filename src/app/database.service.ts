@@ -88,4 +88,8 @@ export class DatabaseService {
   getNewUsers(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}/getNewUsers.php`);
   }
+
+  aktivirajUporabnika(id: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/aktivirajUporabnika.php`,id);
+  }
 }

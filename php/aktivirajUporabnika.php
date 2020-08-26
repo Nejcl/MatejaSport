@@ -16,29 +16,35 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT * FROM uporabniki where aktiviran = 0";
+$postdata = file_get_contents("php://input");
 
-$data = [];
-
-if($result = mysqli_query($conn,$sql))
- {
-    $cr = 0;
-    while($row = mysqli_fetch_assoc($result))
-    {
-      $data[$cr]['id'] = $row['ID_uporabnik'];
-      $data[$cr]['uporabnik'] = $row['uporabnik'];
-      $data[$cr]['ime'] = $row['ime'];
-      $data[$cr]['priimek'] = $row['priimek'];
-      $data[$cr]['email'] = $row['email'];
-      $data[$cr]['telefon'] = $row['telefon'];
-      $data[$cr]['aktiviran'] = $row['aktiviran'];
-      $cr++;
-    }
-   print json_encode($data);
+if(isset($postdata) && !empty($postdata))
+{
+  // Extract the data.
   
-} else {
-    echo "0 results";
+  $request = json_decode($postdata);
+  
+  // Sanitize.
+  $id = mysqli_real_escape_string($conn, trim($request->id));
+  
+  // Store.
+  $sql = "UPDATE `uporabniki` SET `aktiviran`='1' WHERE `ID_uporabnik`='{$id}'";
+
+  if(mysqli_query($conn,$sql))
+  {
+    http_response_code(201);
+    $data = [
+      'resp'    => 'aktiviran',
+    ];
+    echo json_encode($data);
+  }
+  else
+  {
+    http_response_code(422);
+  }
+
 }
+
 
 $conn->close();
 ?>
