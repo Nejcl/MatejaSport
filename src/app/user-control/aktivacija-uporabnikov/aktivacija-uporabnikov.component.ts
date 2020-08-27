@@ -55,4 +55,15 @@ export class AktivacijaUporabnikovComponent implements OnInit {
     );
   }
 
+  izbrisiUporabnika(id: number){
+    let data = {id: id};
+    this.dbService.izbrisiUporabnika(data).subscribe(
+      (data) => {
+        if(data['resp'] =="izbrisan"){
+          this.prikaziNoveUporabnike() 
+        }
+      }
+    );
+  }
+
 }

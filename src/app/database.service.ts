@@ -92,4 +92,8 @@ export class DatabaseService {
   aktivirajUporabnika(id: any): Observable<any[]>{
     return this.http.post<any>(`${this.baseUrl}/aktivirajUporabnika.php`,id);
   }
+
+  izbrisiUporabnika(id: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/izbrisiUporabnika.php`,id);
+  }
 }
