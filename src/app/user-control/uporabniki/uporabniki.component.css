@@ -74,7 +74,3 @@ table {
   ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-label {
     color: white;
   }
-
-  .active{
-    color:#e83e8c
-  }

@@ -96,4 +96,22 @@ export class DatabaseService {
   izbrisiUporabnika(id: any): Observable<any[]>{
     return this.http.post<any>(`${this.baseUrl}/izbrisiUporabnika.php`,id);
   }
+
+  getUsers(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.baseUrl}/getUsers.php`);
+  }
+
+  ponastaviGesloUporabnika(id: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/nastaviGesloUporabnika.php`,id);
+  }
+
+  geTermini(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.baseUrl}/getTermini.php`);
+  }
+
+  getPrijaveNaTermin(id: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/getPrijaveNaTermin.php`,id);
+  }
+
+
 }

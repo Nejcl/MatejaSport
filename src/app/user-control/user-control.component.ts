@@ -45,8 +45,8 @@ export class UserControlComponent implements OnInit, AfterViewInit {
 
   showNovice: boolean = false;
   showUrnik: boolean = false;
-  showAktivacija: boolean = true;
-
+  showAktivacija: boolean = false;
+  showTermini: boolean =true;
 
   danValue: string = '';
   odTime: string = '';
@@ -312,18 +312,29 @@ export class UserControlComponent implements OnInit, AfterViewInit {
     this.showNovice = false;
     this.showUrnik = true;
     this.showAktivacija = false;
+    this.showTermini = false;
+
   }
 
   noviceClick(){
     this.showNovice = true;
     this.showUrnik = false;
     this.showAktivacija = false;
+    this.showTermini = false;
   }
 
   aktivacijaClick(){
     this.showNovice = false;
     this.showUrnik = false;
     this.showAktivacija = true;
+    this.showTermini = false;
+  }
+
+  terminiClick(){
+    this.showNovice = false;
+    this.showUrnik = false;
+    this.showAktivacija = false;
+    this.showTermini = true;
   }
 
   ngAfterViewInit()

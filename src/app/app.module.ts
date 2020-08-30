@@ -46,6 +46,9 @@ import { DialogContent2 } from './user-control/user-control.component';
 import { ProfilComponent } from './profil/profil.component';
 import { RegistracijaComponent } from './registracija/registracija.component';
 import { AktivacijaUporabnikovComponent } from './user-control/aktivacija-uporabnikov/aktivacija-uporabnikov.component';
+import { UporabnikiComponent } from './user-control/uporabniki/uporabniki.component';
+import { TerminiComponent } from './user-control/termini/termini.component';
+import { RazpsTerminaComponent } from './user-control/termini/razps-termina/razps-termina.component';
 
 
 @NgModule({
@@ -79,6 +82,9 @@ import { AktivacijaUporabnikovComponent } from './user-control/aktivacija-uporab
     ProfilComponent,
     RegistracijaComponent,
     AktivacijaUporabnikovComponent,
+    UporabnikiComponent,
+    TerminiComponent,
+    RazpsTerminaComponent,
     
 
 

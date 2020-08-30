@@ -1,4 +1,8 @@
-table {
+
+  .active{
+    color:#e83e8c
+  }
+  table {
     width: 100%;
   }
   
@@ -49,6 +53,7 @@ table {
   .mat-header-cell {
     flex-direction: column;
     justify-content: center;
+    text-align: center;
   }
   
   .mat-cell {
@@ -73,8 +78,4 @@ table {
 
   ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-label {
     color: white;
-  }
-
-  .active{
-    color:#e83e8c
   }

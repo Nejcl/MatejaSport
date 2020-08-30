@@ -11,6 +11,10 @@ import {MatTableDataSource} from '@angular/material/table';
 export class AktivacijaUporabnikovComponent implements OnInit {
   myText = 'Vsi uporabniki so aktivirani';
   noData = false;
+  showUporabniki = false;
+  showAktivacija= true;
+  aktivirajActive = true;
+  userActive = false;
   displayedColumns: string[] = ['uporabnik','ime', 'priimek', 'email', 'telefon','actions'];
   dataSource = new MatTableDataSource();
   constructor(private dbService: DatabaseService) { }
@@ -41,6 +45,10 @@ export class AktivacijaUporabnikovComponent implements OnInit {
       this.noData =false;
     }else {
       this.noData = false;
+      if(this.dataSource.data.length < 1){
+        this.myText='Vsi uporabniki so aktivirani';
+         this.noData = true;
+       }
     }
   }
 
@@ -49,7 +57,7 @@ export class AktivacijaUporabnikovComponent implements OnInit {
     this.dbService.aktivirajUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="aktiviran"){
-          this.prikaziNoveUporabnike() 
+          this.prikaziNoveUporabnike(); 
         }
       }
     );
@@ -60,10 +68,24 @@ export class AktivacijaUporabnikovComponent implements OnInit {
     this.dbService.izbrisiUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="izbrisan"){
-          this.prikaziNoveUporabnike() 
+          this.prikaziNoveUporabnike();
         }
       }
     );
+  }
+
+  showUporabnike() {
+    this.showUporabniki= true;
+    this.userActive = true;
+    this.showAktivacija = false;
+    this.aktivirajActive = false;
+  }
+
+  showAktiviraj() {
+    this.showUporabniki= false;
+    this.userActive = false;
+    this.showAktivacija = true;
+    this.aktivirajActive = true;
   }
 
 }

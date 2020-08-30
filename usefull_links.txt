@@ -1,0 +1,25 @@
+https://moj.bum.si:8444/login/
+u: matejasport, pw: oceN@8Q6
+
+
+matejasport.si
+matejasportlukaleban
+lukaleban
+10021
+
+
+
+
+SELECT t.naziv,t.instruktor,t.datum_cas, t.st_mest,u.ime,u.priimek 
+FROM prijaveNaTermin pt INNER JOIN uporabniki u ON pt.Id_uporabnik=u.ID_uporabnik INNER JOIN termini t ON pt.Id_termin = t.ID_termin
+
+
+SELECT t.naziv,t.instruktor,t.datum_cas,COUNT(pt.Id_uporabnik)+'/'+t.st_mest AS zasedenost FROM termini t INNER JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin 
+
+
+SELECT t.naziv,t.instruktor,t.datum,t.od,t.do,CONCAT(COUNT(pt.Id_uporabnik) , '/', t.st_mest) AS zasedenost FROM termini t INNER JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin 
+
+
+https://stackblitz.com/edit/angular-nested-mat-table?file=app%2Ftable-expandable-rows-example.html
+
+https://stackblitz.com/edit/angular-material-expandable-table-rows?file=app%2Ftable%2Ftable.component.html
