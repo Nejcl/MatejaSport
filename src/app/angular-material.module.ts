@@ -15,6 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 //
@@ -81,6 +82,7 @@ import { MatTableModule } from '@angular/material/table';
     MatSelectModule,
     MatSliderModule,
     MatSlideToggleModule,
+    MatNativeDateModule,
 
     MatMenuModule,
     MatSidenavModule,
@@ -119,12 +121,14 @@ import { MatTableModule } from '@angular/material/table';
 
     MatAutocompleteModule,
     MatCheckboxModule,
+    MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
     MatSliderModule,
     MatSlideToggleModule,
+    MatNativeDateModule,
 
     MatMenuModule,
     MatSidenavModule,

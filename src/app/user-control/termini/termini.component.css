@@ -24,14 +24,14 @@
     background-color: green;
 }
 
-/* input color class */
+/* input color class 
 ::ng-deep input.mat-input-element {
     color: white;
   }
   
-  /* Border */
+  /* Border 
 .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: white;
+   color: white;
   }
   /* Font color */
   td, th {
@@ -63,21 +63,21 @@
 
   ::ng-deep .mat-focused .mat-form-field-label {
     /*change color of label*/
-    color: white !important;
+    /*color: white !important;*/
    }
   
    ::ng-deep.mat-form-field-underline {
     /*change color of underline*/
-    background-color: white !important;
+    /*background-color: white !important;*/
   } 
   
   ::ng-deep.mat-form-field-ripple {
    /*change color of underline when focused*/
-   background-color: white !important;;
+   /*background-color: white !important;;*/
   }
 
   ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-label {
-    color: white;
+  /*  color: white;*/
   }
 
   tr.example-detail-row {

@@ -1,48 +1,99 @@
-<div class="example-container mat-elevation-z8">
-    <mat-table #table [dataSource]="dataSource">
-  
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      </ng-container>
-  
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-      </ng-container>
-  
-      <!-- Expanded Content Column - The detail row is made up of this one column -->
-      <ng-container matColumnDef="expandedDetail">
-        <mat-cell *matCellDef="let detail"> 
-          The symbol for {{detail.element.name}} is {{detail.element.symbol}}
-        </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"
-              matRipple 
-              class="element-row" 
-              [class.expanded]="expandedElement == row"
-              (click)="expandedElement = row"></mat-row>
-      <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
-              [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
-              style="overflow: hidden"> 
-      </mat-row>
-    </mat-table>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Ustvari nov termin</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" [formGroup]="terminForm" (ngSubmit)="onSubmit()">
+        <table style="margin-top: 30px">
+          <tr>
+            <th>DATUM TERMINA</th>
+            <th>OD</th>
+            <th>DO</th>
+            <th>NAZIV</th>
+            <th>VODI</th>
+            <th>BARVA</th>
+            <th>Dodaj</th>
+          </tr>
+          <tr>
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Verbose datepicker</mat-label>
+                  <input matInput [matDatepicker]="dp" [formControl]="date">
+                  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                  <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <div style="display: flex; justify-content: center; align-items: center">
+                  <input matInput placeholder="Od" [ngxTimepicker]="picker"
+                  [format]="24"
+                  min="5:00 am"
+                  max="10:30 pm"
+                  style="width:30%;text-align: end;  outline: 0;
+                  border-width: 0 0 1px;
+                  border-color: black"
+                  readonly
+                  [(ngModel)]="odTime"
+                  >
+                  <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #picker></ngx-material-timepicker>
+                </div>
+              </td>
+              <td>
+                <div style="display: flex; justify-content: center; align-items: center">
+                  <input matInput placeholder="Do"  [ngxTimepicker]="picker2"
+                  [format]="24"
+                  min="5:00 am"
+                  max="10:30 pm"
+                  style="width:30%;text-align: end;  outline: 0;
+                  border-width: 0 0 1px;
+                  border-color: black"
+                  readonly
+                  [(ngModel)]="doTime">
+                  <ngx-material-timepicker-toggle [for]="picker2"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #picker2></ngx-material-timepicker>
+              </div>
+              </td>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <input type="text"
+                         placeholder="Naziv vadbe"
+                         aria-label="Number"
+                         matInput
+                         [formControl]="myControl"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)='setColor($event.option.value)'>
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      <mat-icon  [style.color]=giveValue(option) style="cursor: pointer;font-size: 1.35rem;">fiber_manual_record</mat-icon>{{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <input type="text"
+                         placeholder="Vodi"
+                         aria-label="Number"
+                         matInput
+                         [formControl]="myControl"
+                         [matAutocomplete]="autoVodi">
+                  <mat-autocomplete #autoVodi="matAutocomplete">
+                    <mat-option *ngFor="let option of filtereVodidOptions | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </td>
+              <td style="text-align: center;"><input [value]="colorValue"
+                [style.background]="colorValue"
+                [(colorPicker)]="colorValue"
+                style="height: 32px;
+                width: 42%;text-align: center;"
+                />
+              </td>
+              <td><button mat-button style="color:green; font-size:30px"  (click)="AddItem()">+</button></td>
+          </tr>
+          </table>
+      </form>
+    </mat-card>
   </div>
-  
-  
-  <!-- Copyright 2017 Google Inc. All Rights Reserved.
-      Use of this source code is governed by an MIT-style license that
-      can be found in the LICENSE file at http://angular.io/license -->

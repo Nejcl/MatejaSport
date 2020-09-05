@@ -25,8 +25,8 @@ export class TerminiComponent implements OnInit {
 
   myText = 'Ni razpisanih terminov';
   noData = false;
-  terminiActive = true;
-  novTerminActive = false;
+  terminiActive = false;
+  novTerminActive = true;
   columnsToDisplay = ['barva','naziv','instruktor', 'datum', 'od','zasedenost','actions','barva1'];
   innerDisplayedColumns = ['ime', 'email','telefon','actions'];
   dataSource = new MatTableDataSource();
@@ -57,6 +57,19 @@ export class TerminiComponent implements OnInit {
        }
     );
   }
+
+  activateTermini() {
+    this.terminiActive = true;
+    this.novTerminActive = false;
+  }
+
+  activateNovTermin() {
+    this.terminiActive = false;
+    this.novTerminActive = true;
+  }
+
+
+
   toggleRow(element: Termin) {
     element.prijave && (element.prijave as MatTableDataSource<Prijavljeni>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
     this.cd.detectChanges();
