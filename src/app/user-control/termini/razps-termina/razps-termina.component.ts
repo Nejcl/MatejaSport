@@ -4,31 +4,12 @@ import { Observable, of } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl, Validators} from '@angular/forms';
 import { DatabaseService } from '../../../database.service';
-import { MatDateFormats, MAT_NATIVE_DATE_FORMATS,MAT_DATE_LOCALE } from '@angular/material';
-
-export const GRI_DATE_FORMATS: MatDateFormats = {
-  ...MAT_NATIVE_DATE_FORMATS,
-  display: {
-    ...MAT_NATIVE_DATE_FORMATS.display,
-    dateInput: {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    } as Intl.DateTimeFormatOptions,
-  }
-};
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 
 
@@ -37,12 +18,26 @@ export const MY_FORMATS = {
   templateUrl: './razps-termina.component.html',
   styleUrls: ['./razps-termina.component.css'],
   providers: [
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ],
 })
 
 
 export class RazpsTerminaComponent {
+  minDate: Date;
+  now: Date = new Date();
   myControl = new FormControl();
   myControlVodi = new FormControl();
   colorValue: string = '';
@@ -50,7 +45,8 @@ export class RazpsTerminaComponent {
   vodiOptions: string[] = ['Tjaša','Tina/Meta','Mateja','Meta','Anita','Jaka','Tina','Ana'];
   dict = {}; 
   filteredOptions: Observable<string[]>;
-  filtereVodidOptions: Observable<string[]>;
+  filtereVodiOptions: Observable<string[]>;
+  exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
 
   constructor(private dbService: DatabaseService) {
     this.dict['Jutranji I.F.T.'] = '#49e449';
@@ -63,6 +59,8 @@ export class RazpsTerminaComponent {
     this.dict['IFT'] = '#49e449';
     this.dict['BODY SHAPE'] = '#e85858';
     this.dict['JUTRANJA VADBA - FIT SENIORJI'] = '#f1a469';
+    this.minDate = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDay()-1);
+
   }
 
 
@@ -73,7 +71,7 @@ export class RazpsTerminaComponent {
         startWith(''),
         map(value => this._filter(value))
       );
-    this.filtereVodidOptions = this.myControl.valueChanges
+    this.filtereVodiOptions = this.myControlVodi.valueChanges
       .pipe(
         startWith(''),
         map(value => this._vodiFilter(value))

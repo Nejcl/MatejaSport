@@ -4,48 +4,45 @@
         <mat-card-title>Ustvari nov termin</mat-card-title>
       </mat-card-header>
       <form class="example-form" [formGroup]="terminForm" (ngSubmit)="onSubmit()">
-        <table style="margin-top: 30px">
+        <table style="margin-top: 30px; width:50% ;">
           <tr>
             <th>DATUM TERMINA</th>
             <th>OD</th>
             <th>DO</th>
-            <th>NAZIV</th>
-            <th>VODI</th>
-            <th>BARVA</th>
-            <th>Dodaj</th>
           </tr>
           <tr>
               <td>
-                <mat-form-field appearance="fill">
-                  <mat-label>Verbose datepicker</mat-label>
-                  <input matInput [matDatepicker]="dp" [formControl]="date">
+                <mat-form-field appearance="fill" >
+                  <mat-label>Datum termina</mat-label>
+                  <input matInput [min]="minDate" [matDatepicker]="dp"  (focus)="dp.open()" [formControl]="date" readonly>
                   <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                  <mat-datepicker #dp></mat-datepicker>
+                  <mat-datepicker #dp disabled="false" ></mat-datepicker>
                 </mat-form-field>
               </td>
-              <td>
-                <div style="display: flex; justify-content: center; align-items: center">
-                  <input matInput placeholder="Od" [ngxTimepicker]="picker"
+              <td style="width: 30%">
+                <div style="display: flex; justify-content: center; align-items: center;" >
+                  <mat-label>Od</mat-label>
+                  <input matInput placeholder="--:--" [ngxTimepicker]="picker"
                   [format]="24"
                   min="5:00 am"
                   max="10:30 pm"
-                  style="width:30%;text-align: end;  outline: 0;
+                  style="width:30%;text-align: center;  outline: 0;
                   border-width: 0 0 1px;
                   border-color: black"
                   readonly
-                  [(ngModel)]="odTime"
-                  >
+                  [(ngModel)]="odTime">
                   <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
                   <ngx-material-timepicker #picker></ngx-material-timepicker>
                 </div>
               </td>
-              <td>
+              <td style="width: 30%">
                 <div style="display: flex; justify-content: center; align-items: center">
-                  <input matInput placeholder="Do"  [ngxTimepicker]="picker2"
+                  <mat-label>Do</mat-label>
+                  <input matInput placeholder="--:--"  [ngxTimepicker]="picker2"
                   [format]="24"
                   min="5:00 am"
                   max="10:30 pm"
-                  style="width:30%;text-align: end;  outline: 0;
+                  style="width:30%;text-align: center;  outline: 0;
                   border-width: 0 0 1px;
                   border-color: black"
                   readonly
@@ -54,46 +51,55 @@
                   <ngx-material-timepicker #picker2></ngx-material-timepicker>
               </div>
               </td>
-              <td>
-                <mat-form-field class="example-full-width">
-                  <input type="text"
-                         placeholder="Naziv vadbe"
-                         aria-label="Number"
-                         matInput
-                         [formControl]="myControl"
-                         [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)='setColor($event.option.value)'>
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      <mat-icon  [style.color]=giveValue(option) style="cursor: pointer;font-size: 1.35rem;">fiber_manual_record</mat-icon>{{option}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field class="example-full-width">
-                  <input type="text"
-                         placeholder="Vodi"
-                         aria-label="Number"
-                         matInput
-                         [formControl]="myControl"
-                         [matAutocomplete]="autoVodi">
-                  <mat-autocomplete #autoVodi="matAutocomplete">
-                    <mat-option *ngFor="let option of filtereVodidOptions | async" [value]="option">
-                      {{option}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </td>
-              <td style="text-align: center;"><input [value]="colorValue"
-                [style.background]="colorValue"
-                [(colorPicker)]="colorValue"
-                style="height: 32px;
-                width: 42%;text-align: center;"
-                />
-              </td>
-              <td><button mat-button style="color:green; font-size:30px"  (click)="AddItem()">+</button></td>
-          </tr>
           </table>
+          <table style="margin-top: 30px">
+            <tr>
+              <th>NAZIV</th>
+              <th>VODI</th>
+              <th>BARVA</th>
+              <th>Dodaj termin</th>
+            </tr>
+            <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input type="text"
+                           placeholder="Naziv vadbe"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="myControl"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='setColor($event.option.value)'>
+                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        <mat-icon  [style.color]=giveValue(option) style="cursor: pointer;font-size: 1.35rem;">fiber_manual_record</mat-icon>{{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </td>
+                <td style="width: 8%;">
+                  <mat-form-field style="width: 80%;">
+                    <input type="text"
+                           placeholder="Vodi"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="myControlVodi"
+                           [matAutocomplete]="autoVodi">
+                    <mat-autocomplete #autoVodi="matAutocomplete">
+                      <mat-option *ngFor="let option of filtereVodiOptions | async" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </td>
+                <td style="text-align: center;width: 8%;"><input [value]="colorValue"
+                  [style.background]="colorValue"
+                  [(colorPicker)]="colorValue"
+                  style="height: 32px;
+                  width: 42%;min-width:65px; text-align: center;"
+                  />
+                </td>
+                <td><button mat-button style="color:green; font-size:30px"  (click)="AddItem()">+</button></td>
+            </tr>
+            </table>
       </form>
     </mat-card>
   </div>
