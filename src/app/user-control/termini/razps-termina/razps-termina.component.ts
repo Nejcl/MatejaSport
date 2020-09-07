@@ -59,7 +59,7 @@ export class RazpsTerminaComponent {
     this.dict['IFT'] = '#49e449';
     this.dict['BODY SHAPE'] = '#e85858';
     this.dict['JUTRANJA VADBA - FIT SENIORJI'] = '#f1a469';
-    this.minDate = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDay()-1);
+    this.minDate = new Date();
 
   }
 

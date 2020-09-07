@@ -36,7 +36,7 @@ export class TerminiComponent implements OnInit {
   constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.prikaziTermine();
+      this.prikaziTermine();
   }
 
   prikaziTermine() {

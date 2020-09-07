@@ -6,6 +6,7 @@ body{background-image:url(https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyA
 .box{position:relative;top:0;opacity:1;float:left;padding:60px 50px 40px 50px;width:100%;background:#fff;border-radius:10px;transform:scale(1);-webkit-transform:scale(1);-ms-transform:scale(1);z-index:5;}
 .box.back{transform:scale(.95);-webkit-transform:scale(.95);-ms-transform:scale(.95);top:-20px;opacity:.8;z-index:-1;}
 .login-wrapper .example-full-width,.login-wrapper .btn-block{width:80%;}
+.login-wrapper .example-half-width{width:50%;text-align: center;}
 .login-wrapper .example-form{min-width:100%;max-width:300px;width:100%;}
 .login-wrapper mat-card-header{text-align:center;width:100%;display:block;font-weight:700;}
 .login-wrapper mat-card-header mat-card-title{font-size:30px;margin:0;}
@@ -27,4 +28,6 @@ table {
 td, th {
     border: 1px solid #dddddd;
     text-align: center;
+
     }
+  

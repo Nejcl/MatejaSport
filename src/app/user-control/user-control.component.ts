@@ -77,25 +77,13 @@ export class UserControlComponent implements OnInit, AfterViewInit {
    }
 
   ngOnInit() {
-
-    this.dbService.reloadUrnik().subscribe(
-      (data) => {
-        this.Vadba = data;
-        this.sortArray();
-       }
-    );
-
-    this.dbService.reloadNovica().subscribe(
-      (data) => {
-        if (data != null)
-        {
-          this.Novica = data; 
-          this.sortNovice();
-        }
-
-       }
-    );
+    if(this.showUrnik){
+      this.loadUrnik();
+    } else if(this.showNovice) {    
+      this.loadNovice();
   }
+  }
+
   openDialog(index: number)
   {
     let VadbaCopy = Object.assign({}, this.Vadba[index]);
@@ -198,6 +186,18 @@ export class UserControlComponent implements OnInit, AfterViewInit {
      );
   }
 
+  loadNovice() {
+    this.dbService.reloadNovica().subscribe(
+      (data) => {
+        if (data != null)
+        {
+          this.Novica = data; 
+          this.sortNovice();
+        }
+       }
+    );
+  }
+
   reloadNovica(){
     this.dbService.reloadNovica().subscribe(
       (data) => {
@@ -284,6 +284,15 @@ export class UserControlComponent implements OnInit, AfterViewInit {
    );
   }
 
+  loadUrnik() {
+    this.dbService.reloadUrnik().subscribe(
+      (data) => {
+        this.Vadba = data;
+        this.sortArray();
+       }
+    );  
+  }
+
   reload(){
     this.dbService.reloadUrnik().subscribe(
       (data) => {
@@ -313,6 +322,7 @@ export class UserControlComponent implements OnInit, AfterViewInit {
     this.showUrnik = true;
     this.showAktivacija = false;
     this.showTermini = false;
+    this.loadUrnik();
 
   }
 
@@ -321,6 +331,7 @@ export class UserControlComponent implements OnInit, AfterViewInit {
     this.showUrnik = false;
     this.showAktivacija = false;
     this.showTermini = false;
+    this.loadNovice;
   }
 
   aktivacijaClick(){
