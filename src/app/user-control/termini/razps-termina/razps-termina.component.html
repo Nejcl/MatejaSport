@@ -4,126 +4,158 @@
       <mat-card-title>Ustvari nov termin</mat-card-title>
     </mat-card-header>
 
-
     <div class="container">
-      <div class="row"  style="margin-top: 30px">
-        <div class="col-9">              
-          <form class="example-form" [formGroup]="terminForm" (ngSubmit)="onSubmit()">     
-              <table>
-                <tr>
-                  <th>NAZIV</th>
-                  <th>VODI</th>
-                  <th>BARVA</th>
-                </tr>
-                <tr>
-                    <td>
-                      <mat-form-field class="example-full-width">
-                        <input type="text"
-                              placeholder="Naziv vadbe"
-                              aria-label="Number"
-                              matInput
-                              [formControl]="myControl"
-                              [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='setColor($event.option.value)'>
-                          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            <mat-icon  [style.color]=giveValue(option) style="cursor: pointer;font-size: 1.35rem;">fiber_manual_record</mat-icon>{{option}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
-                    </td>
-                    <td style="width: 8%;">
-                      <mat-form-field style="width: 80%;">
-                        <input type="text"
-                              placeholder="Vodi"
-                              aria-label="Number"
-                              matInput
-                              [formControl]="myControlVodi"
-                              [matAutocomplete]="autoVodi">
-                        <mat-autocomplete #autoVodi="matAutocomplete">
-                          <mat-option *ngFor="let option of filtereVodiOptions | async" [value]="option">
-                            {{option}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
-                    </td>
-                    <td style="text-align: center;width: 8%;">
-                      <mat-form-field  class="example-half-width">
-                        <input matInput [value]="colorValue"
-                        placeholder="Barva"
-                        [style.background]="colorValue"
-                        [(colorPicker)]="colorValue"
-                        style="height: 32px;
-                        width: 42%;min-width:65px; text-align: center;"/>
-                      </mat-form-field>
-
-                    </td>
-                </tr>
-                </table>
+      <form class="example-form" [formGroup]="terminForm" (ngSubmit)="onSubmit()">     
+        <div class="row"  style="margin-top: 30px">
+          <div class="col-9">              
                 <table>
                   <tr>
-                    <th>DATUM TERMINA</th>
-                    <th>OD</th>
-                    <th>DO</th>
-                    <th>ŠT. MEST</th>
+                    <th>NAZIV</th>
+                    <th>VODI</th>
+                    <th>BARVA</th>
                   </tr>
                   <tr>
                       <td>
-                        <mat-form-field class="example-full-width" appearance="fill" >
-                          <mat-label>Datum termina</mat-label>
-                          <input matInput [min]="minDate" [matDatepicker]="dp"  (focus)="dp.open()" [formControl]="date" readonly>
-                          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                          <mat-datepicker #dp disabled="false" ></mat-datepicker>
+                        <mat-form-field class="example-full-width">
+                          <input type="text"
+                                formControlName="naziv" 
+                                placeholder="Naziv vadbe"
+                                matInput
+                                [matAutocomplete]="auto"
+                                [ngClass]="{ 'is-invalid': submitted && f.naziv.errors }">
+                          <mat-autocomplete #auto="matAutocomplete" (optionSelected)='setColor($event.option.value)'>
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                              <mat-icon  [style.color]=giveValue(option) style="cursor: pointer;font-size: 1.35rem;">fiber_manual_record</mat-icon>{{option}}
+                            </mat-option>
+                          </mat-autocomplete>
                         </mat-form-field>
+                        <div *ngIf="submitted && f.naziv.errors" class="invalid-feedback">
+                          <div *ngIf="f.naziv.errors.required">Prosim vnesite naziv termina</div>
+                       </div>
                       </td>
-                      <td style="width: 30%">
-                        <div style="display: flex; justify-content: center; align-items: center;" >
-                          <mat-label>Od</mat-label>
-                          <input matInput placeholder="--:--" [ngxTimepicker]="picker"
-                          [format]="24"
-                          min="5:00 am"
-                          max="10:30 pm"
-                          style="width:30%;text-align: center;  outline: 0;
-                          border-width: 0 0 1px;
-                          border-color: black"
-                          readonly
-                          [(ngModel)]="odTime">
-                          <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
-                          <ngx-material-timepicker #picker></ngx-material-timepicker>
-                        </div>
+                      <td style="width: 8%;">
+                        <mat-form-field style="width: 80%;">
+                          <input type="text"
+                                formControlName="vodi" 
+                                placeholder="Vodi"
+                                matInput
+                                [matAutocomplete]="autoVodi"
+                                [ngClass]="{ 'is-invalid': submitted && f.vodi.errors }">
+                          <mat-autocomplete #autoVodi="matAutocomplete">
+                            <mat-option *ngFor="let option of filtereVodiOptions | async" [value]="option">
+                              {{option}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        <div *ngIf="submitted && f.vodi.errors" class="invalid-feedback">
+                          <div *ngIf="f.vodi.errors.required">Prosim vnesite kdo vodi termin</div>
+                       </div>
                       </td>
-                      <td style="width: 30%">
-                        <div style="display: flex; justify-content: center; align-items: center">
-                          <mat-label>Do</mat-label>
-                          <input matInput placeholder="--:--"  [ngxTimepicker]="picker2"
-                          [format]="24"
-                          min="5:00 am"
-                          max="10:30 pm"
-                          style="width:30%;text-align: center;  outline: 0;
-                          border-width: 0 0 1px;
-                          border-color: black"
-                          readonly
-                          [(ngModel)]="doTime">
-                          <ngx-material-timepicker-toggle [for]="picker2"></ngx-material-timepicker-toggle>
-                          <ngx-material-timepicker #picker2></ngx-material-timepicker>
-                      </div>
-                      </td>
-                      <td style="width: 15%">
+                      <td style="text-align: center;width: 8%;">
                         <mat-form-field  class="example-half-width">
-                          <input type="number" class="form-control" matInput name="st_mest" step="1" max="99" placeholder="Št. mest" (change)="xxx()" value="21"
-                                formControlName="value">
+                          <input matInput [value]="colorValue"
+                          formControlName="barva" 
+                          placeholder="Barva"
+                          [style.background]="colorValue"
+                          [(colorPicker)]="colorValue"
+                          style="height:1.35rem;; width: 42%;min-width:65px; text-align: center;"
+                          [ngClass]="{ 'is-invalid': submitted && f.barva.errors }">
                         </mat-form-field>
+                        <div *ngIf="submitted && f.barva.errors" class="invalid-feedback">
+                          <div *ngIf="f.barva.errors.required">Prosim izberite barvo termina</div>
+                       </div>
                       </td>
+                  </tr>
                   </table>
-          </form>
+                  <table>
+                    <tr>
+                      <th>DATUM TERMINA</th>
+                      <th>OD</th>
+                      <th>DO</th>
+                      <th>ŠT. MEST</th>
+                    </tr>
+                    <tr>
+                        <td>
+                          <mat-form-field class="example-full-width" appearance="fill" >
+                            <mat-label>Datum termina</mat-label>
+                            <input matInput formControlName="datum"  [min]="minDate" [matDatepicker]="dp"  (focus)="dp.open()" readonly [ngClass]="{ 'is-invalid': submitted && f.datum.errors }">
+                            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                            <mat-datepicker #dp disabled="false" ></mat-datepicker>
+                          </mat-form-field>
+                          <div *ngIf="submitted && f.datum.errors" class="invalid-feedback">
+                            <div *ngIf="f.datum.errors.required">Prosim izberite datum termina</div>
+                         </div>
+                        </td>
+                        <td style="width: 30%">
+                          <div style="display: flex; justify-content: center; align-items: center;" >
+                            <mat-label>Od</mat-label>
+                            <input matInput formControlName="od"  placeholder="--:--" [ngxTimepicker]="picker" [ngClass]="{ 'is-invalid': submitted && f.od.errors }"
+                            [format]="24"
+                            style="width:30%;text-align: center;  outline: 0;
+                            border-width: 0 0 1px;
+                            border-color: black"
+                            readonly
+                            [(ngModel)]="odTime">
+                            <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
+                            <ngx-material-timepicker #picker></ngx-material-timepicker>
+                          </div>
+                          <div *ngIf="submitted && f.od.errors" class="invalid-feedback" style="margin-top: 5px;">
+                            <div *ngIf="f.od.errors.required">Prosim izberite čas termina</div>
+                         </div>
+                        </td>
+                        <td style="width: 30%">
+                          <div style="display: flex; justify-content: center; align-items: center">
+                            <mat-label>Do</mat-label>
+                            <input matInput formControlName="do"  placeholder="--:--"  [ngxTimepicker]="picker2"  [ngClass]="{ 'is-invalid': submitted && f.do.errors }"
+                            [format]="24"
+                            style="width:30%;text-align: center;  outline: 0;
+                            border-width: 0 0 1px;
+                            border-color: black"
+                            readonly
+                            [(ngModel)]="doTime">
+                            <ngx-material-timepicker-toggle [for]="picker2"></ngx-material-timepicker-toggle>
+                            <ngx-material-timepicker #picker2></ngx-material-timepicker>
+                          </div>
+                          <div *ngIf="submitted && f.do.errors" class="invalid-feedback" style="margin-top: 5px;">
+                            <div *ngIf="f.do.errors.required">Prosim izberite čas termina</div>
+                        </div>
+                        </td>
+                        <td style="width: 15%">
+                          <mat-form-field  class="example-half-width ">
+                            <input type="number" formControlName="st_mest" class="form-control" matInput name="st_mest"  placeholder="Št. mest" [ngClass]="{ 'is-invalid': submitted && f.st_mest.errors }">
+                          </mat-form-field>
+                          <div *ngIf="submitted && f.st_mest.errors" class="invalid-feedback">
+                            <div *ngIf="f.st_mest.errors.required">Prosim število mest na terminu</div>
+                        </div>
+                        </td>
+                    </table>
+          </div>
+          <div class="col-2">
+            <button mat-button style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;font-size: 1.7rem; color: green;margin-bottom: 6px;">add</mat-icon>Dodaj termin</button>
+          </div>
         </div>
-        <div class="col-2">
-          <button mat-button (click)="AddItem()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;font-size: 1.7rem; color: green;margin-bottom: 6px;">add</mat-icon>Dodaj termin</button>
+      </form>
+      <div class="row" style="margin-top:3rem;">
+        <div class=" col-6" style="text-align:right;">
+          <button mat-button (click)="previusMonth()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_back</mat-icon></button>
+          <mat-form-field style="width:30%; font-size:2rem; text-align: center;" class="readonly-wrapper">
+            <input class="form-control" matInput name="mesec" placeholder="Mesec"  [(ngModel)]="mesec" readonly>
+        </mat-form-field>
+        <button mat-button (click)="nextMonth()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_forward</mat-icon></button>
         </div>
+        <div class="col-5" style="text-align:left;">
+          <button mat-button (click)="previusYear()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_back</mat-icon></button>
+          <mat-form-field style="width:30%; font-size:2rem; text-align: center;" class="readonly-wrapper">
+            <input class="form-control" matInput name="leto" placeholder="Leto"  [(ngModel)]="leto" readonly>
+        </mat-form-field>
+        <button mat-button (click)="nextYear()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_forward</mat-icon></button>
+        </div>
+
       </div>
-      <div class="row" style="margin-top: 2rem;text-align: center;">
+      <div class="row" style="text-align: center;">
         <div class=" col-12">
-          <button mat-button (click)="aktivirajUporabnika(row.id)" style="font-size:2rem;background-color: silver;" ><mat-icon style="padding-right: 25px; padding-bottom: 30px; color: green; cursor: pointer;font-size: 3rem;">
-            list_alt</mat-icon>Ustvari termine po urniku za naslednji mesec</button>
+          <button mat-button (click)="aktivirajUporabnika(row.id)" style="font-size:2rem;background-color: silver;     width: 80%;" ><mat-icon style="padding-right: 25px; padding-bottom: 30px; color: green; cursor: pointer;font-size: 3rem;">
+            list_alt</mat-icon>Ustvari termine po urniku za izbran mesec</button>
         </div>
       </div>
     </div>
