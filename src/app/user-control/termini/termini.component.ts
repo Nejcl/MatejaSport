@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { DatabaseService } from '../../database.service';
-import {MatTableDataSource, MatTable} from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatSort } from '@angular/material/sort';
+import {MatSort, MatTableDataSource,MatTable} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-termini',
@@ -18,15 +18,13 @@ import { MatSort } from '@angular/material/sort';
 })
 
 export class TerminiComponent implements OnInit {
-
-  @ViewChild('outerSort', { static: true }) sort: MatSort;
-  @ViewChildren('innerSort') innerSort: QueryList<MatSort>;
-  @ViewChildren('innerTables') innerTables: QueryList<MatTable<Prijavljeni>>;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false}) sort: MatSort;
 
   myText = 'Ni razpisanih terminov';
   noData = false;
-  terminiActive = false;
-  novTerminActive = true;
+  terminiActive = true;
+  novTerminActive = false;
   columnsToDisplay = ['barva','naziv','instruktor', 'datum', 'od','zasedenost','actions','barva1'];
   innerDisplayedColumns = ['ime', 'email','telefon','actions'];
   dataSource = new MatTableDataSource();
@@ -37,6 +35,13 @@ export class TerminiComponent implements OnInit {
 
   ngOnInit() {
       this.prikaziTermine();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   prikaziTermine() {
@@ -50,6 +55,8 @@ export class TerminiComponent implements OnInit {
           }
         });
         this.dataSource = new MatTableDataSource(this.terminData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         if(this.dataSource.data.length < 1){
          this.myText='Ni razpisanih terminov';
           this.noData = true;

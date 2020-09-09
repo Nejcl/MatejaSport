@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { DatabaseService } from '../../../database.service';
 import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { validateBasis } from '@angular/flex-layout';
 
 
 
@@ -42,6 +43,8 @@ export class RazpsTerminaComponent {
   options: string[] = ['Jutranji I.F.T.', 'FIT PILATES', 'TNZ','VADBA ZA ZAČETNIKE','ZDRAVA HRBTENICA & PILATES','I.F.T.-PUMP','PILATES ZA FANTE IN PUNCE','IFT','BODY SHAPE','JUTRANJA VADBA - FIT SENIORJI'];
   vodiOptions: string[] = ['Tjaša','Tina/Meta','Mateja','Meta','Anita','Jaka','Tina','Ana'];
   monthNames = ["Januar", "Februar", "Marec", "April", "Maj", "Junij","Julij", "Avgust", "September", "Oktober", "November", "December"];
+  Vadbe: Array<{dan:string, od:string, do:string, naziv: string, vodi:string, color:string}>;
+
   mesec: string;
   leto: number;
   dict = {}; 
@@ -122,7 +125,18 @@ export class RazpsTerminaComponent {
     if (this.terminForm.invalid) {
         return;
     }
-  } 
+    this.dbService.dodajTermin(this.terminForm.value)
+    .subscribe(
+      (data) => {
+        if(data.termin === "OK"){
+          alert("Termin uspešno dodan");
+        } else{
+          alert("Prišlo je do napake pri dodajanju termina");
+        }
+      },
+      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+    );
+  }
 
   giveValue(myKey) {
     return this.dict[myKey];
@@ -130,7 +144,7 @@ export class RazpsTerminaComponent {
 
   setColor(color){
     this.colorValue = this.giveValue(color);
-    this.terminForm.controls['barva'].setValue(color);
+    this.terminForm.controls['barva'].setValue(this.colorValue);
 
   }
 
@@ -174,6 +188,51 @@ export class RazpsTerminaComponent {
 
     return this.vodiOptions.filter(option => option.toLowerCase().includes(filterValue));
   }
+
+  razpisiMesecneTermine() {
+    
+  this.dbService.readUrnik().subscribe(
+    (data) => {
+      this.Vadbe = data;
+      var vadbePoDnevih = new Array(7);
+      vadbePoDnevih[0] = this.Vadbe.filter(item => item.dan.indexOf('nedelja') !== -1);
+      vadbePoDnevih[1] = this.Vadbe.filter(item => item.dan.indexOf('ponedeljek') !== -1);
+      vadbePoDnevih[2] = this.Vadbe.filter(item => item.dan.indexOf('torek') !== -1);
+      vadbePoDnevih[3] = this.Vadbe.filter(item => item.dan.indexOf('sreda') !== -1);
+      vadbePoDnevih[4] = this.Vadbe.filter(item => item.dan.indexOf('četrtek') !== -1);
+      vadbePoDnevih[5] = this.Vadbe.filter(item => item.dan.indexOf('petek') !== -1);
+      vadbePoDnevih[6] = this.Vadbe.filter(item => item.dan.indexOf('sobota') !== -1);
+      console.log(vadbePoDnevih);
+      var termini = [];
+      var startDate = new Date(this.leto,this.monthNames.indexOf(this.mesec),1);
+      var endDate = new Date(this.leto,this.monthNames.indexOf(this.mesec)+1,0);
+      var loop = new Date(startDate);
+      while(loop <= endDate){
+        vadbePoDnevih[loop.getDay()].forEach(vadba => {
+          termini.push({naziv:vadba.naziv,vodi:vadba.vodi,barva:vadba.color,datum:loop,od:vadba.od,do:vadba.do,st_mest:21});     
+        });          
+        var newDate = loop.setDate(loop.getDate() + 1);
+        loop = new Date(newDate);
+      }
+     console.log(termini);
+     this.dbService.dodajTermine(termini)
+     .subscribe(
+       (data) => {
+         if(data.termin === "OK"){
+           alert("Termini za "+ this.mesec +" uspešno dodani");
+         } else{
+           alert("Prišlo je do napake pri dodajanju terminov");
+         }
+       },
+       (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+     );
+     },
+     (error) =>{
+      alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+     }
+  );
+
+  }
 }
 
 interface Vadba {
@@ -181,3 +240,13 @@ interface Vadba {
   naziv: string;
 }
 
+
+interface termin {
+  naziv:string;
+  vodi:string;
+  barva: string;
+  datum:string;
+  od: string;
+  do: string;
+  st_mest: string;
+}

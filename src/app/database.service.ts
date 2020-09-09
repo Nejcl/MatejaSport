@@ -113,5 +113,14 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/getPrijaveNaTermin.php`,id);
   }
 
+  dodajTermin(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/dodajTermin.php`,InData); 
+  }
+  
+  dodajTermine(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/dodajTermine.php`,InData); 
+  }
+
+
 
 }
