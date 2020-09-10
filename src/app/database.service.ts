@@ -105,12 +105,12 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/nastaviGesloUporabnika.php`,id);
   }
 
-  geTermini(): Observable<any[]>{
-    return this.http.get<any[]>(`${this.baseUrl}/getTermini.php`);
+  geTermini(dateRange: any): Observable<any[]>{
+    return this.http.post<any[]>(`${this.baseUrl}/getTermini.php`,dateRange);
   }
 
-  getPrijaveNaTermin(id: any): Observable<any[]>{
-    return this.http.post<any>(`${this.baseUrl}/getPrijaveNaTermin.php`,id);
+  getPrijaveNaTermin(dateRange: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/getPrijaveNaTermin.php`,dateRange);
   }
 
   dodajTermin(InData: any):Observable<any>{
@@ -121,6 +121,9 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/dodajTermine.php`,InData); 
   }
 
+  odpovejTermin(id: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/odpovejTermin.php`,id);
+  }
 
 
 }

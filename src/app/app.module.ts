@@ -49,7 +49,9 @@ import { AktivacijaUporabnikovComponent } from './user-control/aktivacija-uporab
 import { UporabnikiComponent } from './user-control/uporabniki/uporabniki.component';
 import { TerminiComponent } from './user-control/termini/termini.component';
 import { RazpsTerminaComponent } from './user-control/termini/razps-termina/razps-termina.component';
-
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { EditTerminDialogComponent } from './user-control/termini/edit-termin-dialog/edit-termin-dialog.component';
+import { PrijavaNaTerminDialogComponent } from './user-control/termini/prijava-na-termin-dialog/prijava-na-termin-dialog.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { RazpsTerminaComponent } from './user-control/termini/razps-termina/razp
     UporabnikiComponent,
     TerminiComponent,
     RazpsTerminaComponent,
+    EditTerminDialogComponent,
+    PrijavaNaTerminDialogComponent,
     
 
 
@@ -108,10 +112,23 @@ import { RazpsTerminaComponent } from './user-control/termini/razps-termina/razp
     AngularEditorModule,
     HttpClientModule,
     CKEditorModule,
+    NgxDaterangepickerMd.forRoot({
+      format: 'MM/DD/YYYY', // could be 'YYYY-MM-DDTHH:mm:ss.SSSSZ'
+      displayFormat: 'DD/MM/YYYY', // default is format value
+      direction: 'ltr', // could be rtl
+      weekLabel: 'T',
+      separator: ' - ', // default is ' - '
+      cancelLabel: 'Prekliči', // detault is 'Cancel'
+      applyLabel: 'Ok', // detault is 'Apply'
+      clearLabel: 'Pobriši', // detault is 'Clear'
+      customRangeLabel: 'Od - Do',
+  })
   ],
   entryComponents: [
     DialogBoxComponent,
     LoginDialogComponent,
+    EditTerminDialogComponent,
+    PrijavaNaTerminDialogComponent,
     InstruktorBoxComponent,
     DialogContent,
     DialogContent2,

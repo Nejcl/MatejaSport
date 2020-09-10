@@ -39,6 +39,7 @@
     "moment": "^2.27.0",
     "ng-simple-slideshow": "^1.2.9",
     "ngx-color-picker": "^8.1.0",
+    "ngx-daterangepicker-material": "^4.0.1",
     "ngx-gallery": "^5.10.0",
     "ngx-material-timepicker": "^4.0.2",
     "rxjs": "~6.4.0",

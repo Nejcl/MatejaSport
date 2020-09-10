@@ -1,0 +1,116 @@
+<h1 mat-dialog-title>Urejanje termina</h1>
+<form class="example-form" [formGroup]="terminForm" (ngSubmit)="onSubmit()">     
+    <div class="row"  style="margin-top: 30px">
+      <div class="container">       
+          <div class="row">
+            <mat-form-field class="example-full-width">
+                <input type="text"
+                      formControlName="naziv" 
+                      placeholder="Naziv vadbe"
+                      matInput
+                      [matAutocomplete]="auto"
+                      [ngClass]="{ 'is-invalid': submitted && f.naziv.errors }">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)='setColor($event.option.value)'>
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    <mat-icon  [style.color]=giveValue(option) style="cursor: pointer;font-size: 1.35rem;">fiber_manual_record</mat-icon>{{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <div *ngIf="submitted && f.naziv.errors" class="invalid-feedback">
+                <div *ngIf="f.naziv.errors.required">Prosim vnesite naziv termina</div>
+             </div>
+          </div>  
+          <div class="row">
+            <mat-form-field style="width: 80%;">
+                <input type="text"
+                      formControlName="vodi" 
+                      placeholder="Vodi"
+                      matInput
+                      [matAutocomplete]="autoVodi"
+                      [ngClass]="{ 'is-invalid': submitted && f.vodi.errors }">
+                <mat-autocomplete #autoVodi="matAutocomplete">
+                  <mat-option *ngFor="let option of filtereVodiOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <div *ngIf="submitted && f.vodi.errors" class="invalid-feedback">
+                <div *ngIf="f.vodi.errors.required">Prosim vnesite kdo vodi termin</div>
+             </div>
+          </div>  
+          <div class="row">
+            <mat-form-field  class="example-half-width">
+                <input matInput [value]="colorValue"
+                formControlName="barva" 
+                placeholder="Barva"
+                [style.background]="colorValue"
+                [(colorPicker)]="colorValue"
+                style="height:1.35rem;; width: 42%;min-width:65px; text-align: center;"
+                [ngClass]="{ 'is-invalid': submitted && f.barva.errors }">
+              </mat-form-field>
+              <div *ngIf="submitted && f.barva.errors" class="invalid-feedback">
+                <div *ngIf="f.barva.errors.required">Prosim izberite barvo termina</div>
+             </div>
+          </div>  
+          <div class="row">
+            <mat-form-field class="example-full-width" appearance="fill" >
+                <mat-label>Datum termina</mat-label>
+                <input matInput formControlName="datum"  [min]="minDate" [matDatepicker]="dp"  (focus)="dp.open()" readonly [ngClass]="{ 'is-invalid': submitted && f.datum.errors }">
+                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp disabled="false" ></mat-datepicker>
+              </mat-form-field>
+              <div *ngIf="submitted && f.datum.errors" class="invalid-feedback">
+                <div *ngIf="f.datum.errors.required">Prosim izberite datum termina</div>
+             </div>
+          </div>  
+          <div class="row">
+            <div style="display: flex; justify-content: center; align-items: center;" >
+                <mat-label>Od</mat-label>
+                <input matInput formControlName="od"  placeholder="--:--" [ngxTimepicker]="picker" [ngClass]="{ 'is-invalid': submitted && f.od.errors }"
+                [format]="24"
+                style="width:30%;text-align: center;  outline: 0;
+                border-width: 0 0 1px;
+                border-color: black"
+                readonly
+                [(ngModel)]="odTime">
+                <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker #picker></ngx-material-timepicker>
+              </div>
+              <div *ngIf="submitted && f.od.errors" class="invalid-feedback" style="margin-top: 5px;">
+                <div *ngIf="f.od.errors.required">Prosim izberite čas termina</div>
+             </div>
+          </div>  
+          <div class="row">
+            <div style="display: flex; justify-content: center; align-items: center">
+                <mat-label>Do</mat-label>
+                <input matInput formControlName="do"  placeholder="--:--"  [ngxTimepicker]="picker2"  [ngClass]="{ 'is-invalid': submitted && f.do.errors }"
+                [format]="24"
+                style="width:30%;text-align: center;  outline: 0;
+                border-width: 0 0 1px;
+                border-color: black"
+                readonly
+                [(ngModel)]="doTime">
+                <ngx-material-timepicker-toggle [for]="picker2"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker #picker2></ngx-material-timepicker>
+              </div>
+              <div *ngIf="submitted && f.do.errors" class="invalid-feedback" style="margin-top: 5px;">
+                <div *ngIf="f.do.errors.required">Prosim izberite čas termina</div>
+            </div>
+          </div>  
+          <div class="row">
+            <mat-form-field  class="example-half-width ">
+                <input type="number" formControlName="st_mest" class="form-control" matInput name="st_mest"  placeholder="Št. mest" [ngClass]="{ 'is-invalid': submitted && f.st_mest.errors }">
+              </mat-form-field>
+              <div *ngIf="submitted && f.st_mest.errors" class="invalid-feedback">
+                <div *ngIf="f.st_mest.errors.required">Prosim število mest na terminu</div>
+            </div>
+          </div>                
+      </div>
+    </div>
+  </form>
+<div mat-dialog-actions style="float: right;">
+  <button mat-button cdkFocusInitial (click)="onOkClick()"> <mat-icon style="cursor: pointer;font-size: 1.7rem; color:yellow;margin-bottom: 6px;">create</mat-icon> Uredi termin</button>
+</div>
+<div mat-dialog-actions style="float: left;">
+    <button mat-button cdkFocusInitial (click)="onOkClick()"> <mat-icon style="cursor: pointer;font-size: 1.7rem; color:red;margin-bottom: 6px;">close</mat-icon> Prekliči</button>
+  </div>

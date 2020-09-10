@@ -3,6 +3,14 @@ import { DatabaseService } from '../../database.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatSort, MatTableDataSource,MatTable} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
+import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { EditTerminDialogComponent } from './edit-termin-dialog/edit-termin-dialog.component';
+import {MatDialog} from "@angular/material";
+
+import moment from 'moment';
+import 'moment/locale/sl';
+moment.locale('sl');
 
 @Component({
   selector: 'app-termini',
@@ -15,6 +23,21 @@ import {MatPaginator} from '@angular/material/paginator';
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
+  providers: [
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 
 export class TerminiComponent implements OnInit {
@@ -23,6 +46,7 @@ export class TerminiComponent implements OnInit {
 
   myText = 'Ni razpisanih terminov';
   noData = false;
+  praznaPrijava = [{}];
   terminiActive = true;
   novTerminActive = false;
   columnsToDisplay = ['barva','naziv','instruktor', 'datum', 'od','zasedenost','actions','barva1'];
@@ -30,13 +54,26 @@ export class TerminiComponent implements OnInit {
   dataSource = new MatTableDataSource();
   terminData: Termin[] = [];
   expandedElement: Termin | null;
-
-  constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef) { }
+  minDate = null;
+  odDate = new Date();
+  selected: {startDate: moment.Moment, endDate: moment.Moment};
+  ranges: any = {
+    'Danes': [moment(), moment()],
+    'Jutri': [moment().add(1, 'days'), moment().add(1, 'days')],
+    'Zadnjih 7 dni': [moment().subtract(6, 'days'), moment()],
+    'Naslednjih 7 dni': [moment(), moment().add(6, 'days')],
+    'Zadnjih 30 dni': [moment().subtract(29, 'days'), moment()],
+    'Ta Mesec': [moment().startOf('month'), moment().endOf('month')],
+    'Naslednji Mesec': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')]
+  }
+  constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog) {
+ 
+   }
 
   ngOnInit() {
-      this.prikaziTermine();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.selected = {startDate:moment().startOf('day'),endDate:moment().add(1,'month').endOf('day')}
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngAfterViewInit() {
@@ -45,13 +82,15 @@ export class TerminiComponent implements OnInit {
   }
 
   prikaziTermine() {
-    this.dbService.geTermini().subscribe(
+    this.terminData = [];
+    this.dbService.geTermini(this.selected).subscribe(
       (data) => {
         data.forEach(termin => {
           if (termin.prijavljeni && Array.isArray(termin.prijavljeni) && termin.prijavljeni.length) {
             this.terminData = [...this.terminData, {...termin, prijave: new MatTableDataSource(termin.prijavljeni)}];
           } else {
-            this.terminData = [...this.terminData, termin];
+            termin.prijavljeni = this.praznaPrijava;
+            this.terminData = [...this.terminData, {...termin, prijave: new MatTableDataSource([termin.prijavljeni])}];
           }
         });
         this.dataSource = new MatTableDataSource(this.terminData);
@@ -65,6 +104,23 @@ export class TerminiComponent implements OnInit {
     );
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if(this.dataSource.filteredData.length < 1 && this.dataSource.filter.length > 0 ){
+      this.noData = true;
+      this.myText='Noben zapis ne zustreza filtru';
+    } else if(this.dataSource.filter.length < 0) {
+      this.noData =false;
+    }else {
+      this.noData = false;
+      if(this.dataSource.data.length < 1){
+        this.myText='Ni uporabnikov';
+         this.noData = true;
+       }
+    }
+  }
+
   activateTermini() {
     this.terminiActive = true;
     this.novTerminActive = false;
@@ -75,7 +131,16 @@ export class TerminiComponent implements OnInit {
     this.novTerminActive = true;
   }
 
-
+  odpovejTermin(id:string) {
+    let data = {id: id};
+    this.dbService.odpovejTermin(data).subscribe(
+      (data) => {
+        if(data['resp'] =="odpovedan"){
+          this.prikaziTermine(); 
+        }
+      }
+    );
+  }
 
   toggleRow(element: Termin) {
     element.prijave && (element.prijave as MatTableDataSource<Prijavljeni>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
@@ -84,7 +149,15 @@ export class TerminiComponent implements OnInit {
   }
 
 
+  openEditDialog(row): void {
+    this.dialog.closeAll();
+    const loginDialogRef = this.dialog.open(EditTerminDialogComponent,{width:'500px' ,panelClass: 'mobile-width',  data: {
+      dataKey: row
+    }})
+  }
+
 }
+
 
 export interface Termin {
   Id: string;
@@ -95,6 +168,7 @@ export interface Termin {
   do: string;
   zasedenost: string;
   barva:string;
+  status:string;
   prijave?: Prijavljeni[] | MatTableDataSource<Prijavljeni>;
 }
 
@@ -107,6 +181,7 @@ export interface TerminDataSource {
   do: string;
   zasedenost: string;
   barva:string;
+  status:string;
   prijave?: Prijavljeni[] | MatTableDataSource<Prijavljeni>;
 }
 
