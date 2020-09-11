@@ -125,5 +125,8 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/odpovejTermin.php`,id);
   }
 
+  urediTermin(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/urediTermin.php`,InData); 
+  }
 
 }

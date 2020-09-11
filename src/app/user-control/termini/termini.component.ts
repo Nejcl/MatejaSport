@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { EditTerminDialogComponent } from './edit-termin-dialog/edit-termin-dialog.component';
+import { PrijavaNaTerminDialogComponent } from './prijava-na-termin-dialog/prijava-na-termin-dialog.component';
 import {MatDialog} from "@angular/material";
 
 import moment from 'moment';
@@ -152,6 +153,13 @@ export class TerminiComponent implements OnInit {
   openEditDialog(row): void {
     this.dialog.closeAll();
     const loginDialogRef = this.dialog.open(EditTerminDialogComponent,{width:'500px' ,panelClass: 'mobile-width',  data: {
+      dataKey: row
+    }})
+  }
+
+  openAddUserDialog(row): void {
+    this.dialog.closeAll();
+    const loginDialogRef = this.dialog.open(PrijavaNaTerminDialogComponent,{width:'500px' ,panelClass: 'mobile-width',  data: {
       dataKey: row
     }})
   }
