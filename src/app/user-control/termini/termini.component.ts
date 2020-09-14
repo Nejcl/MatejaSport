@@ -152,17 +152,35 @@ export class TerminiComponent implements OnInit {
 
   openEditDialog(row): void {
     this.dialog.closeAll();
-    const loginDialogRef = this.dialog.open(EditTerminDialogComponent,{width:'500px' ,panelClass: 'mobile-width',  data: {
+    const editDialogRef = this.dialog.open(EditTerminDialogComponent,{width:'500px' ,panelClass: 'mobile-width',  data: {
       dataKey: row
     }})
+    editDialogRef.afterClosed().subscribe(() => {
+      // Do stuff after the dialog has closed
+      this.prikaziTermine(); 
+
+  });
+
   }
 
   openAddUserDialog(row): void {
     this.dialog.closeAll();
-    const loginDialogRef = this.dialog.open(PrijavaNaTerminDialogComponent,{width:'500px' ,panelClass: 'mobile-width',  data: {
+    const loginDialogRef = this.dialog.open(PrijavaNaTerminDialogComponent,{width:'400px' ,panelClass: 'mobile-width',  data: {
       dataKey: row
     }})
   }
+
+  odjaviUporabnika(id): void {
+    let data = {id: id};
+    this.dbService.odjaviUporabnika(data).subscribe(
+      (data) => {
+        if(data['resp'] =="odjavljen"){
+          this.prikaziTermine(); 
+        }
+      }
+    );
+  }
+
 
 }
 
@@ -194,7 +212,7 @@ export interface TerminDataSource {
 }
 
 export interface Prijavljeni {
-  id_uporabnik: number;
+  id:number
   ime: string;
   priimek: string;
   email:string;

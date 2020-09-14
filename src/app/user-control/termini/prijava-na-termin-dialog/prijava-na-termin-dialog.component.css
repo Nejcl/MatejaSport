@@ -1,0 +1,13 @@
+:host table {
+    width: 100%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+  }
+
+  :host td, th {
+    width: 33%;
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding-left: unset !important;
+    padding-right: unset !important;
+  }
