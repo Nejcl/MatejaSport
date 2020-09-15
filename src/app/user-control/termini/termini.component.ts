@@ -165,9 +165,13 @@ export class TerminiComponent implements OnInit {
 
   openAddUserDialog(row): void {
     this.dialog.closeAll();
-    const loginDialogRef = this.dialog.open(PrijavaNaTerminDialogComponent,{width:'400px' ,panelClass: 'mobile-width',  data: {
+    const prijaviDialogRef = this.dialog.open(PrijavaNaTerminDialogComponent,{width:'400px' ,panelClass: 'mobile-width',  data: {
       dataKey: row
     }})
+    prijaviDialogRef.afterClosed().subscribe(() => {
+      // Do stuff after the dialog has closed
+      this.prikaziTermine(); 
+  });
   }
 
   odjaviUporabnika(id): void {
@@ -175,6 +179,7 @@ export class TerminiComponent implements OnInit {
     this.dbService.odjaviUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="odjavljen"){
+          alert("odjava uporabnika uspešna");
           this.prikaziTermine(); 
         }
       }

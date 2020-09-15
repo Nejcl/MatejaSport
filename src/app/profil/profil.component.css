@@ -1,0 +1,124 @@
+
+ :host .active{
+    color:#e83e8c
+  }
+  :host table {
+    width: 100%;
+  }
+  
+  :host .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  :host td, th {
+    width: 15%;
+  }
+  :host .akcije {
+      width: 25%;
+  }
+  :host .mat-form-field-empty.mat-form-field-label {
+    color: green;
+}
+:host .mat-form-field-underline {
+    background-color: green;
+}
+
+:host td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+
+  }
+  :host table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  :host th {
+    background-color: lightgray;
+    color:black;
+  }
+
+  :host .mat-header-cell {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  :host ::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content:center;
+  }
+  
+  :host .mat-cell {
+    text-align: center;
+    justify-content:center;
+  }
+
+
+  :host tr.example-detail-row {
+    height: 0;
+  }
+  
+  :host tr.example-element-row:not(.example-expanded-row):hover {
+    background: #e83e8d;
+  }
+  
+  :host tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+  
+  :host .example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+  :host .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  :host .example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+  }
+  
+  :host .example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+  
+  :host .example-element-description {
+    padding: 16px;
+  }
+  
+  :host .example-element-description-attribution {
+    opacity: 0.5;
+  }
+  
+  :host .inner-table {
+    width: 100%;
+  }
+  
+  :host .inner-table mat-form-field {
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  :host .mat-button:hover {
+    color: #000000;
+}
+
+:host ::ng-deep.md-drppicker.shown  {
+  display: flex;
+}
+
+:host ::ng-deep.md-drppicker.shown .ranges {
+  width: 122px;
+}
+

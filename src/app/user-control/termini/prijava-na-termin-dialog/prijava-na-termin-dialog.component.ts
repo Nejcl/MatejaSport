@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material'
 import { Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -6,6 +6,8 @@ import { map, startWith} from 'rxjs/operators';
 import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { DatabaseService } from '../../../database.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-prijava-na-termin-dialog',
@@ -13,31 +15,37 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./prijava-na-termin-dialog.component.css']
 })
 export class PrijavaNaTerminDialogComponent implements OnInit {
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+
   displayedColumns: string[] = ['ime', 'priimek','actions'];
   dataSource = new MatTableDataSource();
   myText = 'Ni uporabnikov';
   noData = false;
-
+  uporabniki = [];
+  termin: string;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dbService: DatabaseService) { }
 
   ngOnInit() {
-    console.log(this.data);
+    this.data.dataKey.prijavljeni.forEach(element => {
+      this.uporabniki.push(element.ID_uporabnik)
+    });
     this.prikaziUporabnike();
+    this.termin=this.data.dataKey.naziv;
 
   }
 
   prikaziUporabnike() {
-    var uporabniki = [];
-    this.data.dataKey.forEach(element => {
-      uporabniki.push(element.ID_uporabnik)
-    });
     this.dbService.getUsers().subscribe(
       (data) => {
-        const arr =  data.filter(i => !uporabniki.includes(i.id))
+        const arr =  data.filter(i => !this.uporabniki.includes(i.id))
         this.dataSource = new MatTableDataSource(arr);
+        this.dataSource.paginator = this.paginator;
+        if(this.dataSource.data.length < 1){
+          this.myText='Ni uporabnikov';
+           this.noData = true;
+         }
        }
     );
-    console.log(uporabniki);
   }
 
   applyFilter(event: Event) {
@@ -55,6 +63,23 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
          this.noData = true;
        }
     }
+  }
+
+  prijaviUporabnika(id) {
+    const data = {id_termin:this.data.dataKey.id,id_uporabnik:id};
+    this.dbService.prijaviUporabnika(data)
+    .subscribe(
+      (data) => {
+        if(data['resp'] =="prijavljen"){
+          this.uporabniki.push(id);
+          alert("Prijava uporabnika uspešna");
+          this.prikaziUporabnike();
+        } else{
+          alert("Prišlo je do napake pri prijavi uporabnika");
+        }
+      },
+      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+    );
   }
 
 }

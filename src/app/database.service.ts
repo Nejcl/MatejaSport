@@ -133,8 +133,8 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/odjaviUporabnika.php`,data);
   }
 
-  neprijavljeniUporabniki(data: any): Observable<any[]>{
-    return this.http.post<any>(`${this.baseUrl}/getNeprijavljeneUporabnike.php`,data);
+  prijaviUporabnika(data: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/prijaviUporabnika.php`,data);
   }
 
 }
