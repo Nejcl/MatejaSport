@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation, Inject } from '@angular/core';
 import { DatabaseService } from '../database.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { LoginService } from '../login.service';
+import {Router} from '@angular/router';
 
 export interface DialogData {
   diagResult: false
@@ -11,6 +13,7 @@ export interface DialogData2 {
   diagResult2: false
   diagData2: {id: string, position: Number, naslovna: string, naslov: string, vsebina: string, configCE4: any ,configCE42: any}
 }
+const TOKEN = '';
 
 @Component({
   selector: 'app-user-control',
@@ -72,11 +75,18 @@ export class UserControlComponent implements OnInit, AfterViewInit {
   noviceTekst: string = '';
   data: any[];
 
-  constructor(private dbService: DatabaseService, public dialog: MatDialog) {
+  constructor(private dbService: DatabaseService, public dialog: MatDialog, private log: LoginService,private router: Router) {
 
    }
 
   ngOnInit() {
+    if(localStorage.getItem(TOKEN) != "TOKEN-ADM-USR"){
+      this.router.navigate(['/home']);
+
+    }
+
+
+
     if(this.showUrnik){
       this.loadUrnik();
     } else if(this.showNovice) {    

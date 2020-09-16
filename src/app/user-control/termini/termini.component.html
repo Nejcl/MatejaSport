@@ -95,7 +95,7 @@
                       <button mat-button style="margin-right:2rem;"(click)="openEditDialog(row);"><mat-icon style="color: #e7e410; cursor: pointer; font-size: 1.35rem;">create</mat-icon>Uredi</button>
                       <button mat-button style="margin-right:2rem;" (click)="odpovejTermin(row.id);" ><mat-icon style="color: red; cursor: pointer; font-size: 1.35rem;">cancel</mat-icon>Odpovej</button>
                     </div>
-                    <div  *ngIf="row.status == 'odpovedan'" style="font-size:large; color: red; font-weight:600; ;">
+                    <div  *ngIf="row.status == 'odpovedan'" style="font-size:large; color: red; font-weight:600;font-family: monospace;">
                        ODPOVEDAN
                     </div>
                   </td>

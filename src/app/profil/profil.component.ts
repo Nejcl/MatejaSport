@@ -6,6 +6,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog} from "@angular/material";
+import { DataService } from '../data.service'  
+
 
 import moment from 'moment';
 import 'moment/locale/sl';
@@ -21,7 +23,7 @@ export class ProfilComponent implements OnInit {
   @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false}) sort: MatSort;
 
-  constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog) {
+  constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog,private _dataService: DataService) {
   }
   minDate = null;
   myText = 'Ni razpisanih terminov';
@@ -38,12 +40,13 @@ export class ProfilComponent implements OnInit {
     'Ta Mesec': [moment().startOf('month'), moment().endOf('month')],
     'Naslednji Mesec': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')]
   }
-  columnsToDisplay = ['barva','naziv','instruktor', 'datum', 'od','zasedenost','actions','barva1'];
+  columnsToDisplay = ['dan','naziv','actions'];
   dataSource = new MatTableDataSource();
   ngOnInit() {
     this.selected = {startDate:moment().startOf('day'),endDate:moment().add(1,'month').endOf('day')}
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    console.log(this._dataService.getOption());
   }
 
 

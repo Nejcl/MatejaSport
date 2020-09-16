@@ -3,7 +3,7 @@
       <mat-card-title>PROFIL</mat-card-title>
     </mat-card-header> 
     <div *ngIf="prijavaNaTermin">
-        <div class="container">
+        <div class="container" style="padding-left: unset;">
             <div class="row">
                 <div class="col-11">
                     <mat-card class="box">
@@ -11,13 +11,13 @@
                           <mat-card-title style="font-size: 16px;">Filtriraj termine</mat-card-title>
                         </mat-card-header> 
                       <div class="row">
-                        <div class="col-3">
-                          <mat-form-field style="width: 80%;">
+                        <div class="col-3 .col-sm-10">
+                          <mat-form-field>
                             <mat-label>Filtriraj</mat-label>
                             <input matInput (keyup)="applyFilter($event)" autocomplete="off" #input>
                           </mat-form-field>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3 .col-sm-10">
                           <mat-form-field >
                             <mat-label>Časovno obdobje</mat-label>
                           <input matInput type="text" ngxDaterangepickerMd 
@@ -52,16 +52,35 @@
                             <th mat-header-cell *matHeaderCellDef style="width: 1% !important;" ></th>
                             <td mat-cell *matCellDef="let row" style="width: 1% !important;"[style.background]="row.barva"> </td>
                           </ng-container>
+
+                    <!-- Inštruktor Column -->
+                    <ng-container matColumnDef="dan" >
+                      <th mat-header-cell *matHeaderCellDef> Dan </th>
+                      <td mat-cell *matCellDef="let row" style="padding-left: unset; width: 20%;">
+                          <div style="width: 100%; text-align:left; font-family:'Roboto';padding-top: 5px;">
+                            <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
+                              Ponedeljek</div>
+                            <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:14px; padding-bottom: 22px;">{{row.datum | date:'dd.MM.yyyy'}}</div>
+                         </div>
+                        </td>
+                    </ng-container>      
                 
                     <!-- Naziv Column -->
                     <ng-container matColumnDef="naziv">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 20%;"> Naziv </th>
-                      <td mat-cell  *matCellDef="let row" [style.background]="row.barva"> {{row.naziv}} </td>
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Naziv </th>
+                      <td mat-cell  *matCellDef="let row" style="width: 60%;">
+                        <div  [style.background]="row.barva" style="text-align:left; font-family:'Roboto';padding-top: 5px;">
+                          <div  style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
+                            {{row.od}} - {{row.do}}<div class="float-right" style="margin-right: 10px;">{{row.zasedenost}} </div></div>
+                          <div   style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:14px ">{{row.naziv}}</div>
+                          <div  style="margin-right: 10px;display: grid;text-align: end;;padding-bottom: 5px;">{{row.instruktor}}</div>
+                       </div>
+                      </td>
                     </ng-container>
                 
                     <!-- Inštruktor Column -->
                     <ng-container matColumnDef="instruktor" >
-                      <th mat-header-cell *matHeaderCellDef style="width: 12%;" > Inštruktor </th>
+                      <th mat-header-cell *matHeaderCellDef style="width: 20%;" > Inštruktor </th>
                       <td mat-cell *matCellDef="let row"> {{row.instruktor}} </td>
                     </ng-container>
                 
@@ -84,18 +103,18 @@
                       </ng-container>
             
                       <!-- Zasedenost Column -->
-                      <ng-container matColumnDef="zasedenost">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Zasedenost </th>
+                      <ng-container matColumnDef="zasedenost" >
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width: 5% !important;" > Zasedenost </th>
                           <td mat-cell *matCellDef="let row"> {{row.zasedenost}} </td>
                       </ng-container>
             
                       <ng-container matColumnDef="actions">
-                          <th mat-header-cell *matHeaderCellDef class="akcije" style="width: 10% !important;" >Termin</th>
+                          <th mat-header-cell *matHeaderCellDef class="akcije" style="width: 5% !important;" >Termin</th>
                               <td mat-cell *matCellDef="let row" >
                                 <div  *ngIf="row.status != 'odpovedan'">
                                   <button mat-button style="margin-right:2rem;"(click)="openEditDialog(row);"><mat-icon style="color: green; cursor: pointer; font-size: 1.35rem;">check_circle_outline</mat-icon> Prijava</button>
                                 </div>
-                                <div  *ngIf="row.status == 'odpovedan'" style="font-size:large; color: red; font-weight:600; ;">
+                                <div  *ngIf="row.status == 'odpovedan'" style="font-size:large; color: red; font-weight:600;font-family: monospace;">
                                    ODPOVEDAN
                                 </div>
                               </td>

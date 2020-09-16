@@ -5,7 +5,8 @@ import { LoginService } from '../login.service';
 import { DatabaseService } from '../database.service';
 import { IUser } from '../entities/user';
 import { fromEventPattern } from 'rxjs';
-import { ShareDataService} from '../share-data.service';
+import { DataService } from '../data.service'  
+
  
 @Component({
   selector: 'app-dialog-box',
@@ -18,11 +19,11 @@ export class LoginDialogComponent implements OnInit {
   show: boolean;
 
   constructor(public dialogRef: MatDialogRef<LoginDialogComponent>,
+              private _dataService: DataService,
               @Inject(MAT_DIALOG_DATA) public bdata: string,
               public router: Router,
               private log: LoginService,
-              private dbService: DatabaseService,
-              private shareService:ShareDataService) { }
+              private dbService: DatabaseService) { }
 
     onOkClick() {
       if(this.user.length > 0 && this.password.length > 0){
@@ -31,7 +32,7 @@ export class LoginDialogComponent implements OnInit {
         .subscribe(
           (data) => {
             if(data.pw === "OK"){
-              this.log.setToken('TOKEN');
+              this.log.setToken('TOKEN'+data.id);
               const currentUser:IUser = {
                 id:data.id,
                 username:data.username,
@@ -44,7 +45,7 @@ export class LoginDialogComponent implements OnInit {
                 email:data.email,
                 telefon:data.telefon
               };
-              this.shareService.addItem(currentUser);
+              this._dataService.setOption('size', data.id);
               this.dialogRef.close();
 
               this.router.navigateByUrl('/profil');

@@ -52,6 +52,7 @@ import { RazpsTerminaComponent } from './user-control/termini/razps-termina/razp
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { EditTerminDialogComponent } from './user-control/termini/edit-termin-dialog/edit-termin-dialog.component';
 import { PrijavaNaTerminDialogComponent } from './user-control/termini/prijava-na-termin-dialog/prijava-na-termin-dialog.component';
+import { DataService } from './data.service'  
 
 @NgModule({
   declarations: [
@@ -133,7 +134,7 @@ import { PrijavaNaTerminDialogComponent } from './user-control/termini/prijava-n
     DialogContent,
     DialogContent2,
   ],
-  providers: [NeedAuthGuard],
+  providers: [NeedAuthGuard,DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

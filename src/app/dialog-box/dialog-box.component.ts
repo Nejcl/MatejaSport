@@ -30,7 +30,7 @@ export class DialogBoxComponent implements OnInit {
       .subscribe(
         (data) => {
           if(data.pw === "OK"){
-            this.log.setToken('TOKEN');
+            this.log.setToken('TOKEN-ADM-USR');
             this.dialogRef.close();
             this.router.navigateByUrl('/user-control');
           }
