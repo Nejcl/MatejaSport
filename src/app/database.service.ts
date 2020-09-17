@@ -109,6 +109,10 @@ export class DatabaseService {
     return this.http.post<any[]>(`${this.baseUrl}/getTermini.php`,dateRange);
   }
 
+  geAktivniTermini(userId: any): Observable<any[]>{
+    return this.http.post<any[]>(`${this.baseUrl}/getAktivniTermini.php`,userId);
+  }
+
   getPrijaveNaTermin(dateRange: any): Observable<any[]>{
     return this.http.post<any>(`${this.baseUrl}/getPrijaveNaTermin.php`,dateRange);
   }

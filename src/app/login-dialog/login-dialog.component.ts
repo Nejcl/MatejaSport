@@ -46,6 +46,8 @@ export class LoginDialogComponent implements OnInit {
                 telefon:data.telefon
               };
               this._dataService.setOption('size', data.id);
+              localStorage.setItem('USER', data.id);
+              localStorage.setItem('ime', data.ime + " " + data.priimek);
               this.dialogRef.close();
 
               this.router.navigateByUrl('/profil');

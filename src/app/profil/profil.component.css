@@ -118,8 +118,12 @@
   width: 122px;
 }
 
+:host .paginatorWidth{
+  width: 50%;
+}
+
 @media(max-width: 600px) {
-  .mobile-label {
+  :host  .mobile-label {
     width: 80px;
     display: inline-block;
         font-weight: bold;
@@ -133,18 +137,28 @@
     display: block;
   }
 
-  .mat-header-row {
+  :host  .mat-header-row {
     display: none;
   }
 
-  .mat-row { 
+  :host .mat-row { 
     flex-direction: column;
     align-items: start;
     padding: 8px 24px;
   }
- .col-3 {
+  :host .col-3 {
   flex: 0 0 90%;
   max-width: 100%;
  }
+
+ :host a{
+  font-size: unset !important;
+  padding-top: unset !important;
+  padding-bottom: unset !important;
+}
+
+:host .paginatorWidth{
+  width: 100%;
+}
   
 }

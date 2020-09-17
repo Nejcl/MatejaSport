@@ -1,14 +1,17 @@
 <mat-card class="box" style="width: 95%;">
+  <div class="float-right">
+   {{ime}}<a style="padding-left: 1rem;" href="">Ponastavi geslo </a>
+  </div>
     <mat-card-header>
       <mat-card-title>PROFIL</mat-card-title>
     </mat-card-header> 
     <div *ngIf="prijavaNaTermin">
         <div class="container" style="padding-left: unset;">
             <div class="row">
-                <div class="col-11">
+                <div class="col-12">
                     <mat-card class="box">
                         <mat-card-header>
-                          <mat-card-title style="font-size: 16px;">Filtriraj termine</mat-card-title>
+                          <mat-card-title style="font-size: 16px;">Razpoložljivi termini</mat-card-title>
                         </mat-card-header> 
                       <div class="row">
                         <div class="col-3 .col-sm-10">
@@ -59,7 +62,8 @@
                       <td mat-cell *matCellDef="let row" style="padding-left: unset; width: 20%;">
                           <div style="width: 100%; text-align:left; font-family:'Roboto';padding-top: 5px;">
                             <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
-                              Ponedeljek</div>
+                              {{getDate(row.datum)}}
+                            </div>
                             <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:14px; padding-bottom: 22px;">{{row.datum | date:'dd.MM.yyyy'}}</div>
                          </div>
                         </td>
@@ -108,9 +112,9 @@
                           <td mat-cell *matCellDef="let row"> {{row.zasedenost}} </td>
                       </ng-container>
             
-                      <ng-container matColumnDef="actions">
-                          <th mat-header-cell *matHeaderCellDef class="akcije" style="width: 5% !important;" >Termin</th>
-                              <td mat-cell *matCellDef="let row" >
+                      <ng-container matColumnDef="actions" style="text-align: center;">
+                          <th mat-header-cell *matHeaderCellDef class="akcije" style="width: 5% !important;padding-right: unset;" >Termin</th>
+                              <td mat-cell *matCellDef="let row"style="padding-right: unset;" >
                                 <div  *ngIf="row.status != 'odpovedan'">
                                   <button mat-button style="margin-right:2rem;"(click)="openEditDialog(row);"><mat-icon style="color: green; cursor: pointer; font-size: 1.35rem;">check_circle_outline</mat-icon> Prijava</button>
                                 </div>
@@ -128,13 +132,114 @@
                   <tr mat-row *matRowDef="let element; columns: columnsToDisplay;">
                   </tr>
                 </table>
-                <mat-paginator [length]="100"
-                [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 25, 50, 100]">
-              </mat-paginator>
+                <div *ngIf="noData" style="margin-top: 1rem;" id ="emptyTable" >
+                  {{myText}} "{{input.value}}"
               </div>
+              <div class="paginatorWidth">
+                <mat-paginator [length]="100"
+                  [pageSize]="7"
+                  [pageSizeOptions]="[7, 14, 25, 50, 100]">
+                </mat-paginator>
+              </div>
+            </div>
           </div>
-         
+          <div class="row" style="margin-top: 1rem;text-align: center;display: block;">
+            <button mat-button style="font-size: 2rem; margin-right:2rem; width: 80%;border-width: 3px;border-style: solid" (click)="prikaziAktivnePrijave()" ><mat-icon style="color: #e83e8d; cursor: pointer; font-size: 2.35rem; margin-right: 1.4rem;padding-bottom: 1rem;">arrow_back</mat-icon>Nazaj</button>
+          </div>
     </div>
 
+
+    <div *ngIf="aktivnePrijave">
+      <div class="container" style="padding-left: unset;">
+          <div class="row">
+              <div class="col-11">
+                  <mat-card class="box">
+                      <mat-card-header>
+                        <mat-card-title style="font-size: 16px;">Aktivne prijave</mat-card-title>
+                      </mat-card-header> 
+                    <div class="row">
+                      <div class="col-3 .col-sm-10">
+                        <mat-form-field>
+                          <mat-label>Filtriraj</mat-label>
+                          <input matInput (keyup)="applyFilteAktivni($event)" autocomplete="off" #inputTrenutni>
+                        </mat-form-field>
+                      </div>
+                      <br>
+                    </div>
+                  </mat-card>
+              </div>
+          </div>       
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-11">
+              <table mat-table #outerSort="matSort" [dataSource]="dataSourceTrenutni" matSort  multiTemplateDataRows class="mat-elevation-z8">  
+                  <!-- ID Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef > ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                  </ng-container>
+          
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="barva">
+                          <th mat-header-cell *matHeaderCellDef style="width: 1% !important;" ></th>
+                          <td mat-cell *matCellDef="let row" style="width: 1% !important;"[style.background]="row.barva"> </td>
+                        </ng-container>
+
+                  <!-- Inštruktor Column -->
+                  <ng-container matColumnDef="dan" >
+                    <th mat-header-cell *matHeaderCellDef> Dan </th>
+                    <td mat-cell *matCellDef="let row" style="padding-left: unset; width: 20%;">
+                        <div style="width: 100%; text-align:left; font-family:'Roboto';padding-top: 5px;">
+                          <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
+                            {{getDate(row.datum)}}
+                          </div>
+                          <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:14px; padding-bottom: 22px;">{{row.datum | date:'dd.MM.yyyy'}}</div>
+                       </div>
+                      </td>
+                  </ng-container>      
+              
+                  <!-- Naziv Column -->
+                  <ng-container matColumnDef="naziv">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Naziv </th>
+                    <td mat-cell  *matCellDef="let row" style="width: 60%;">
+                      <div  [style.background]="row.barva" style="text-align:left; font-family:'Roboto';padding-top: 5px;">
+                        <div  style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
+                          {{row.od}} - {{row.do}}<div class="float-right" style="margin-right: 10px;">{{row.zasedenost}} </div></div>
+                        <div   style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:14px ">{{row.naziv}}</div>
+                        <div  style="margin-right: 10px;display: grid;text-align: end;;padding-bottom: 5px;">{{row.instruktor}}</div>
+                     </div>
+                    </td>
+                  </ng-container>
+                    <ng-container matColumnDef="actions" style="text-align: center;">
+                        <th mat-header-cell *matHeaderCellDef class="akcije" style="width: 5% !important;padding-right: unset;">Termin</th>
+                            <td mat-cell *matCellDef="let row" style="padding-right: unset;">
+                              <div  *ngIf="row.status != 'odpovedan'">
+                                <button mat-button *ngIf="row.id" (click)="odjaviUporabnika(row.id)" ><mat-icon style="color: red; cursor: pointer; font-size: 1.35rem;">not_interested</mat-icon>Odjava</button>
+                              </div>
+                              <div  *ngIf="row.status == 'odpovedan'" style="font-size:large; color: red; font-weight:600;font-family: monospace;">
+                                 ODPOVEDAN
+                              </div>
+                            </td>
+                    </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayTrenutni"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;">
+                </tr>
+              </table>
+              <div *ngIf="noActiveData" style="margin-top: 1rem;" id ="emptyTable" >
+                {{myTextTrenutni}} "{{inputTrenutni.value}}"
+            </div>
+            <div class="paginatorWidth">
+              <mat-paginator [length]="100"
+              [pageSize]="7"
+              [pageSizeOptions]="[7, 14, 25, 50, 100]">
+            </mat-paginator>
+            </div>
+
+          </div>
+        </div>
+        <div class="row" style="margin-top: 1rem;text-align: center;display: block;">
+          <button mat-button style="font-size: 2rem; margin-right:2rem; width: 80%;border-width: 3px;border-style: solid" (click)="prikaziPrijavoNaTermin()" ><mat-icon style="color: #e83e8d; cursor: pointer; font-size: 2.35rem; margin-right: 1.4rem;padding-bottom: 1rem;">fitness_center</mat-icon>Prijava na termin</button>
+        </div>
+  </div>
 </mat-card>
