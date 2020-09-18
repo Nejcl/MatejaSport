@@ -5,12 +5,16 @@ import { Observable, of } from 'rxjs';
 import { map, startWith} from 'rxjs/operators';
 import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { DatabaseService } from '../../../database.service';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 
 @Component({
   selector: 'app-edit-termin-dialog',
   templateUrl: './edit-termin-dialog.component.html',
-  styleUrls: ['./edit-termin-dialog.component.css']
+  styleUrls: ['./edit-termin-dialog.component.css'],  
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+  ],
 })
 export class EditTerminDialogComponent implements OnInit {
   editTerminForm: FormGroup;
@@ -97,9 +101,17 @@ export class EditTerminDialogComponent implements OnInit {
     return this.vodiOptions.filter(option => option.toLowerCase().includes(filterValue));
   }
 
+  adjustDateForTimeOffset(dateToAdjust): Date {
+    var offsetMs = dateToAdjust.getTimezoneOffset() * 60000;
+    return new Date(dateToAdjust.getTime() - offsetMs);
+  }
+  
+
   onSubmit() {
     this.submitted = true;
     this.editTerminForm.controls['barva'].setValue(this.colorValue);
+    var datum = this.adjustDateForTimeOffset(new Date(this.editTerminForm.controls['datum'].value))
+    this.editTerminForm.controls['datum'].setValue(datum);
     // stop here if form is invalid
     if (this.editTerminForm.invalid) {
         return;

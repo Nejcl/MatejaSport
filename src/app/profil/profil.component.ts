@@ -47,6 +47,7 @@ export class ProfilComponent implements OnInit {
   aktivnePrijave = true;
   user: string;
   ime:string;
+  prijave = [];
   selected: {startDate: moment.Moment, endDate: moment.Moment};
   ranges: any = {
     'Danes': [moment(), moment()],
@@ -120,6 +121,9 @@ prikaziTrenutneTermine() {
   let item = {user: this.user}
   this.dbService.geAktivniTermini(item).subscribe(
     (data) => {
+      data.forEach(element => {
+        this.prijave.push(element.id_termin)
+      });
       this.dataSourceTrenutni = new MatTableDataSource(data);
       this.dataSourceTrenutni.paginator = this.paginator;
       this.dataSourceTrenutni.sort = this.sort;
@@ -148,7 +152,8 @@ getDate(datum:string): string{
   prikaziTermine() {
     this.dbService.geTermini(this.selected).subscribe(
       (data) => {
-        this.dataSource = new MatTableDataSource(data);
+        const arr =  data.filter(i => !this.prijave.includes(i.id))
+        this.dataSource = new MatTableDataSource(arr);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         if(this.dataSource.data.length < 1){
@@ -162,12 +167,65 @@ getDate(datum:string): string{
   prikaziPrijavoNaTermin() {
     this.prijavaNaTermin = true;
     this.aktivnePrijave = false;
+    window.scrollTo(0, 0);
   }
 
   prikaziAktivnePrijave(){
+    this.prikaziTrenutneTermine(); 
     this.prijavaNaTermin = false;
     this.aktivnePrijave = true;
+    window.scrollTo(0, 0);
   }
+
+  odjavaAvailable(row): boolean{
+    let date = new Date(row.datum); 
+    var now = new Date();
+    var t = new Date();
+    var minute15= 15*60; // odjava možna do 15:00 na dan termina
+    var currentTime = t.getHours()*60 + t.getMinutes();
+    var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
+    if(date.getTime() == today.getTime()) {
+      if(currentTime > minute15)
+       return false;
+    }
+    return true;
+}
+
+
+
+
+
+  odjaviUporabnika(id): void {
+    let data = {id: id};
+    this.dbService.odjaviUporabnika(data).subscribe(
+      (data) => {
+        if(data['resp'] =="odjavljen"){
+          alert("odjava uporabnika uspešna");
+          this.prikaziTrenutneTermine(); 
+        }
+      }
+    );
+  }
+
+  prijaviUporabnika(id) {
+    const data = {id_termin:id,id_uporabnik:this.user};
+    this.dbService.prijaviUporabnika(data)
+    .subscribe(
+      (data) => {
+        if(data['resp'] =="prijavljen"){
+          alert("Prijava uporabnika uspešna");
+          this.prijave.push(id);
+          this.prikaziTrenutneTermine();
+          this.prikaziAktivnePrijave();
+          this.prikaziTermine();
+        } else{
+          alert("Prišlo je do napake pri prijavi uporabnika");
+        }
+      },
+      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+    );
+  }
+
 
 
 }

@@ -116,6 +116,11 @@ export class RazpsTerminaComponent {
 
   get f() { return this.terminForm.controls; }
 
+  adjustDateForTimeOffset(dateToAdjust): Date {
+    var offsetMs = dateToAdjust.getTimezoneOffset() * 60000;
+    return new Date(dateToAdjust.getTime() - offsetMs);
+  }
+  
 
   onSubmit() {
     this.submitted = true;
@@ -124,6 +129,8 @@ export class RazpsTerminaComponent {
     if (this.terminForm.invalid) {
         return;
     }
+    var datum = this.adjustDateForTimeOffset(new Date(this.terminForm.controls['datum'].value))
+    this.terminForm.controls['datum'].setValue(datum);
     this.dbService.dodajTermin(this.terminForm.value)
     .subscribe(
       (data) => {

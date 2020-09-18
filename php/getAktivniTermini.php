@@ -27,7 +27,7 @@ if(isset($postdata) && !empty($postdata))
   $user = mysqli_real_escape_string($conn, trim($input->user));
   $date_now = date("Y-m-d"); // this format is string comparable
 
-  $sql = "SELECT t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT(COUNT(pt.Id_uporabnik) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin WHERE t.datum >'{$date_now}' AND pt.id_uporabnik = '{$user}' GROUP BY t.ID_termin ORDER BY t.datum ";
+  $sql = "SELECT pt.Id,t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT(COUNT(pt.Id_uporabnik) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin WHERE t.datum >='{$date_now}' AND pt.id_uporabnik = '{$user}' GROUP BY t.ID_termin ORDER BY t.datum ";
 
   $data = [];
   
@@ -36,7 +36,8 @@ if(isset($postdata) && !empty($postdata))
       $cr = 0;
       while($row = mysqli_fetch_assoc($result))
       {
-        $data[$cr]['id'] = $row['ID_termin'];
+        $data[$cr]['id_prijava'] = $row['Id'];
+        $data[$cr]['id_termin'] = $row['ID_termin'];
         $data[$cr]['naziv'] = $row['naziv'];
         $data[$cr]['instruktor'] = $row['instruktor'];
         $data[$cr]['datum'] = $row['datum'];
