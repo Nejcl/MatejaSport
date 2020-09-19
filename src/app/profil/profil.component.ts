@@ -63,6 +63,8 @@ export class ProfilComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
   dataSourceTrenutni = new MatTableDataSource();
+  dataSourceRezerve = new MatTableDataSource();
+
 
 
   constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog) {
@@ -72,7 +74,8 @@ export class ProfilComponent implements OnInit {
 
   ngOnInit() {
     this.selected = {startDate:moment().startOf('day'),endDate:moment().add(1,'month').endOf('day')}
-    this.prikaziTrenutneTermine() 
+    this.prikaziTrenutneTermine();
+    this.prikaziTrenutneRezerve();  
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSourceTrenutni.paginator = this.paginator;
@@ -133,6 +136,24 @@ prikaziTrenutneTermine() {
       }
      }
   );
+}
+
+prikaziTrenutneRezerve() {
+  let item = {user: this.user}
+  this.dbService.geAktivneRezerve(item).subscribe(
+    (data) => {
+      data.forEach(element => {
+        this.prijave.push(element.id_termin)
+      });
+      this.dataSourceRezerve = new MatTableDataSource(data);
+      this.dataSourceRezerve.paginator = this.paginator;
+      this.dataSourceRezerve.sort = this.sort;
+      if(this.dataSourceRezerve.data.length < 1){
+       this.myText='Ni aktivnih prijav na termine';
+        this.noActiveData = true;
+      }
+     }
+  );
 
 }
 
@@ -172,6 +193,7 @@ getDate(datum:string): string{
 
   prikaziAktivnePrijave(){
     this.prikaziTrenutneTermine(); 
+    this.prikaziTrenutneRezerve();
     this.prijavaNaTermin = false;
     this.aktivnePrijave = true;
     window.scrollTo(0, 0);
@@ -220,6 +242,25 @@ getDate(datum:string): string{
           this.prikaziTermine();
         } else{
           alert("Prišlo je do napake pri prijavi uporabnika");
+        }
+      },
+      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+    );
+  }
+
+
+  prijaviRezervo(id) {
+    const data = {id_termin:id,id_uporabnik:this.user};
+    this.dbService.prijavaRezerve(data)
+    .subscribe(
+      (data) => {
+        if(data['resp'] =="prijavljen"){
+          alert("Prijava kot rezervea uspešna");
+          this.prikaziTrenutneTermine();
+          this.prikaziAktivnePrijave();
+          this.prikaziTermine();
+        } else{
+          alert("Prišlo je do napake pri prijavi kot rezerva");
         }
       },
       (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)

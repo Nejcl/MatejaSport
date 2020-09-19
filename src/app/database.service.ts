@@ -113,6 +113,11 @@ export class DatabaseService {
     return this.http.post<any[]>(`${this.baseUrl}/getAktivniTermini.php`,userId);
   }
 
+  
+  geAktivneRezerve(userId: any): Observable<any[]>{
+    return this.http.post<any[]>(`${this.baseUrl}/getAktivneRezerve.php`,userId);
+  }
+
   getPrijaveNaTermin(dateRange: any): Observable<any[]>{
     return this.http.post<any>(`${this.baseUrl}/getPrijaveNaTermin.php`,dateRange);
   }
@@ -139,6 +144,10 @@ export class DatabaseService {
 
   prijaviUporabnika(data: any): Observable<any[]>{
     return this.http.post<any>(`${this.baseUrl}/prijaviUporabnika.php`,data);
+  }
+
+  prijavaRezerve(data: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/prijavaRezerve.php`,data);
   }
 
 }
