@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from '../_helpers/must-match.validator';
 import { DatabaseService } from '../database.service';
 import { LoginService } from '../login.service';
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-registracija',
@@ -14,8 +16,8 @@ export class RegistracijaComponent implements OnInit {
 
   registerForm: FormGroup;
   submitted = false;
-
-  constructor( private formBuilder: FormBuilder, public router: Router, private dbService: DatabaseService, private log: LoginService) { }
+  result: string = '';
+  constructor( private formBuilder: FormBuilder, public router: Router, private dbService: DatabaseService, private log: LoginService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -44,8 +46,21 @@ export class RegistracijaComponent implements OnInit {
           .subscribe(
             (data) => {
               if(data.registration === "OK"){
-                alert("Registracija uspešna prosim počakajte na aktivacijo računa");
-                this.router.navigateByUrl('/home');
+                
+                  let message = "Registracija uspešna prosim počakajte na aktivacijo računa";
+                  let icon = "info";
+                  const dialogData = new ConfirmDialogModel(false,icon,"Registracija uspešna", message,'Ok');
+                  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                      maxWidth: "400px",
+                      data: dialogData
+                  });
+                     
+                  dialogRef.afterClosed().subscribe(dialogResult => {
+                  this.result = dialogResult;
+                  if(this.result)
+                    this.router.navigateByUrl('/home');
+                   });
+
               } else{
                 alert("registracija uporabnika ni uspešna");
                 this.router.navigateByUrl('/home');

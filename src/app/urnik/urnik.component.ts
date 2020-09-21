@@ -44,7 +44,7 @@ backupUrnik = [{"id":"57","dan":"\u010detrtek","od":"08:30","do":"09:30","naziv"
           top.scrollIntoView();
           top = null;
         }
-        this.Vadba = this.backupUrnik;
+       // this.Vadba = this.backupUrnik;
         this.showUrnik();
   }
 

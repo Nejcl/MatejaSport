@@ -52,7 +52,8 @@ import { RazpsTerminaComponent } from './user-control/termini/razps-termina/razp
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { EditTerminDialogComponent } from './user-control/termini/edit-termin-dialog/edit-termin-dialog.component';
 import { PrijavaNaTerminDialogComponent } from './user-control/termini/prijava-na-termin-dialog/prijava-na-termin-dialog.component';
-import { DataService } from './data.service'  
+import { DataService } from './data.service';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'  
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { DataService } from './data.service'
     RazpsTerminaComponent,
     EditTerminDialogComponent,
     PrijavaNaTerminDialogComponent,
+    ConfirmDialogComponent,
     
 
 
@@ -115,7 +117,6 @@ import { DataService } from './data.service'
     CKEditorModule,
     NgxDaterangepickerMd.forRoot({
       format: 'MM/DD/YYYY', // could be 'YYYY-MM-DDTHH:mm:ss.SSSSZ'
-      displayFormat: 'DD/MM/YYYY', // default is format value
       direction: 'ltr', // could be rtl
       weekLabel: 'T',
       separator: ' - ', // default is ' - '
@@ -133,6 +134,7 @@ import { DataService } from './data.service'
     InstruktorBoxComponent,
     DialogContent,
     DialogContent2,
+    ConfirmDialogComponent,
   ],
   providers: [NeedAuthGuard,DataService],
   bootstrap: [AppComponent]

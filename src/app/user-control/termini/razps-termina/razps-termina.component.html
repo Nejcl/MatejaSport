@@ -94,8 +94,7 @@
                             style="width:30%;text-align: center;  outline: 0;
                             border-width: 0 0 1px;
                             border-color: black"
-                            readonly
-                            [(ngModel)]="odTime">
+                            readonly>
                             <ngx-material-timepicker-toggle [for]="picker"></ngx-material-timepicker-toggle>
                             <ngx-material-timepicker #picker></ngx-material-timepicker>
                           </div>
@@ -111,8 +110,7 @@
                             style="width:30%;text-align: center;  outline: 0;
                             border-width: 0 0 1px;
                             border-color: black"
-                            readonly
-                            [(ngModel)]="doTime">
+                            readonly>
                             <ngx-material-timepicker-toggle [for]="picker2"></ngx-material-timepicker-toggle>
                             <ngx-material-timepicker #picker2></ngx-material-timepicker>
                           </div>
@@ -154,7 +152,7 @@
       </div>
       <div class="row" style="text-align: center;">
         <div class=" col-12">
-          <button mat-button (click)="razpisiMesecneTermine()" style="font-size:2rem;background-color: silver;     width: 80%;" ><mat-icon style="padding-right: 25px; padding-bottom: 30px; color: green; cursor: pointer;font-size: 3rem;">
+          <button mat-button (click)="confirmDialog()" style="font-size:2rem;background-color: silver;     width: 80%;" ><mat-icon style="padding-right: 25px; padding-bottom: 30px; color: green; cursor: pointer;font-size: 3rem;">
             list_alt</mat-icon>Ustvari termine po urniku za izbran mesec</button>
         </div>
       </div>

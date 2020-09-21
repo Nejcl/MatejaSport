@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DatabaseService } from '../../database.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import {MatSort, MatTableDataSource,MatTable} from '@angular/material';
+import {MatSort, MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -101,8 +101,7 @@ export class TerminiComponent implements OnInit {
          this.myText='Ni razpisanih terminov';
           this.noData = true;
         }
-       }
-    );
+      });
   }
 
   applyFilter(event: Event) {
@@ -163,10 +162,11 @@ export class TerminiComponent implements OnInit {
 
   }
 
-  openAddUserDialog(row): void {
+  openAddUserDialog(row,tip): void {
     this.dialog.closeAll();
     const prijaviDialogRef = this.dialog.open(PrijavaNaTerminDialogComponent,{width:'400px' ,panelClass: 'mobile-width',  data: {
-      dataKey: row
+      dataKey: row,
+      dataType: tip
     }})
     prijaviDialogRef.afterClosed().subscribe(() => {
       // Do stuff after the dialog has closed
@@ -186,6 +186,33 @@ export class TerminiComponent implements OnInit {
     );
   }
 
+  prijaviRezervo(row): void {
+    let data = {id: row.Id,id_uporabnik:row.ID_uporabnik,id_termin:row.ID_termin};
+    this.dbService.prijaviRezervo(data).subscribe(
+      (data) => {
+        if(data['resp'] =="prijavljen"){
+          alert("prijava rezerve na termin uspešna");
+          this.prikaziTermine(); 
+        }
+      }
+    );
+  }
+
+  izbrisiTermin(id){
+    const data = {id:id};
+    this.dbService.izbrisiTermin(data)
+    .subscribe(
+      (data) => {
+        if(data['resp'] === "OK"){
+          alert("Termin uspešno izbrisan");
+        } else{
+          alert("Prišlo je do napake pri izbrisu termina");
+        }
+      },
+      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+    );
+  }
+
 
 }
 
@@ -201,6 +228,7 @@ export interface Termin {
   barva:string;
   status:string;
   prijave?: Prijavljeni[] | MatTableDataSource<Prijavljeni>;
+  rezerve?: Rezerve[] | MatTableDataSource<Rezerve>;
 }
 
 export interface TerminDataSource {
@@ -214,9 +242,18 @@ export interface TerminDataSource {
   barva:string;
   status:string;
   prijave?: Prijavljeni[] | MatTableDataSource<Prijavljeni>;
+  rezerve?: Rezerve[] | MatTableDataSource<Rezerve>;
 }
 
 export interface Prijavljeni {
+  id:number
+  ime: string;
+  priimek: string;
+  email:string;
+  telefon:string;
+}
+
+export interface Rezerve {
   id:number
   ime: string;
   priimek: string;

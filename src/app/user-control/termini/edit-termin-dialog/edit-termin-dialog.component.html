@@ -1,4 +1,10 @@
-<h1 mat-dialog-title>Urejanje termina</h1>
+<h1 mat-dialog-title>      <div style="float: left;">Urejanje termina</div>
+  <div style="float: right;">
+    <button mat-button cdkFocusInitial (click)="confirmDialog()"> 
+      <mat-icon style="cursor: pointer;font-size: 1.7rem; color:red;" title="Izbriši termin" aria-label="Izbriši termin">delete</mat-icon>
+    </button>
+  </div></h1>
+<br>
 <form class="example-form" [formGroup]="editTerminForm" (ngSubmit)="onSubmit()">     
     <div class="row"  style="margin-top: 30px">
       <div class="container">       
@@ -70,7 +76,7 @@
             <div class="offset-1 col-10">
               <mat-form-field style="width: 90%;" appearance="fill" >
                 <mat-label>Datum termina</mat-label>
-                <input matInput formControlName="datum"  [min]="minDate" [matDatepicker]="dp"  (focus)="dp.open()" readonly [ngClass]="{ 'is-invalid': submitted && f.datum.errors }">
+                <input matInput formControlName="datum" [matDatepicker]="dp"  (focus)="dp.open()" readonly [ngClass]="{ 'is-invalid': submitted && f.datum.errors }">
                 <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                 <mat-datepicker #dp disabled="false" ></mat-datepicker>
               </mat-form-field>

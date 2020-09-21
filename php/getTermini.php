@@ -64,6 +64,21 @@ if(isset($postdata) && !empty($postdata))
             $data[$cr]['prijavljeni'] = 'ni prijav';
           } 
         }
+        $sqlR = "SELECT  rt.Id,rt.ID_termin,u.ID_uporabnik, ime, priimek,email,telefon FROM rezerveTermin rt INNER JOIN uporabniki u ON rt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']}";
+        if($res = mysqli_query($conn,$sqlR)){
+          $crr = 0;
+          while($rowR = mysqli_fetch_assoc($res))
+          {
+            $data[$cr]['rezerve'][$crr]['Id'] = $rowR['Id'];
+            $data[$cr]['rezerve'][$crr]['ID_uporabnik'] = $rowR['ID_uporabnik'];
+            $data[$cr]['rezerve'][$crr]['ID_termin'] = $rowR['ID_termin'];
+            $data[$cr]['rezerve'][$crr]['ime'] = $rowR['ime'];
+            $data[$cr]['rezerve'][$crr]['priimek'] = $rowR['priimek'];
+            $data[$cr]['rezerve'][$crr]['email'] = $rowR['email'];
+            $data[$cr]['rezerve'][$crr]['telefon'] = $rowR['telefon'];
+            $crr++;
+          }
+        }
         $cr++;
       }
       print json_encode($data);

@@ -1,2 +1,2 @@
-.invalid-feedback {width: 100%;margin-top: -0.5rem;font-size: 80%;color: #dc3545;}
-.row {margin-top: 10px;}
+:host.invalid-feedback {width: 100%;margin-top: -0.5rem;font-size: 80%;color: #dc3545;}
+:host.row {margin-top: 10px;}

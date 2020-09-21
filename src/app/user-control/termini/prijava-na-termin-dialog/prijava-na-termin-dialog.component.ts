@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { DatabaseService } from '../../../database.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -29,6 +30,12 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
     this.data.dataKey.prijavljeni.forEach(element => {
       this.uporabniki.push(element.ID_uporabnik)
     });
+    if(this.data.dataKey.rezerve){
+      this.data.dataKey.rezerve.forEach(element => {
+        this.uporabniki.push(element.ID_uporabnik)
+      });
+    }
+
     this.prikaziUporabnike();
     this.termin=this.data.dataKey.naziv;
 
@@ -67,19 +74,36 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
 
   prijaviUporabnika(id) {
     const data = {id_termin:this.data.dataKey.id,id_uporabnik:id};
-    this.dbService.prijaviUporabnika(data)
-    .subscribe(
-      (data) => {
-        if(data['resp'] =="prijavljen"){
-          this.uporabniki.push(id);
-          alert("Prijava uporabnika uspešna");
-          this.prikaziUporabnike();
-        } else{
-          alert("Prišlo je do napake pri prijavi uporabnika");
-        }
-      },
-      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
-    );
+    if(this.data.dataType == 'vadba'){
+      this.dbService.prijaviUporabnika(data)
+      .subscribe(
+        (data) => {
+          if(data['resp'] =="prijavljen"){
+            this.uporabniki.push(id);
+            alert("Prijava uporabnika uspešna");
+            this.prikaziUporabnike();
+          } else{
+            alert("Prišlo je do napake pri prijavi uporabnika");
+          }
+        },
+        (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+      );
+    } else {
+      this.dbService.prijavaRezerve(data)
+      .subscribe(
+        (data) => {
+          if(data['resp'] =="prijavljen"){
+            this.uporabniki.push(id);
+            alert("Prijava rezerve uspešna");
+            this.prikaziUporabnike();
+          } else{
+            alert("Prišlo je do napake pri prijavi rezerve");
+          }
+        },
+        (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+      );
+    }
+
   }
 
 }

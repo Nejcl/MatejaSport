@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>
+   <div style="display: flex;"> <mat-icon [innerHtml]="icon"  [style.color]="barva" style="cursor: pointer; font-size: 2rem;padding-right: 1rem;"></mat-icon>{{title}}</div>
+  </h1>
+   
+  <div mat-dialog-content>
+    <p>{{message}}</p>
+  </div>
+   
+  <div mat-dialog-actions style="float: right;">
+    <button mat-button *ngIf="noBtn" (click)="onDismiss()">Ne</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">{{da}}</button>
+  </div>

@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
 import { map, startWith} from 'rxjs/operators';
 import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { DatabaseService } from '../../../database.service';
 import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
-
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-razps-termina',
@@ -50,8 +49,8 @@ export class RazpsTerminaComponent {
   filteredOptions: Observable<string[]>;
   filtereVodiOptions: Observable<string[]>;
   exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
-
-  constructor(private dbService: DatabaseService, private formBuilder: FormBuilder) {
+  result: string = '';
+  constructor(private dbService: DatabaseService, private formBuilder: FormBuilder,public dialog: MatDialog) {
     this.dict['Jutranji I.F.T.'] = '#49e449';
     this.dict['FIT PILATES'] = '#f1e648';
     this.dict['TNZ'] = '#03c8ff';
@@ -193,6 +192,38 @@ export class RazpsTerminaComponent {
     const filterValue = value.toLowerCase();
 
     return this.vodiOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+
+  confirmDialog(): void {
+    var startDate = new Date(this.leto,this.monthNames.indexOf(this.mesec),1);
+    var endDate = new Date(this.leto,this.monthNames.indexOf(this.mesec)+1,0);
+    let data = {startDate: startDate,endDate:endDate};
+    let message = '';
+    let icon = "warning";
+    this.dbService.getStTerminov(data)
+    .subscribe(
+      (data) => {
+        if(data['termin'] !="NOK"){
+          message = "Ali ste prepričani da želite dodati termine? \n Za "+this.mesec +" že obstaja "+ data['termin']+ " terminov";
+          const dialogData = new ConfirmDialogModel(true,icon,"Ustvari termine za " +this.mesec, message,'Da');
+ 
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            maxWidth: "400px",
+            data: dialogData
+          });
+       
+          dialogRef.afterClosed().subscribe(dialogResult => {
+            this.result = dialogResult;
+            if(this.result)
+              this.razpisiMesecneTermine();
+          });
+        } else{
+          message = "Prišlo je do napake pri dodajanju terminov"
+        }
+      },
+      (error) =>  { message = "Prišlo je do napake prosimo preverite podatke "+ error
+    }); 
   }
 
   razpisiMesecneTermine() {

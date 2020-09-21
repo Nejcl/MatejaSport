@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DatabaseService } from '../database.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import {MatSort, MatTableDataSource,MatTable} from '@angular/material';
+import {MatSort, MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog} from "@angular/material";
-
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 import moment from 'moment';
 import 'moment/locale/sl';
@@ -45,6 +44,7 @@ export class ProfilComponent implements OnInit {
   odDate = new Date();
   prijavaNaTermin = false;
   aktivnePrijave = true;
+  aktivnePrijaveRezerve = false;
   user: string;
   ime:string;
   prijave = [];
@@ -60,6 +60,7 @@ export class ProfilComponent implements OnInit {
   }
   columnsToDisplay = ['dan','naziv','actions'];
   columnsToDisplayTrenutni = ['dan','naziv','actions'];
+  result: string = '';
 
   dataSource = new MatTableDataSource();
   dataSourceTrenutni = new MatTableDataSource();
@@ -146,12 +147,13 @@ prikaziTrenutneRezerve() {
         this.prijave.push(element.id_termin)
       });
       this.dataSourceRezerve = new MatTableDataSource(data);
+      if(this.dataSourceRezerve.data.length > 0){
+        this.aktivnePrijaveRezerve = true;
+      } else {
+        this.aktivnePrijaveRezerve = false;
+      }
       this.dataSourceRezerve.paginator = this.paginator;
       this.dataSourceRezerve.sort = this.sort;
-      if(this.dataSourceRezerve.data.length < 1){
-       this.myText='Ni aktivnih prijav na termine';
-        this.noActiveData = true;
-      }
      }
   );
 
@@ -181,6 +183,11 @@ getDate(datum:string): string{
          this.myText='Ni razpisanih terminov';
           this.noData = true;
         }
+        let top = document.getElementById('top');
+        if (top !== null) {
+          top.scrollIntoView();
+          top = null;
+        } 
        }
     );
   }
@@ -188,7 +195,11 @@ getDate(datum:string): string{
   prikaziPrijavoNaTermin() {
     this.prijavaNaTermin = true;
     this.aktivnePrijave = false;
-    window.scrollTo(0, 0);
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
 
   prikaziAktivnePrijave(){
@@ -196,7 +207,11 @@ getDate(datum:string): string{
     this.prikaziTrenutneRezerve();
     this.prijavaNaTermin = false;
     this.aktivnePrijave = true;
-    window.scrollTo(0, 0);
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    } 
   }
 
   odjavaAvailable(row): boolean{
@@ -212,10 +227,6 @@ getDate(datum:string): string{
     }
     return true;
 }
-
-
-
-
 
   odjaviUporabnika(id): void {
     let data = {id: id};
@@ -235,11 +246,22 @@ getDate(datum:string): string{
     .subscribe(
       (data) => {
         if(data['resp'] =="prijavljen"){
-          alert("Prijava uporabnika uspešna");
-          this.prijave.push(id);
-          this.prikaziTrenutneTermine();
-          this.prikaziAktivnePrijave();
-          this.prikaziTermine();
+          let message = "Prijava na termin uspešna";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Prijava  uspešna", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });
+             
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+
+           });
+           this.prijave.push(id);
+           this.prikaziTrenutneTermine();
+           this.prikaziAktivnePrijave();
+           this.prikaziTermine();
         } else{
           alert("Prišlo je do napake pri prijavi uporabnika");
         }
@@ -255,10 +277,23 @@ getDate(datum:string): string{
     .subscribe(
       (data) => {
         if(data['resp'] =="prijavljen"){
-          alert("Prijava kot rezervea uspešna");
-          this.prikaziTrenutneTermine();
-          this.prikaziAktivnePrijave();
-          this.prikaziTermine();
+          let message = "Prijava kot rezervea uspešna";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Prijava rezerva uspešna", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });
+             
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+
+           });
+           this.prijave.push(id);
+           this.prikaziTrenutneTermine();
+           this.prikaziAktivnePrijave();
+           this.prikaziTermine();
+
         } else{
           alert("Prišlo je do napake pri prijavi kot rezerva");
         }
@@ -267,6 +302,28 @@ getDate(datum:string): string{
     );
   }
 
+  odjaviRezervo(id): void {
+    let data = {id: id};
+    this.dbService.odjaviRezervo(data).subscribe(
+      (data) => {
+        if(data['resp'] =="odjavljen"){
+          alert("odjava rezerve uspešna");
+          let message = "Odjava rezerve uspešn";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Odjava rezerva uspešna", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });
+          this.prikaziTrenutneRezerve();  
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+          
 
+           });
+        }
+      }
+    );
+  }
 
 }

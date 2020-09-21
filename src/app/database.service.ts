@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable} from 'rxjs';
 
 
 @Injectable({
@@ -9,8 +9,8 @@ import { Observable, throwError } from 'rxjs';
 export class DatabaseService {
 
   //baseUrl = 'http://localhost:4200/php';
-  baseUrl = 'http://127.0.0.1:80/php'
-  //baseUrl = 'http://www.matejasport.si/php';
+  //baseUrl = 'http://127.0.0.1:80/php'
+  baseUrl = 'http://www.matejasport.si/php';
   data: any;
 
   constructor(private http: HttpClient) { }
@@ -148,6 +148,22 @@ export class DatabaseService {
 
   prijavaRezerve(data: any): Observable<any[]>{
     return this.http.post<any>(`${this.baseUrl}/prijavaRezerve.php`,data);
+  }
+
+  odjaviRezervo(data: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/odjaviRezervo.php`,data);
+  }
+
+  prijaviRezervo(data: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/prijaviRezervo.php`,data);
+  }
+
+  izbrisiTermin(id: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/izbrisiTermin.php`,id);
+  }
+
+  getStTerminov(data: any): Observable<any[]>{
+    return this.http.post<any[]>(`${this.baseUrl}/getStTerminov.php`,data);
   }
 
 }
