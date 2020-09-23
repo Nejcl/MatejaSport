@@ -27,6 +27,10 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/userRegistration.php`,InData); 
   }
 
+  spremeniGeslo(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/resetGesla.php`,InData); 
+  }
+
   readUrnik(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}/getdata.php`);
   }

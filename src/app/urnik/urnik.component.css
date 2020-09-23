@@ -10,7 +10,7 @@
     /* overflow-x: auto; */
 }
 
-table {
+ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
@@ -40,5 +40,3 @@ th {
   padding-bottom: 20px;
   z-index: 500;
 }
-
-

@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material'
 import { Inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map, startWith} from 'rxjs/operators';
-import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { DatabaseService } from '../../../database.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import { ThrowStmt } from '@angular/compiler';
-
+import {MatDialog} from "@angular/material";
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-prijava-na-termin-dialog',
@@ -24,7 +21,8 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
   noData = false;
   uporabniki = [];
   termin: string;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dbService: DatabaseService) { }
+  result: string = '';
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dbService: DatabaseService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.data.dataKey.prijavljeni.forEach(element => {
@@ -80,7 +78,13 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
         (data) => {
           if(data['resp'] =="prijavljen"){
             this.uporabniki.push(id);
-            alert("Prijava uporabnika uspešna");
+            let message = "Prijava uporabnika uspešna";
+            let icon = "info";
+            const dialogData = new ConfirmDialogModel(false,icon,"Prijava uporabnika", message,'Ok');
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                maxWidth: "400px",
+                data: dialogData
+            });  
             this.prikaziUporabnike();
           } else{
             alert("Prišlo je do napake pri prijavi uporabnika");
@@ -94,7 +98,13 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
         (data) => {
           if(data['resp'] =="prijavljen"){
             this.uporabniki.push(id);
-            alert("Prijava rezerve uspešna");
+            let message = "Prijava rezerve uspešna";
+            let icon = "info";
+            const dialogData = new ConfirmDialogModel(false,icon,"Prijava rezerve", message,'Ok');
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                maxWidth: "400px",
+                data: dialogData
+            });  
             this.prikaziUporabnike();
           } else{
             alert("Prišlo je do napake pri prijavi rezerve");

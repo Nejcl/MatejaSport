@@ -1,16 +1,22 @@
-<h1 mat-dialog-title>Prijava</h1>
-<div mat-dialog-content class="mobile-width">
-  <mat-form-field class="mobile-width">
-    <input matInput  placeholder="Uporabniško ime" type="text" [(ngModel)]="user" autocomplete="off">
-  </mat-form-field>
-  <br>
-  <mat-form-field class="mobile-width">
-    <input matInput placeholder="Geslo"  type="password" [(ngModel)]="password">
-  </mat-form-field>
-  <div [hidden]="!show" style="color:red; font-size: 10px">Napačno uporabniško ime ali geslo!</div>
+<div style="position:relative;">
+  <button mat-dialog-close class="close-btn" style="background-color: transparent;border: none;"><mat-icon style="cursor: pointer; font-size: 2rem;">close</mat-icon></button>
 </div>
-<a href="/registracija" class="registracija">Registracija</a>
+<div class="login-wrapper">
+  <h1 mat-dialog-title>Prijava</h1>
+  <div mat-dialog-content>
+    <mat-form-field  class="example-full-width">
+      <input matInput  placeholder="Uporabniško ime" type="text" [(ngModel)]="user" autocomplete="off">
+    </mat-form-field>
+    <br>
+    <mat-form-field  class="example-full-width">
+      <input matInput placeholder="Geslo"  type="password" [(ngModel)]="password">
+    </mat-form-field>
+    <div [hidden]="!show" style="color:red; font-size: 10px">Napačno uporabniško ime ali geslo!</div>
+  </div>
 
-<div mat-dialog-actions style="float: right;">
-  <button mat-button cdkFocusInitial (click)="onOkClick()">Ok</button>
+
+  <div class="form-group">
+    <button mat-stroked-button color="accent" (click)="onOkClick()" class="btn-block">Prijava</button>
+  </div>     
+  <a href="/registracija" class="registracija">Registracija</a>
 </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../../database.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog} from "@angular/material";
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-uporabniki',
@@ -12,7 +14,8 @@ export class UporabnikiComponent implements OnInit {
   dataSource = new MatTableDataSource();
   myText = 'Ni uporabnikov';
   noData = false;
-  constructor(private dbService: DatabaseService) { }
+  result: string = '';
+  constructor(private dbService: DatabaseService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.prikaziUporabnike();
@@ -27,15 +30,35 @@ export class UporabnikiComponent implements OnInit {
     );
   }
 
-  izbrisiUporabnika(id: number){
-    let data = {id: id};
-    this.dbService.izbrisiUporabnika(data).subscribe(
-      (data) => {
-        if(data['resp'] =="izbrisan"){
-          this.prikaziUporabnike();
+  izbrisiUporabnika(row){
+    let data = {id: row.id};
+    let message = "Ali ste prepričani da želite izbrisati uporabnika: \n" + row.ime + " "+ row.priimek + "?";
+    let icon = "cancel";
+    const dialogData = new ConfirmDialogModel(true,icon,"Izbriši uporabnika", message,'Da');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        maxWidth: "400px",
+        data: dialogData
+    });  
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+      if( this.result) {
+        this.dbService.izbrisiUporabnika(data).subscribe(
+          (data) => {
+            if(data['resp'] =="izbrisan"){
+              let message = "Uporabnik uspešno izbrisan";
+              let icon = "info";
+              const dialogData = new ConfirmDialogModel(false,icon,"Uporabnik izbrisan", message,'Ok');
+              this.dialog.open(ConfirmDialogComponent, {
+                  maxWidth: "400px",
+                  data: dialogData
+              });  
+              this.prikaziUporabnike();
+              }
+            }
+          );
         }
-      }
-    );
+     });  
+      
   }
 
   ponastaviGeslo(id: number){
@@ -43,6 +66,16 @@ export class UporabnikiComponent implements OnInit {
     this.dbService.ponastaviGesloUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="ponastavljeno"){
+          let message = "Novo geslo: matejašprt";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Ponastavitev gesla uspešna", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+           });
         }
       }
     );

@@ -1,0 +1,33 @@
+<mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Sprememba gesla</mat-card-title>
+    </mat-card-header>
+
+<form class="example-form" [formGroup]="changePwForm" (ngSubmit)="onSubmit()">
+    <div class="row" style="margin-left: 1rem;">
+        <mat-form-field class="example-full-width">
+            <input matInput type="password" placeholder="Goslo" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+        </mat-form-field>
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Prosim vnesite geslo</div>
+            <div *ngIf="f.password.errors.minlength">Geslo mora vsebovati vsaj 6 znakov</div>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 1rem;">
+        <mat-form-field class="example-full-width">
+            <input matInput type="password" placeholder="Ponovi geslo" formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" >
+        </mat-form-field>
+        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.confirmPassword.errors.required">Prosim potrdite geslo</div>
+            <div *ngIf="f.confirmPassword.errors.mustMatch">Gesli se ne ujemata</div>
+        </div>
+    </div>
+    
+    <div class=" row form-group" style="margin-top: 1rem;">
+        <div class="offset-7 col-2">
+            <button mat-stroked-button color="accent" class="btn-block">Potrdi</button>
+
+        </div>
+    </div>  
+  </form>
+</mat-card>

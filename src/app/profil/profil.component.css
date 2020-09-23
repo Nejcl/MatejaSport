@@ -1,9 +1,14 @@
-
+:host .container {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+ 
  :host .active{
     color:#e83e8c
   }
   :host table {
-    width: 50%;
+    width: 100%;
   }
   
   :host .mat-form-field {
@@ -122,6 +127,22 @@
   width: 50%;
 }
 
+.example-margin {
+  margin: 0 4px;
+}
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+  padding:0;
+}
+ul, li {
+  display:inline;
+  margin-right: 8px;
+
+}
+
+.paginator-margin{margin-right: 2rem;}
+
 @media(max-width: 600px) {
   :host  .mobile-label {
     width: 80px;
@@ -146,19 +167,28 @@
     align-items: start;
     padding: 8px 24px;
   }
-  :host .col-3 {
-  flex: 0 0 90%;
-  max-width: 100%;
- }
 
  :host a{
   font-size: unset !important;
   padding-top: unset !important;
   padding-bottom: unset !important;
-}
+  }
 
-:host .paginatorWidth{
-  width: 100%;
-}
+  :host .box{
+    width: 94% !important;
+  }
+
+  :host .container{
+    padding:0;
+  }
+
+  ul {
+    padding-left: 5px;
+  }
+
+  :host .col-3 {width: 100%;max-width: 80%;flex: unset;}
+  :host .col-6 {width: 100%;max-width: 80%;flex: unset;}
+
+  .paginator-margin{margin-right: 1rem;}
   
 }

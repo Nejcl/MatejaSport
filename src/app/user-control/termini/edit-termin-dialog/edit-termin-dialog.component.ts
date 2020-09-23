@@ -133,8 +133,17 @@ export class EditTerminDialogComponent implements OnInit {
     .subscribe(
       (data) => {
         if(data['resp'] === "OK"){
-          alert("Termin uspešno izbrisan");
-          this.closeDialog();
+          let message = "Termin uspešno izbrisan";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Izbris termina", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+            this.closeDialog();
+           });
         } else{
           alert("Prišlo je do napake pri izbrisu termina");
         }
@@ -161,8 +170,17 @@ export class EditTerminDialogComponent implements OnInit {
     .subscribe(
       (data) => {
         if(data.termin === "OK"){
-          alert("Termin uspešno urejen");
-          this.closeDialog();
+          let message = "Termin uspešno urejen";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Urejanje termina", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+            this.closeDialog();
+           });
         } else{
           alert("Prišlo je do napake pri urejanju  termina");
         }

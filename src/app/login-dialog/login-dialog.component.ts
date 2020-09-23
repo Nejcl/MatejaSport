@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { DatabaseService } from '../database.service';
 import { IUser } from '../entities/user';
-import { fromEventPattern } from 'rxjs';
 import { DataService } from '../data.service'  
 
  

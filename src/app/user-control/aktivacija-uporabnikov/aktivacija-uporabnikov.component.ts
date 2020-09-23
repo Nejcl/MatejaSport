@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../../database.service';
 import {MatTableDataSource} from '@angular/material/table';
-
+import {MatDialog} from "@angular/material";
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-aktivacija-uporabnikov',
@@ -17,7 +18,8 @@ export class AktivacijaUporabnikovComponent implements OnInit {
   userActive = false;
   displayedColumns: string[] = ['uporabnik','ime', 'priimek', 'email', 'telefon','actions'];
   dataSource = new MatTableDataSource();
-  constructor(private dbService: DatabaseService) { }
+  result: string = '';
+  constructor(private dbService: DatabaseService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.prikaziNoveUporabnike()
@@ -57,6 +59,13 @@ export class AktivacijaUporabnikovComponent implements OnInit {
     this.dbService.aktivirajUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="aktiviran"){
+          let message = "Uporabnik aktiviran";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Aktivacija uporabnika", message,'Ok');
+          this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
           this.prikaziNoveUporabnike(); 
         }
       }

@@ -8,6 +8,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import { EditTerminDialogComponent } from './edit-termin-dialog/edit-termin-dialog.component';
 import { PrijavaNaTerminDialogComponent } from './prijava-na-termin-dialog/prijava-na-termin-dialog.component';
 import {MatDialog} from "@angular/material";
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
 import moment from 'moment';
 import 'moment/locale/sl';
@@ -57,6 +58,7 @@ export class TerminiComponent implements OnInit {
   expandedElement: Termin | null;
   minDate = null;
   odDate = new Date();
+  result: string = '';
   selected: {startDate: moment.Moment, endDate: moment.Moment};
   ranges: any = {
     'Danes': [moment(), moment()],
@@ -131,15 +133,39 @@ export class TerminiComponent implements OnInit {
     this.novTerminActive = true;
   }
 
-  odpovejTermin(id:string) {
-    let data = {id: id};
-    this.dbService.odpovejTermin(data).subscribe(
-      (data) => {
-        if(data['resp'] =="odpovedan"){
-          this.prikaziTermine(); 
-        }
+  odpovejTermin(row) {
+    let data = {id: row.id};
+    let message = "Ali ste prepričani da želite odpovedati termin: \n "+ row.naziv + "?";
+    let icon = "warning";
+    const dialogData = new ConfirmDialogModel(true,icon,"Odpoved termina", message,'Da');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        maxWidth: "400px",
+        data: dialogData
+    });  
+    dialogRef.afterClosed().subscribe(dialogResult => {
+    this.result = dialogResult;
+    if(this.result) {
+        this.dbService.odpovejTermin(data).subscribe(
+          (data) => {
+            if(data['resp'] =="odpovedan"){
+              let message = "Termin uspešno odpovedan";
+              let icon = "info";
+              const dialogData = new ConfirmDialogModel(false,icon,"Termin odpovedan", message,'Ok');
+              const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                  maxWidth: "400px",
+                  data: dialogData
+              });  
+              dialogRef.afterClosed().subscribe(dialogResult => {
+              this.result = dialogResult;
+    
+              });
+              this.prikaziTermine(); 
+            }
+          }
+        );
       }
-    );
+    });
+    
   }
 
   toggleRow(element: Termin) {
@@ -179,7 +205,17 @@ export class TerminiComponent implements OnInit {
     this.dbService.odjaviUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="odjavljen"){
-          alert("odjava uporabnika uspešna");
+          let message = "Odjava uporabnika uspešna";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Odjava  uspešna", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+
+           });
           this.prikaziTermine(); 
         }
       }
@@ -191,29 +227,56 @@ export class TerminiComponent implements OnInit {
     this.dbService.prijaviRezervo(data).subscribe(
       (data) => {
         if(data['resp'] =="prijavljen"){
-          alert("prijava rezerve na termin uspešna");
+          let message = "Prijava rezerve uspešna";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Prijava rezerve uspešna", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+
+           });
           this.prikaziTermine(); 
         }
       }
     );
   }
 
-  izbrisiTermin(id){
-    const data = {id:id};
-    this.dbService.izbrisiTermin(data)
-    .subscribe(
-      (data) => {
-        if(data['resp'] === "OK"){
-          alert("Termin uspešno izbrisan");
-        } else{
-          alert("Prišlo je do napake pri izbrisu termina");
-        }
-      },
-      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
-    );
+  izbrisiTermin(row){
+    const data = {id:row.id};
+    let message = "Ali ste prepričani da želite izbrisati termin: \n " + row.naziv + "?";
+    let icon = "cancel";
+    const dialogData = new ConfirmDialogModel(true,icon,"Izbris termina", message,'Da');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        maxWidth: "400px",
+        data: dialogData
+    });  
+    dialogRef.afterClosed().subscribe(dialogResult => {
+    this.result = dialogResult;
+    if(this.result){
+      this.dbService.izbrisiTermin(data)
+      .subscribe(
+        (data) => {
+          if(data['resp'] === "OK"){
+            let message = "termin uspešno izbrisan";
+            let icon = "info";
+            const dialogData = new ConfirmDialogModel(false,icon,"Termin izbrisan", message,'Ok');
+            this.dialog.open(ConfirmDialogComponent, {
+                maxWidth: "400px",
+                data: dialogData
+            });  
+            this.prikaziTermine(); 
+          } else{
+            alert("Prišlo je do napake pri izbrisu termina");
+          }
+        },
+        (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+      );
+    }
+     });  
   }
-
-
 }
 
 

@@ -24,8 +24,8 @@ export class RegistracijaComponent implements OnInit {
       userName: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.email]],
-      phone: [''],
+      email: ['', [Validators.required,Validators.email]],
+      phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
   }, {

@@ -53,7 +53,9 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { EditTerminDialogComponent } from './user-control/termini/edit-termin-dialog/edit-termin-dialog.component';
 import { PrijavaNaTerminDialogComponent } from './user-control/termini/prijava-na-termin-dialog/prijava-na-termin-dialog.component';
 import { DataService } from './data.service';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'  
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { PregledObiskovUporabnikaComponent } from './pregled-obiskov-uporabnika/pregled-obiskov-uporabnika.component';
+import { SpremembaGeslaDialogComponent } from './profil/sprememba-gesla-dialog/sprememba-gesla-dialog.component'  
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     EditTerminDialogComponent,
     PrijavaNaTerminDialogComponent,
     ConfirmDialogComponent,
+    PregledObiskovUporabnikaComponent,
+    SpremembaGeslaDialogComponent,
     
 
 
@@ -131,6 +135,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     LoginDialogComponent,
     EditTerminDialogComponent,
     PrijavaNaTerminDialogComponent,
+    SpremembaGeslaDialogComponent,
     InstruktorBoxComponent,
     DialogContent,
     DialogContent2,

@@ -82,7 +82,7 @@ export class RazpsTerminaComponent {
       this.terminForm = this.formBuilder.group({
         naziv: ['', Validators.required],
         vodi: ['', Validators.required],
-        barva: ['', Validators.required],
+        barva: [''],
         datum: ['', Validators.required],
         od: ['', Validators.required],
         do: ['', Validators.required],
@@ -130,11 +130,19 @@ export class RazpsTerminaComponent {
     }
     var datum = this.adjustDateForTimeOffset(new Date(this.terminForm.controls['datum'].value))
     this.terminForm.controls['datum'].setValue(datum);
+    this.terminForm.controls['barva'].setValue(this.colorValue);
     this.dbService.dodajTermin(this.terminForm.value)
     .subscribe(
       (data) => {
         if(data.termin === "OK"){
-          alert("Termin uspešno dodan");
+          let message = "Termin uspešno dodan";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Termin dodan", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
+          this.terminForm.reset();
         } else{
           alert("Prišlo je do napake pri dodajanju termina");
         }
@@ -256,7 +264,13 @@ export class RazpsTerminaComponent {
      .subscribe(
        (data) => {
          if(data.termin === "OK"){
-           alert("Termini za "+ this.mesec +" uspešno dodani");
+          let message = "Termini za "+ this.mesec +" uspešno dodani";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Termini dodani", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          });  
          } else{
            alert("Prišlo je do napake pri dodajanju terminov");
          }
