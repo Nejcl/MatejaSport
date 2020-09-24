@@ -54,6 +54,7 @@ export class ProfilComponent implements OnInit,AfterViewInit {
   prijave = [];
   razpolozljiviTermini = [];
   aktivniTermini = [];
+  showOverlay = true;
   selected: {startDate: moment.Moment, endDate: moment.Moment};
   ranges: any = {
     'Danes': [moment(), moment()],
@@ -81,8 +82,8 @@ export class ProfilComponent implements OnInit,AfterViewInit {
 
 
   constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog) {
-    this.user = localStorage.getItem('USER');
-    this.ime = localStorage.getItem('ime');
+    this.user = sessionStorage.getItem('USER');
+    this.ime = sessionStorage.getItem('ime');
   }
 
   ngOnInit() {
@@ -140,6 +141,7 @@ export class ProfilComponent implements OnInit,AfterViewInit {
 
 
 prikaziTrenutneTermine() {
+  this.prijave = [];
   let item = {user: this.user}
   this.dbService.geAktivniTermini(item).subscribe(
     (data) => {
@@ -168,6 +170,7 @@ prikaziTrenutneRezerve() {
         this.prijave.push(element.id_termin)
       });
       this.dataSourceRezerve = new MatTableDataSource(data);
+      this.showOverlay = false;
       if(this.dataSourceRezerve.data.length > 0){
         this.aktivnePrijaveRezerve = true;
       } else {
@@ -201,7 +204,7 @@ prikaziTrenutneRezerve() {
   sortirajAktivneTermine(){
     this.aktivniTermini.sort(function(a, b) {
       // Sort by count
-      var dCount = new Date(a.datum).getDate() - new Date(b.datum).getDate();
+      var dCount = new Date(a.datum).getTime() - new Date(b.datum).getTime();
       if(dCount) return dCount;
   
       // If there is a tie, sort by time
@@ -223,7 +226,7 @@ prikaziTrenutneRezerve() {
   sortirajTermine(){
     this.razpolozljiviTermini.sort(function(a, b) {
       // Sort by count
-      var dCount = new Date(a.datum).getDate() - new Date(b.datum).getDate();
+      var dCount = new Date(a.datum).getTime() - new Date(b.datum).getTime();
       if(dCount) return dCount;
   
       // If there is a tie, sort by time
@@ -262,6 +265,8 @@ prikaziTrenutneRezerve() {
   }
 
   prikaziTermine() {
+    this.noData = false;
+    this.showOverlay = true;
     this.dbService.geTermini(this.selected).subscribe(
       (data) => {
         this.razpolozljiviTermini = data;
@@ -270,6 +275,7 @@ prikaziTrenutneRezerve() {
         this.dataSource = new MatTableDataSource(this.razpolozljiviTermini);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.showOverlay = false;
         if(this.dataSource.data.length < 1){
          this.myText='Ni razpisanih terminov';
           this.noData = true;
@@ -284,6 +290,8 @@ prikaziTrenutneRezerve() {
   }
 
   prikaziPrijavoNaTermin() {
+    this.showOverlay = true;
+    this.prikaziTermine();
     this.prijavaNaTermin = true;
     this.aktivnePrijave = false;
     let top = document.getElementById('top');
@@ -294,6 +302,7 @@ prikaziTrenutneRezerve() {
   }
 
   prikaziAktivnePrijave(){
+    this.showOverlay = true;
     this.prikaziTrenutneTermine(); 
     this.prikaziTrenutneRezerve();
     this.prijavaNaTermin = false;
@@ -309,18 +318,28 @@ prikaziTrenutneRezerve() {
     let date = new Date(row.datum); 
     var now = new Date();
     var t = new Date();
+    var time =  row.od.split ( ":" );
+    let startTermina  = Number(time[0])*60;
+    startTermina +=Number(time[1]);
+    let jutranjiTermin = 11*60;
     var minute15= 15*60; // odjava možna do 15:00 na dan termina
+    var minute20=20*60; //odjava možna do 20 en dan pred terminom za jutranje vadbe
     var currentTime = t.getHours()*60 + t.getMinutes();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
     if(date.getTime() == today.getTime()) {
       if(currentTime > minute15)
        return false;
+    } 
+    today.setDate(today.getDate() + 1);
+    if (date.getTime() == today.getTime() && startTermina < jutranjiTermin) {
+      if(currentTime > minute20)
+       return false;
     }
     return true;
 }
 
-  odjaviUporabnika(id): void {
-    let data = {id: id};
+  odjaviUporabnika(row): void {
+    let data = {id: row.id_prijava, id_termin:row.id_termin};
     this.dbService.odjaviUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="odjavljen"){
@@ -331,11 +350,8 @@ prikaziTrenutneRezerve() {
               maxWidth: "400px",
               data: dialogData
           });
-             
-          dialogRef.afterClosed().subscribe(dialogResult => {
-          this.result = dialogResult;
-
-           });
+           let index = this.prijave.indexOf(row.id_termin);
+           this.prijave.splice(index,1);
           this.prikaziTrenutneTermine(); 
         }
       }
@@ -355,11 +371,6 @@ prikaziTrenutneRezerve() {
               maxWidth: "400px",
               data: dialogData
           });
-             
-          dialogRef.afterClosed().subscribe(dialogResult => {
-          this.result = dialogResult;
-
-           });
            this.prijave.push(id);
            this.osveziRazpolozljiveTermine();        
           } else{
@@ -384,11 +395,6 @@ prikaziTrenutneRezerve() {
               maxWidth: "400px",
               data: dialogData
           });
-             
-          dialogRef.afterClosed().subscribe(dialogResult => {
-          this.result = dialogResult;
-
-           });
            this.prijave.push(id);
            this.prikaziTermine();
 
@@ -400,8 +406,8 @@ prikaziTrenutneRezerve() {
     );
   }
 
-  odjaviRezervo(id): void {
-    let data = {id: id};
+  odjaviRezervo(row): void {
+    let data = {id: row.id_prijava};
     this.dbService.odjaviRezervo(data).subscribe(
       (data) => {
         if(data['resp'] =="odjavljen"){
@@ -412,10 +418,9 @@ prikaziTrenutneRezerve() {
               maxWidth: "400px",
               data: dialogData
           });
-          this.prikaziTrenutneRezerve();  
-          dialogRef.afterClosed().subscribe(dialogResult => {
-          this.result = dialogResult;
-           });
+           let index = this.prijave.indexOf(row.id_termin);
+           this.prijave.splice(index,1);
+          this.prikaziTrenutneTermine(); 
         }
       }
     );

@@ -17,6 +17,10 @@
   :host .akcije {
       width: 25%;
   }
+  :host .prisotnost {
+    width: 5% !important;
+    padding-left: unset !important;
+}
   :host .mat-form-field-empty.mat-form-field-label {
     color: green;
 }

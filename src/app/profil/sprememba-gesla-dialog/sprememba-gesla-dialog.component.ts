@@ -21,7 +21,7 @@ export class SpremembaGeslaDialogComponent implements OnInit {
   user: string;
 
   ngOnInit() {
-    this.user = localStorage.getItem('USER');
+    this.user = sessionStorage.getItem('USER');
     this.changePwForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]

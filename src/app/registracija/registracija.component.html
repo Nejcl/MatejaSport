@@ -11,6 +11,8 @@
           </mat-form-field>
           <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
             <div *ngIf="f.userName.errors.required">Prosim vnesite uporabniško ime</div>
+            <div *ngIf="f.userName.errors.forbiddenValue">Uporabniško ime že obstaja</div>
+            
           </div>
           <mat-form-field class="example-full-width">
             <input matInput name="fname" formControlName="firstName" placeholder="Ime"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
@@ -40,7 +42,7 @@
           <br>
           <br>
           <mat-form-field class="example-full-width">
-            <input matInput type="password" placeholder="Goslo" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+            <input matInput type="password" placeholder="Geslo" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
           </mat-form-field>
           <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
             <div *ngIf="f.password.errors.required">Prosim vnesite geslo</div>

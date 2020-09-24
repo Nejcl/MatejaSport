@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
 import { MustMatch } from '../_helpers/must-match.validator';
 import { DatabaseService } from '../database.service';
 import { LoginService } from '../login.service';
@@ -17,11 +17,16 @@ export class RegistracijaComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
   result: string = '';
-  constructor( private formBuilder: FormBuilder, public router: Router, private dbService: DatabaseService, private log: LoginService, public dialog: MatDialog) { }
+  obstojeciUporabniki = [];
+  constructor( private formBuilder: FormBuilder, public router: Router, private dbService: DatabaseService, private log: LoginService, public dialog: MatDialog) {
+    this.getExistingUsers();
+  }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      userName: ['', Validators.required],
+      userName: ['', [Validators.required,(control: AbstractControl) => {
+        return this.obstojeciUporabniki.indexOf(control.value) === -1 ? null : {'forbiddenValue': true};
+     }]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required,Validators.email]],
@@ -47,7 +52,7 @@ export class RegistracijaComponent implements OnInit {
             (data) => {
               if(data.registration === "OK"){
                 
-                  let message = "Registracija uspešna prosim počakajte na aktivacijo računa";
+                  let message = "Registracija uspešna, vaš račun bo aktiviran v roku 24 ur";
                   let icon = "info";
                   const dialogData = new ConfirmDialogModel(false,icon,"Registracija uspešna", message,'Ok');
                   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -70,6 +75,16 @@ export class RegistracijaComponent implements OnInit {
             (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
          );
       } 
+
+      getExistingUsers(){
+        this.dbService.getUsers().subscribe(
+          (data) => {
+             data.forEach(element => {
+              this.obstojeciUporabniki.push(element.uporabnik)
+            });
+           }
+        );
+      }
 
       numberOnly(event): boolean {
         const charCode = (event.which) ? event.which : event.keyCode;

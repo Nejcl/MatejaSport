@@ -5,7 +5,7 @@ import UrnikJson from '../../urnik.json';
 @Component({
   selector: 'app-urnik',
   templateUrl: './urnik.component.html',
-  styleUrls: ['./urnik.component.css'],
+  styleUrls: ['./urnik.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class UrnikComponent implements OnInit,AfterViewInit {
@@ -44,8 +44,6 @@ backupUrnik = [{"id":"57","dan":"\u010detrtek","od":"08:30","do":"09:30","naziv"
           top.scrollIntoView();
           top = null;
         }
-       // this.Vadba = this.backupUrnik;
-        this.showUrnik();
   }
 
   showUrnik(){

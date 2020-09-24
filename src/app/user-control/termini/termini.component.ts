@@ -9,6 +9,7 @@ import { EditTerminDialogComponent } from './edit-termin-dialog/edit-termin-dial
 import { PrijavaNaTerminDialogComponent } from './prijava-na-termin-dialog/prijava-na-termin-dialog.component';
 import {MatDialog} from "@angular/material";
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import {SelectionModel} from '@angular/cdk/collections';
 
 import moment from 'moment';
 import 'moment/locale/sl';
@@ -52,13 +53,16 @@ export class TerminiComponent implements OnInit {
   terminiActive = true;
   novTerminActive = false;
   columnsToDisplay = ['barva','naziv','instruktor', 'datum', 'od','zasedenost','actions','barva1'];
-  innerDisplayedColumns = ['ime', 'email','telefon','actions'];
-  dataSource = new MatTableDataSource();
+  innerDisplayedColumns = ['select','ime', 'email','telefon','actions'];
+  innerDisplayedColumnsRezerve = ['ime', 'email','telefon','actions'];
+  setPrisotnost = false;
+  dataSource = new MatTableDataSource<Termin>();
   terminData: Termin[] = [];
   expandedElement: Termin | null;
   minDate = null;
   odDate = new Date();
   result: string = '';
+  showOverlay = true;
   selected: {startDate: moment.Moment, endDate: moment.Moment};
   ranges: any = {
     'Danes': [moment(), moment()],
@@ -72,6 +76,35 @@ export class TerminiComponent implements OnInit {
   constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog) {
  
    }
+   selection = new SelectionModel<Prijavljeni>(true, []);
+
+   /** Whether the number of selected elements matches the total number of rows. */
+   isAllSelected() {
+     const numSelected = this.selection.selected.length;
+     const numRows = this.expandedElement.prijave.data.length;
+     return numSelected === numRows;
+   }
+ 
+   /** Selects all rows if they are not all selected; otherwise clear selection. */
+   masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => {
+          if(row == this.expandedElement) {
+            row.prijave.data.forEach(element => {this.selection.select(element);   
+            });
+          }
+        });
+  }
+
+     /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Prijavljeni): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+  }
+ 
 
   ngOnInit() {
     this.selected = {startDate:moment().startOf('day'),endDate:moment().add(1,'month').endOf('day')}
@@ -85,20 +118,22 @@ export class TerminiComponent implements OnInit {
   }
 
   prikaziTermine() {
+    this.showOverlay = true;
     this.terminData = [];
     this.dbService.geTermini(this.selected).subscribe(
       (data) => {
         data.forEach(termin => {
           if (termin.prijavljeni && Array.isArray(termin.prijavljeni) && termin.prijavljeni.length) {
-            this.terminData = [...this.terminData, {...termin, prijave: new MatTableDataSource(termin.prijavljeni)}];
+            this.terminData = [...this.terminData, {...termin, prijave: new MatTableDataSource<Prijavljeni>(termin.prijavljeni)}];
           } else {
             termin.prijavljeni = this.praznaPrijava;
-            this.terminData = [...this.terminData, {...termin, prijave: new MatTableDataSource([termin.prijavljeni])}];
+            this.terminData = [...this.terminData, {...termin, prijave: new MatTableDataSource<Prijavljeni>([termin.prijavljeni])}];
           }
         });
-        this.dataSource = new MatTableDataSource(this.terminData);
+        this.dataSource = new MatTableDataSource<Termin>(this.terminData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.showOverlay = false;
         if(this.dataSource.data.length < 1){
          this.myText='Ni razpisanih terminov';
           this.noData = true;
@@ -145,6 +180,7 @@ export class TerminiComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
     this.result = dialogResult;
     if(this.result) {
+      this.showOverlay = true;
         this.dbService.odpovejTermin(data).subscribe(
           (data) => {
             if(data['resp'] =="odpovedan"){
@@ -155,6 +191,7 @@ export class TerminiComponent implements OnInit {
                   maxWidth: "400px",
                   data: dialogData
               });  
+              this.showOverlay = false;
               dialogRef.afterClosed().subscribe(dialogResult => {
               this.result = dialogResult;
     
@@ -169,9 +206,15 @@ export class TerminiComponent implements OnInit {
   }
 
   toggleRow(element: Termin) {
+    this.setPrisotnost = false;
     element.prijave && (element.prijave as MatTableDataSource<Prijavljeni>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
     this.cd.detectChanges();
-    //this.innerTables.forEach((table, index) => (table.dataSource as MatTableDataSource<Prijavljeni>).sort = this.innerSort.toArray()[index]);
+    this.expandedElement.prijave.data.forEach(element => { 
+      element.prisotnost ? this.setPrisotnost = true:this.setPrisotnost = false ;
+      if(element.prisotnost == 1){
+        this.selection.select(element);
+      }
+    });
   }
 
 
@@ -182,6 +225,7 @@ export class TerminiComponent implements OnInit {
     }})
     editDialogRef.afterClosed().subscribe(() => {
       // Do stuff after the dialog has closed
+      this.showOverlay = true;
       this.prikaziTermine(); 
 
   });
@@ -196,12 +240,14 @@ export class TerminiComponent implements OnInit {
     }})
     prijaviDialogRef.afterClosed().subscribe(() => {
       // Do stuff after the dialog has closed
+      this.showOverlay = true;
       this.prikaziTermine(); 
   });
   }
 
-  odjaviUporabnika(id): void {
-    let data = {id: id};
+  odjaviUporabnika(row): void {
+    let data = {id: row.Id,id_termin:row.Id_termin};
+    this.showOverlay = true;
     this.dbService.odjaviUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="odjavljen"){
@@ -211,7 +257,8 @@ export class TerminiComponent implements OnInit {
           const dialogRef = this.dialog.open(ConfirmDialogComponent, {
               maxWidth: "400px",
               data: dialogData
-          });  
+          }); 
+          this.showOverlay = false; 
           dialogRef.afterClosed().subscribe(dialogResult => {
           this.result = dialogResult;
 
@@ -223,6 +270,7 @@ export class TerminiComponent implements OnInit {
   }
 
   prijaviRezervo(row): void {
+    this.showOverlay = true;
     let data = {id: row.Id,id_uporabnik:row.ID_uporabnik,id_termin:row.ID_termin};
     this.dbService.prijaviRezervo(data).subscribe(
       (data) => {
@@ -234,6 +282,7 @@ export class TerminiComponent implements OnInit {
               maxWidth: "400px",
               data: dialogData
           });  
+          this.showOverlay = false;
           dialogRef.afterClosed().subscribe(dialogResult => {
           this.result = dialogResult;
 
@@ -244,7 +293,38 @@ export class TerminiComponent implements OnInit {
     );
   }
 
+
+  shraniPrisotnost(){
+    this.showOverlay = true;
+    let prisotni =  [];   
+    this.selection.selected.forEach(element => {
+      prisotni.push({id_prijava:element.Id})
+    });
+    console.log(prisotni);
+    this.dbService.setPrisotnost(prisotni)
+    .subscribe(
+      (data) => {
+        if(data.prisotnost === "OK"){
+         let message = "Prisotnost uspešno shranjena";
+         let icon = "info";
+         const dialogData = new ConfirmDialogModel(false,icon,"Prisotnost na terminu", message,'Ok');
+         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+             maxWidth: "400px",
+             data: dialogData
+         }); 
+         this.showOverlay = false; 
+        } else{
+          alert("Prišlo je do napake pri dodajanju terminov");
+        }
+      },
+      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+    );
+
+  }
+
+
   izbrisiTermin(row){
+    this.showOverlay = true;
     const data = {id:row.id};
     let message = "Ali ste prepričani da želite izbrisati termin: \n " + row.naziv + "?";
     let icon = "cancel";
@@ -290,7 +370,7 @@ export interface Termin {
   zasedenost: string;
   barva:string;
   status:string;
-  prijave?: Prijavljeni[] | MatTableDataSource<Prijavljeni>;
+  prijave?: MatTableDataSource<Prijavljeni>;
   rezerve?: Rezerve[] | MatTableDataSource<Rezerve>;
 }
 
@@ -309,11 +389,12 @@ export interface TerminDataSource {
 }
 
 export interface Prijavljeni {
-  id:number
+  Id:number
   ime: string;
   priimek: string;
   email:string;
   telefon:string;
+  prisotnost:number;
 }
 
 export interface Rezerve {

@@ -170,4 +170,8 @@ export class DatabaseService {
     return this.http.post<any[]>(`${this.baseUrl}/getStTerminov.php`,data);
   }
 
+  setPrisotnost(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/prisotnost.php`,InData); 
+  }
+
 }

@@ -26,28 +26,20 @@ if(isset($postdata) && !empty($postdata))
   
   // Sanitize.
   $id = mysqli_real_escape_string($conn, trim($request->id));
-  $id_termin = mysqli_real_escape_string($conn, trim($request->id_termin));
+  $geslo = mysqli_real_escape_string($conn, trim($request->geslo));
+
+  $hashed_password = password_hash($geslo, PASSWORD_DEFAULT);
+
   // Store.
-  $sql = "DELETE FROM `prijaveNaTermin` WHERE`Id`='{$id}'";
-  $sql1 = "SELECT t.status, COUNT(r.Id_uporabnik)  AS rezerve, COUNT(pt.Id_uporabnik) AS zasedenost, t.st_mest FROM termini t LEFT JOIN rezerveTermin r ON t.ID_termin = r.id_termin LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin  WHERE t.Id_termin = '{$id_termin}'GROUP BY t.ID_termin"; 
+  $sql = "UPDATE `uporabniki` SET `geslo`='$hashed_password' WHERE `ID_uporabnik`='{$id}'";
 
   if(mysqli_query($conn,$sql))
   {
     http_response_code(201);
     $data = [
-      'resp'    => 'odjavljen',
+      'resp'    => 'ponastavljeno',
     ];
     echo json_encode($data);
-    $result = mysqli_query($conn, $sql1);
-    if (mysqli_num_rows($result) > 0) {
-      // output data of each row
-      while($row = mysqli_fetch_assoc($result)) {
-        if($row["status"] == 'zaseden' && $row["rezerve"] == 0 && $row["zasedenost"] < $row["st_mest"]){
-          $sql2 ="UPDATE `termini` SET `status`='razpisan' WHERE `ID_termin`='{$id_termin}'";
-          mysqli_query($conn, $sql2);
-        }
-      }
-    }
   }
   else
   {

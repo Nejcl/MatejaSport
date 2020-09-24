@@ -46,18 +46,19 @@ if(isset($postdata) && !empty($postdata))
         $data[$cr]['barva'] = $row['barva'];
         $data[$cr]['status'] = $row['status'];
         $data[$cr]['st_mest'] = $row['st_mest'];
-        $sqlU = "SELECT  pt.Id,u.ID_uporabnik, ime, priimek,email,telefon FROM prijaveNaTermin pt INNER JOIN uporabniki u ON pt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']}";
+        $sqlU = "SELECT  pt.Id,u.ID_uporabnik,ID_termin,ime, priimek,email,telefon,pt.prisotnost FROM prijaveNaTermin pt INNER JOIN uporabniki u ON pt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']}";
         if($res = mysqli_query($conn,$sqlU)){
           $cru = 0;
           while($rowU = mysqli_fetch_assoc($res))
           {
             $data[$cr]['prijavljeni'][$cru]['Id'] = $rowU['Id'];
+            $data[$cr]['prijavljeni'][$cru]['Id_termin'] = $rowU['ID_termin'];
             $data[$cr]['prijavljeni'][$cru]['ID_uporabnik'] = $rowU['ID_uporabnik'];
             $data[$cr]['prijavljeni'][$cru]['ime'] = $rowU['ime'];
             $data[$cr]['prijavljeni'][$cru]['priimek'] = $rowU['priimek'];
             $data[$cr]['prijavljeni'][$cru]['email'] = $rowU['email'];
             $data[$cr]['prijavljeni'][$cru]['telefon'] = $rowU['telefon'];
-  
+            $data[$cr]['prijavljeni'][$cru]['prisotnost'] = $rowU['prisotnost'];
             $cru++;
           }
           if ( 0===$cru ) { 

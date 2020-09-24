@@ -140,8 +140,12 @@ navigationInterceptor(event: RouterEvent): void {
   }
 
   openLoginDialog(): void {
-    this.dialog.closeAll();
-    const loginDialogRef = this.dialog.open(LoginDialogComponent,{width:'320px' ,panelClass: 'mobile-width'})
+    if(sessionStorage.getItem('USER') != undefined && localStorage.getItem("") != undefined) {
+      this.router.navigateByUrl('/profil');
+    } else {
+      this.dialog.closeAll();
+      const loginDialogRef = this.dialog.open(LoginDialogComponent,{width:'320px' ,panelClass: 'mobile-width'})
+    }
   }
 
   oNasMobile(){
