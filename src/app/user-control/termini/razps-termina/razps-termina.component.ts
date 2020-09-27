@@ -42,7 +42,7 @@ export class RazpsTerminaComponent {
   vodiOptions: string[] = ['Tjaša','Tina/Meta','Mateja','Meta','Anita','Jaka','Tina','Ana'];
   monthNames = ["Januar", "Februar", "Marec", "April", "Maj", "Junij","Julij", "Avgust", "September", "Oktober", "November", "December"];
   Vadbe: Array<{dan:string, od:string, do:string, naziv: string, vodi:string, color:string}>;
-
+  stMest = 21;
   mesec: string;
   leto: number;
   dict = {}; 
@@ -161,6 +161,16 @@ export class RazpsTerminaComponent {
 
   }
 
+  addMesto(){
+    this.stMest +=1;
+  }
+  
+  removeMesto(){
+    if(this.stMest >0){
+      this.stMest -=1;
+    }
+  }
+
   previusMonth() {
     if(this.monthNames.indexOf(this.mesec)+(this.leto-this.now.getFullYear())*12>this.now.getMonth()){
       this.mesec = this.monthNames[this.monthNames.indexOf(this.mesec)-1];
@@ -254,7 +264,7 @@ export class RazpsTerminaComponent {
       var loop = new Date(startDate);
       while(loop <= endDate){
         vadbePoDnevih[loop.getDay()].forEach(vadba => {
-          termini.push({naziv:vadba.naziv,vodi:vadba.vodi,barva:vadba.color,datum:loop,od:vadba.od,do:vadba.do,st_mest:21});     
+          termini.push({naziv:vadba.naziv,vodi:vadba.vodi,barva:vadba.color,datum:loop,od:vadba.od,do:vadba.do,st_mest:this.stMest});     
         });          
         var newDate = loop.setDate(loop.getDate() + 1);
         loop = new Date(newDate);

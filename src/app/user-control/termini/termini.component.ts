@@ -350,6 +350,7 @@ export class TerminiComponent implements OnInit {
 
   prijaviRezervo(row : Prijavljeni): void {
     this.showOverlay = true;
+    console.log(row);
     let data = {id: row.Id,id_uporabnik:row.ID_uporabnik,id_termin:row.Id_termin};
     this.dbService.prijaviRezervo(data).subscribe(
       (data) => {

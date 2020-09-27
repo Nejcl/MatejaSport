@@ -28,8 +28,7 @@ export class AktivacijaUporabnikovComponent implements OnInit {
 
   getParentComponent(): UserControlComponent{
     return this.viewContainerRef[ '_data' ].componentView.component.viewContainerRef[ '_view' ].component
-}
-
+  }
 
   prikaziNoveUporabnike() {
     this.dbService.getNewUsers().subscribe(

@@ -135,19 +135,26 @@
         </div>
       </form>
       <div class="row" style="margin-top:3rem;">
-        <div class=" col-6" style="text-align:right;">
+        <div class=" col-4" style="text-align:left;">
           <button mat-button (click)="previusMonth()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_back</mat-icon></button>
-          <mat-form-field style="width:30%; font-size:2rem; text-align: center;" class="readonly-wrapper">
+          <mat-form-field style="width:65%; font-size:2rem; text-align: center;" class="readonly-wrapper">
             <input class="form-control" matInput name="mesec" placeholder="Mesec"  [(ngModel)]="mesec" readonly>
         </mat-form-field>
         <button mat-button (click)="nextMonth()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_forward</mat-icon></button>
         </div>
-        <div class="col-5" style="text-align:left;">
+        <div class="col-3" style="text-align:left;">
           <button mat-button (click)="previusYear()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_back</mat-icon></button>
-          <mat-form-field style="width:30%; font-size:2rem; text-align: center;" class="readonly-wrapper">
+          <mat-form-field style="width:50%; font-size:2rem; text-align: center;" class="readonly-wrapper">
             <input class="form-control" matInput name="leto" placeholder="Leto"  [(ngModel)]="leto" readonly>
         </mat-form-field>
         <button mat-button (click)="nextYear()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_forward</mat-icon></button>
+        </div>
+        <div class="col-3" style="text-align:left;">
+          <button mat-button (click)="removeMesto()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_back</mat-icon></button>
+          <mat-form-field style="width:50%; font-size:2rem; text-align: center;" class="readonly-wrapper">
+            <input class="form-control" matInput name="Št. mest" placeholder="Št. mest"  [(ngModel)]="stMest" readonly>
+        </mat-form-field>
+        <button mat-button (click)="addMesto()" style="font-size:1.3rem;"> <mat-icon style="cursor: pointer;">arrow_forward</mat-icon></button>
         </div>
 
       </div>

@@ -44,7 +44,7 @@ if ($conn->connect_error) {
           while($rowU = mysqli_fetch_assoc($res))
           {
             $data[$cr]['prijavljeni'][$cru]['Id'] = $rowU['Id'];
-            $data[$cr]['prijavljeni'][$cru]['Id_termin'] = $rowU['ID_termin'];
+            $data[$cr]['prijavljeni'][$cru]['Id_termin'] = $rowU['id_termin'];
             $data[$cr]['prijavljeni'][$cru]['ID_uporabnik'] = $rowU['ID_uporabnik'];
             $data[$cr]['prijavljeni'][$cru]['ime'] = $rowU['ime'];
             $data[$cr]['prijavljeni'][$cru]['priimek'] = $rowU['priimek'];
@@ -64,7 +64,7 @@ if ($conn->connect_error) {
           {
             $data[$cr]['rezerve'][$crr]['Id'] = $rowR['Id'];
             $data[$cr]['rezerve'][$crr]['ID_uporabnik'] = $rowR['ID_uporabnik'];
-            $data[$cr]['rezerve'][$crr]['ID_termin'] = $rowR['ID_termin'];
+            $data[$cr]['rezerve'][$crr]['Id_termin'] = $rowR['ID_termin'];
             $data[$cr]['rezerve'][$crr]['ime'] = $rowR['ime'];
             $data[$cr]['rezerve'][$crr]['priimek'] = $rowR['priimek'];
             $data[$cr]['rezerve'][$crr]['email'] = $rowR['email'];

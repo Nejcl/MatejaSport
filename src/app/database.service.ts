@@ -9,8 +9,8 @@ import { Observable} from 'rxjs';
 export class DatabaseService {
 
   //baseUrl = 'http://localhost:4200/php';
-  //baseUrl = 'http://127.0.0.1:80/php'
-  baseUrl = 'http://www.matejasport.si/php';
+  baseUrl = 'http://127.0.0.1:80/php'
+  //baseUrl = 'http://www.matejasport.si/php';
   data: any;
 
   constructor(private http: HttpClient) { }

@@ -67,13 +67,13 @@ export class ProfilComponent implements OnInit,AfterViewInit {
   columnsToDisplayTrenutni = ['dan','naziv','actions'];
   result: string = '';
   dnevi:any = [
-    {name: 'Pon', completed: true, color: 'accent', value: 1},
-    {name: 'Tor', completed: true, color: 'accent', value: 2},
-    {name: 'Sre', completed: true, color: 'accent', value: 3},
-    {name: 'Čet', completed: true, color: 'accent', value: 4},
-    {name: 'Pet', completed: true, color: 'accent', value: 5},
-    {name: 'Sob', completed: true, color: 'accent', value: 6},
-    {name: 'Ned', completed: true, color: 'accent', value: 0}
+    {name: 'Pon', completed: false, color: 'accent', value: 1},
+    {name: 'Tor', completed: false, color: 'accent', value: 2},
+    {name: 'Sre', completed: false, color: 'accent', value: 3},
+    {name: 'Čet', completed: false, color: 'accent', value: 4},
+    {name: 'Pet', completed: false, color: 'accent', value: 5},
+    {name: 'Sob', completed: false, color: 'accent', value: 6},
+    {name: 'Ned', completed: false, color: 'accent', value: 0}
   ]
   dataSource = new MatTableDataSource();
   dataSourceTrenutni = new MatTableDataSource();
@@ -245,12 +245,16 @@ prikaziTrenutneRezerve() {
 
   prikaziIzbraneDneve(){
     let izbraniDnevi = [];
+    let posamezniDnevi =this.razpolozljiviTermini;
     this.dnevi.forEach(dan => {
       if(dan.completed) {
         izbraniDnevi.push(dan.value);
       }
     });
-    let posamezniDnevi = this.razpolozljiviTermini.filter(i => izbraniDnevi.includes(new Date(i.datum).getDay()));
+
+    if(izbraniDnevi.length>0) {
+      posamezniDnevi = this.razpolozljiviTermini.filter(i => izbraniDnevi.includes(new Date(i.datum).getDay()));
+    }
     this.dataSource = new MatTableDataSource(posamezniDnevi);
     this.dataSource.filter = this.filter.trim().toLowerCase();
     this.dataSource.paginator = this.paginator;
