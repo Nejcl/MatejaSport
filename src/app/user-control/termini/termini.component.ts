@@ -13,6 +13,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 
 import moment from 'moment';
 import 'moment/locale/sl';
+import { TmplAstElement } from '@angular/compiler';
 moment.locale('sl');
 
 @Component({
@@ -63,6 +64,8 @@ export class TerminiComponent implements OnInit {
   odDate = new Date();
   result: string = '';
   showOverlay = true;
+  notification: number;
+  terminiNotifikacije: Termin[]  = [];
   selected: {startDate: moment.Moment, endDate: moment.Moment};
   ranges: any = {
     'Danes': [moment(), moment()],
@@ -110,6 +113,7 @@ export class TerminiComponent implements OnInit {
     this.selected = {startDate:moment().startOf('day'),endDate:moment().add(1,'month').endOf('day')}
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.getTerminiNotifikacije();
   }
 
   ngAfterViewInit() {
@@ -117,10 +121,78 @@ export class TerminiComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  prikaziTermineNotifikacije(){
+    this.dataSource = new MatTableDataSource<Termin>(this.terminiNotifikacije);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    if(this.dataSource.data.length < 1){
+      this.myText='Ni terminov';
+       this.noData = true;
+     }
+  }
+
+  getTerminiNotifikacije() {
+    this.terminiNotifikacije = [];
+    this.dbService.getNotificationTermini().subscribe(
+      (data) => {
+        data.forEach(termin => {
+          if (termin.prijavljeni && Array.isArray(termin.prijavljeni) && termin.prijavljeni.length) {
+            this.terminiNotifikacije = [...this.terminiNotifikacije, {...termin, prijave: new MatTableDataSource<Prijavljeni>(termin.prijavljeni)}];
+          } else {
+            termin.prijavljeni = this.praznaPrijava;
+            this.terminiNotifikacije = [...this.terminiNotifikacije, {...termin, prijave: new MatTableDataSource<Prijavljeni>([termin.prijavljeni])}];
+          }
+        });
+        this.notification = data.length;
+        this.sortirajNotificationTermine();
+
+      });
+  }
+
+  sortirajNotificationTermine(){
+    this.terminiNotifikacije.sort(function(a, b) {
+      // Sort by count
+      var dCount = new Date(a.datum).getTime() - new Date(b.datum).getTime();
+      if(dCount) return dCount;
+  
+      // If there is a tie, sort by time
+      let minuteA;
+      var time =  a.od.split ( ":" );
+      minuteA = Number(time[0])*60;
+      minuteA +=Number(time[1]);
+      let minuteB;
+      var time =  b.od.split ( ":" );
+      minuteB = Number(time[0])*60;
+      minuteB +=Number(time[1]);
+      var dminute = minuteA - minuteB;
+      return dminute;
+    });
+  }
+
+  sortirajTermine(){
+    this.terminData.sort(function(a, b) {
+      // Sort by count
+      var dCount = new Date(a.datum).getTime() - new Date(b.datum).getTime();
+      if(dCount) return dCount;
+  
+      // If there is a tie, sort by time
+      let minuteA;
+      var time =  a.od.split ( ":" );
+      minuteA = Number(time[0])*60;
+      minuteA +=Number(time[1]);
+      let minuteB;
+      var time =  b.od.split ( ":" );
+      minuteB = Number(time[0])*60;
+      minuteB +=Number(time[1]);
+      var dminute = minuteA - minuteB;
+      return dminute;
+    });
+  }
+
   prikaziTermine() {
     this.showOverlay = true;
     this.terminData = [];
-    this.dbService.geTermini(this.selected).subscribe(
+    this.dbService.getTermini(this.selected).subscribe(
       (data) => {
         data.forEach(termin => {
           if (termin.prijavljeni && Array.isArray(termin.prijavljeni) && termin.prijavljeni.length) {
@@ -130,6 +202,7 @@ export class TerminiComponent implements OnInit {
             this.terminData = [...this.terminData, {...termin, prijave: new MatTableDataSource<Prijavljeni>([termin.prijavljeni])}];
           }
         });
+        this.sortirajTermine();
         this.dataSource = new MatTableDataSource<Termin>(this.terminData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -209,12 +282,15 @@ export class TerminiComponent implements OnInit {
     this.setPrisotnost = false;
     element.prijave && (element.prijave as MatTableDataSource<Prijavljeni>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
     this.cd.detectChanges();
-    this.expandedElement.prijave.data.forEach(element => { 
-      element.prisotnost ? this.setPrisotnost = true:this.setPrisotnost = false ;
-      if(element.prisotnost == 1){
-        this.selection.select(element);
-      }
-    });
+    if(this.expandedElement){
+      this.expandedElement.prijave.data.forEach(element => { 
+        element.prisotnost ? this.setPrisotnost = true:this.setPrisotnost = false ;
+        if(element.prisotnost == 1){
+          this.selection.select(element);
+        }
+      });
+    }
+
   }
 
 
@@ -226,6 +302,7 @@ export class TerminiComponent implements OnInit {
     editDialogRef.afterClosed().subscribe(() => {
       // Do stuff after the dialog has closed
       this.showOverlay = true;
+      this.getTerminiNotifikacije();
       this.prikaziTermine(); 
 
   });
@@ -241,6 +318,7 @@ export class TerminiComponent implements OnInit {
     prijaviDialogRef.afterClosed().subscribe(() => {
       // Do stuff after the dialog has closed
       this.showOverlay = true;
+      this.getTerminiNotifikacije();
       this.prikaziTermine(); 
   });
   }
@@ -263,15 +341,16 @@ export class TerminiComponent implements OnInit {
           this.result = dialogResult;
 
            });
+           this.getTerminiNotifikacije();
           this.prikaziTermine(); 
         }
       }
     );
   }
 
-  prijaviRezervo(row): void {
+  prijaviRezervo(row : Prijavljeni): void {
     this.showOverlay = true;
-    let data = {id: row.Id,id_uporabnik:row.ID_uporabnik,id_termin:row.ID_termin};
+    let data = {id: row.Id,id_uporabnik:row.ID_uporabnik,id_termin:row.Id_termin};
     this.dbService.prijaviRezervo(data).subscribe(
       (data) => {
         if(data['resp'] =="prijavljen"){
@@ -282,11 +361,7 @@ export class TerminiComponent implements OnInit {
               maxWidth: "400px",
               data: dialogData
           });  
-          this.showOverlay = false;
-          dialogRef.afterClosed().subscribe(dialogResult => {
-          this.result = dialogResult;
-
-           });
+          this.getTerminiNotifikacije();
           this.prikaziTermine(); 
         }
       }
@@ -294,14 +369,15 @@ export class TerminiComponent implements OnInit {
   }
 
 
-  shraniPrisotnost(){
+  shraniPrisotnost(element){
     this.showOverlay = true;
     let prisotni =  [];   
     this.selection.selected.forEach(element => {
       prisotni.push({id_prijava:element.Id})
     });
-    console.log(prisotni);
-    this.dbService.setPrisotnost(prisotni)
+    let items = {id_termin:element.id,prisotnost:prisotni}
+    console.log(items);
+    this.dbService.setPrisotnost(items)
     .subscribe(
       (data) => {
         if(data.prisotnost === "OK"){
@@ -315,9 +391,10 @@ export class TerminiComponent implements OnInit {
          this.showOverlay = false; 
         } else{
           alert("Prišlo je do napake pri dodajanju terminov");
+          this.showOverlay = false; 
         }
       },
-      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+      (error) => { alert("Prišlo je do napake prosimo preverite podatke \n" + error.message);this.showOverlay = false; }
     );
 
   }
@@ -352,8 +429,8 @@ export class TerminiComponent implements OnInit {
             alert("Prišlo je do napake pri izbrisu termina");
           }
         },
-        (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
-      );
+        (error) => { alert("Prišlo je do napake prosimo preverite podatke \n" + error.message);this.showOverlay = false; }
+        );
     }
      });  
   }
@@ -389,7 +466,9 @@ export interface TerminDataSource {
 }
 
 export interface Prijavljeni {
-  Id:number
+  Id:number;
+  Id_termin:number;
+  ID_uporabnik:number;
   ime: string;
   priimek: string;
   email:string;

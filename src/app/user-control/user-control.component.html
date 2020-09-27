@@ -3,7 +3,7 @@
 <mat-card class="card" style="margin-bottom: 50px;" >
   <button mat-button (click)="urnikClick()">Urnik</button>
   <button mat-button (click)="noviceClick()">Novice</button>
-  <button mat-button (click)="aktivacijaClick()"class="float-right">Uporabniki</button>
+  <button mat-button style="padding-right: 0;"   [matBadge]="noviUporabniki || null" matBadgePosition="after" matBadgeColor="accent" (click)="aktivacijaClick()"class="float-right">Uporabniki</button>
   <button mat-button (click)="terminiClick()" class="float-right">Termini</button>
 
   <div style="border-bottom: 1px solid black; margin-bottom: 20px;"></div>

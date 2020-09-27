@@ -143,6 +143,14 @@ ul, li {
 
 .paginator-margin{margin-right: 2rem;}
 
+.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 @media(max-width: 600px) {
   :host  .mobile-label {
     width: 80px;
@@ -188,6 +196,7 @@ ul, li {
 
   :host .col-3 {width: 100%;max-width: 80%;flex: unset;}
   :host .col-6 {width: 100%;max-width: 80%;flex: unset;}
+  :host .col-7 {width: 100%;max-width: 82%;flex: unset;}
 
   .paginator-margin{margin-right: 1rem;}
   

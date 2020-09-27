@@ -49,8 +49,10 @@ if(isset($postdata) && !empty($postdata))
       // output data of each row
       while($row = mysqli_fetch_assoc($result)) {
         if($row["zasedenost"] == $row["st_mest"]){
-          $sql2 ="UPDATE `termini` SET `status`='zaseden' WHERE `ID_termin`='{$id_termin}'";
-          mysqli_query($conn, $sql2);
+          $sql3 ="UPDATE `termini` SET `status`='zaseden' WHERE `ID_termin`='{$id_termin}'";
+          mysqli_query($conn, $sql3);
+          $sql4 = "UPDATE `termini` SET `notification`= 0 WHERE `ID_termin`='{$id_termin}'";
+          mysqli_query($conn, $sql4);
         }
       }
     } else {

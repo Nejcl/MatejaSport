@@ -27,7 +27,7 @@ if(isset($postdata) && !empty($postdata))
   $user = mysqli_real_escape_string($conn, trim($input->user));
   $date_now = date("Y-m-d"); // this format is string comparable
 
-  $sql = "SELECT pt.Id,t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT(COUNT(pt.Id_uporabnik) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin WHERE t.datum >='{$date_now}' AND pt.id_uporabnik = '{$user}' GROUP BY t.ID_termin ORDER BY t.datum ";
+  $sql = "SELECT pt.Id,t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT((SELECT COUNT(*) FROM prijaveNaTermin WHERE id_termin=t.ID_termin) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin WHERE t.datum >='{$date_now}' AND pt.id_uporabnik = '{$user}' GROUP BY t.ID_termin ORDER BY t.datum ";
 
   $data = [];
   

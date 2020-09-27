@@ -28,8 +28,7 @@ export class LoginDialogComponent implements OnInit {
               public dialog: MatDialog) { }
 
     onOkClick() {
-      this.dialogRef.close();
-      if(this.user.length > 0 && this.password.length > 0){
+      if(this.user && this.user.length > 0 &&this.password && this.password.length > 0){
         let item = {user: this.user, pw: this.password}
         this.dbService.checkUserandPassword(item)
         .subscribe(

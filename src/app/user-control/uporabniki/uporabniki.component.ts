@@ -21,7 +21,6 @@ export class UporabnikiComponent implements OnInit {
     this.prikaziUporabnike();
   }
 
-
   prikaziUporabnike() {
     this.dbService.getUsers().subscribe(
       (data) => {
@@ -66,7 +65,7 @@ export class UporabnikiComponent implements OnInit {
     this.dbService.ponastaviGesloUporabnika(data).subscribe(
       (data) => {
         if(data['resp'] =="ponastavljeno"){
-          let message = "Novo geslo: matejašprt";
+          let message = "Novo geslo: matejašport";
           let icon = "info";
           const dialogData = new ConfirmDialogModel(false,icon,"Ponastavitev gesla uspešna", message,'Ok');
           const dialogRef = this.dialog.open(ConfirmDialogComponent, {

@@ -7,10 +7,10 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MatDialog} from "@angular/material";
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { SpremembaGeslaDialogComponent } from './sprememba-gesla-dialog/sprememba-gesla-dialog.component'
+import { Router} from '@angular/router';
 
 import moment from 'moment';
 import 'moment/locale/sl';
-import { MinutesFormatterPipe } from 'ngx-material-timepicker/src/app/material-timepicker/pipes/minutes-formatter.pipe';
 moment.locale('sl');
 
 @Component({
@@ -81,7 +81,7 @@ export class ProfilComponent implements OnInit,AfterViewInit {
 
 
 
-  constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog) {
+  constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog,public router: Router) {
     this.user = sessionStorage.getItem('USER');
     this.ime = sessionStorage.getItem('ime');
   }
@@ -267,7 +267,7 @@ prikaziTrenutneRezerve() {
   prikaziTermine() {
     this.noData = false;
     this.showOverlay = true;
-    this.dbService.geTermini(this.selected).subscribe(
+    this.dbService.getTermini(this.selected).subscribe(
       (data) => {
         this.razpolozljiviTermini = data;
         this.razpolozljiviTermini =  this.razpolozljiviTermini.filter(i => !this.prijave.includes(i.id));
@@ -327,7 +327,7 @@ prikaziTrenutneRezerve() {
     var currentTime = t.getHours()*60 + t.getMinutes();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
     if(date.getTime() == today.getTime()) {
-      if(currentTime > minute15)
+      if(startTermina < jutranjiTermin || currentTime > minute15)
        return false;
     } 
     today.setDate(today.getDate() + 1);
@@ -421,18 +421,20 @@ prikaziTrenutneRezerve() {
            let index = this.prijave.indexOf(row.id_termin);
            this.prijave.splice(index,1);
           this.prikaziTrenutneTermine(); 
+          this.prikaziTrenutneRezerve();
         }
       }
     );
   }
 
+  odjava(){
+    sessionStorage.clear();
+    this.router.navigateByUrl('/home');
+  }
+
   openEditDialog(): void {
     this.dialog.closeAll();
-    const editDialogRef = this.dialog.open(SpremembaGeslaDialogComponent,{width:'300px' ,panelClass: 'mobile-width'})
-    editDialogRef.afterClosed().subscribe(() => {
-      // Do stuff after the dialog has closed
-  });
-
+    this.dialog.open(SpremembaGeslaDialogComponent,{width:'300px' ,panelClass: 'mobile-width'})
   }
 
 }

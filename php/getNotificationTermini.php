@@ -16,18 +16,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$postdata = file_get_contents("php://input");
+  $od = date("Y-m-d");
 
-if(isset($postdata) && !empty($postdata))
-{
-  $request = json_decode($postdata);
-    
-  $input = json_decode($postdata);
 
-  $od = mysqli_real_escape_string($conn, trim($input->startDate));
-  $do = mysqli_real_escape_string($conn, trim($input->endDate));
-
-  $sql = "SELECT t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT(COUNT(pt.Id_uporabnik) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin WHERE t.datum BETWEEN '{$od}' AND '{$do}' GROUP BY t.ID_termin ORDER BY t.datum ";
+  $sql = "SELECT t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT(COUNT(pt.Id_uporabnik) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin = pt.Id_termin WHERE t.datum > '{$od}' AND t.notification = 1 GROUP BY t.ID_termin ORDER BY t.datum ";
 
   $data = [];
   
@@ -72,7 +64,7 @@ if(isset($postdata) && !empty($postdata))
           {
             $data[$cr]['rezerve'][$crr]['Id'] = $rowR['Id'];
             $data[$cr]['rezerve'][$crr]['ID_uporabnik'] = $rowR['ID_uporabnik'];
-            $data[$cr]['rezerve'][$crr]['Id_termin'] = $rowR['ID_termin'];
+            $data[$cr]['rezerve'][$crr]['ID_termin'] = $rowR['ID_termin'];
             $data[$cr]['rezerve'][$crr]['ime'] = $rowR['ime'];
             $data[$cr]['rezerve'][$crr]['priimek'] = $rowR['priimek'];
             $data[$cr]['rezerve'][$crr]['email'] = $rowR['email'];
@@ -87,13 +79,6 @@ if(isset($postdata) && !empty($postdata))
   } else {
       echo "0 results";
   }
-} else {
-  $data2 = [
-    'termin'    => 'NOK'
-    ];
-  echo json_encode($data2);
-}
-
 
 
 $conn->close();

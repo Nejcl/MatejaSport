@@ -22,7 +22,14 @@ if(isset($postdata) && !empty($postdata))
  $request = json_decode($postdata);
   
  $input = json_decode($postdata);
-  foreach($input as $prisotni => $prisoten) {
+
+ $id_termin = mysqli_real_escape_string($conn, trim($input->id_termin));
+ $prisotnost = $input->prisotnost;
+
+ $sql1 = "UPDATE prijaveNaTermin SET `prisotnost`= 0 WHERE id_termin='{$id_termin}'";
+ mysqli_query($conn,$sql1);
+
+  foreach($prisotnost as $prisotni => $prisoten) {
     $id_prijava = mysqli_real_escape_string($conn, trim($prisoten->id_prijava));
       // Store.
     $sql = "UPDATE prijaveNaTermin SET `prisotnost`= 1 WHERE id='{$id_prijava}'";

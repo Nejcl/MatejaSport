@@ -57,6 +57,7 @@ export class UserControlComponent implements OnInit, AfterViewInit {
   nazivValue: string = '';
   vodiValue: string = '';
   colorValue: string = '';
+  noviUporabniki: number;
 
   Vadba: Array<{id: string, dan: string, od: string, do: string, naziv: string, vodi: string, color: string}> = [];
   Novica: Array<{id: string, position: Number, naslovna: string, naslov: string, vsebina: string}> = [];
@@ -82,16 +83,21 @@ export class UserControlComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if(localStorage.getItem(TOKEN) != "TOKEN-ADM-USR"){
       this.router.navigate(['/home']);
-
     }
-
-
-
+    this.getNotificationData();
     if(this.showUrnik){
       this.loadUrnik();
     } else if(this.showNovice) {    
       this.loadNovice();
+    }
   }
+
+  getNotificationData(){
+    this.dbService.getNewUsers().subscribe(
+      (data) => {
+        this.noviUporabniki= data.length;
+      });
+    
   }
 
   openDialog(index: number)

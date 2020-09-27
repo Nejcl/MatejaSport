@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewContainerRef } from '@angular/core';
 import { DatabaseService } from '../../database.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from "@angular/material";
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { UserControlComponent } from "../user-control.component";
 
 @Component({
   selector: 'app-aktivacija-uporabnikov',
@@ -19,11 +20,16 @@ export class AktivacijaUporabnikovComponent implements OnInit {
   displayedColumns: string[] = ['uporabnik','ime', 'priimek', 'email', 'telefon','actions'];
   dataSource = new MatTableDataSource();
   result: string = '';
-  constructor(private dbService: DatabaseService, public dialog: MatDialog) { }
+  constructor(private dbService: DatabaseService, public dialog: MatDialog,private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
     this.prikaziNoveUporabnike()
   }
+
+  getParentComponent(): UserControlComponent{
+    return this.viewContainerRef[ '_data' ].componentView.component.viewContainerRef[ '_view' ].component
+}
+
 
   prikaziNoveUporabnike() {
     this.dbService.getNewUsers().subscribe(
@@ -66,6 +72,7 @@ export class AktivacijaUporabnikovComponent implements OnInit {
               maxWidth: "400px",
               data: dialogData
           });  
+          this.getParentComponent().noviUporabniki -= 1;
           this.prikaziNoveUporabnike(); 
         }
       }

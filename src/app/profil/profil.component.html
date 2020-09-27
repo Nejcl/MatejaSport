@@ -4,12 +4,15 @@
     <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
   </div>
   <mat-card class="box" style="width: 100%; max-width: 880px;">
-    <div class="float-right">
-     {{ime}}<a style="padding: 0 1rem;font-size: initial !important;" href='javascript:void(0);' (click)="openEditDialog()">Ponastavi geslo </a>
+    <div style="line-height: 36px;">
+      {{ime}}<a style="padding: 0 1rem;font-size: initial !important;" href='javascript:void(0);' (click)="openEditDialog()">Ponastavi geslo </a>
+      <button  class ="float-right" mat-button (click)="odjava()" ><mat-icon style="color: red; cursor: pointer; font-size: 1.35rem; margin-right: 0.4rem;">cancel</mat-icon>ODJAVA</button>
     </div>
+    <br>
       <mat-card-header>
         <mat-card-title>PROFIL</mat-card-title>
       </mat-card-header> 
+      <br><br><br>
       <div *ngIf="prijavaNaTermin">
           <div  style="padding-left: unset;">
               <div class="row">
@@ -197,6 +200,15 @@
                         <br>
                       </div>
                     </mat-card>
+                    <br>
+                    <mat-card class="box">
+                      <div class="row unselectable">
+                        <div style="flex: 0 0 0.333333%;padding-right: 15px;"><mat-icon style="color: dodgerblue; cursor: default; font-size: 2.4rem; margin-right: -0.5rem;">info</mat-icon></div>
+                        <div class="col-7">
+                           Od vadbe se lahko odjavite do 15.00 ure istega dne oz. do 20.00 ure za jutranje in dopoldanske vadbe naslednjega dne.
+                        </div>
+                      </div>
+                    </mat-card>
                 </div>
             </div>       
           </div>
@@ -219,7 +231,7 @@
                     <!-- Inštruktor Column -->
                     <ng-container matColumnDef="dan" >
                       <th mat-header-cell *matHeaderCellDef> Dan </th>
-                      <td mat-cell *matCellDef="let row" style="padding-left: unset; width: 20%;">
+                      <td mat-cell *matCellDef="let row" style="padding-left: unset; width: 25%;">
                           <div style="width: 100%; text-align:left; font-family:'Roboto';padding-top: 5px;">
                             <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
                               {{getDate(row.datum)}}
@@ -243,7 +255,7 @@
                     </ng-container>
                       <ng-container matColumnDef="actions" style="text-align: center;">
                           <th mat-header-cell *matHeaderCellDef class="akcije" style="width: 5% !important;padding-right: unset;">Termin</th>
-                              <td mat-cell *matCellDef="let row" style="padding-right: unset;">
+                              <td mat-cell *matCellDef="let row" style="padding-right: unset;width: 20%;">
                                 <div  *ngIf="row.status != 'odpovedan' && odjavaAvailable(row)">
                                   <button mat-button (click)="odjaviUporabnika(row)" ><mat-icon style="color: red; cursor: pointer; font-size: 1.35rem;">not_interested</mat-icon>Odjava</button>
                                 </div>
@@ -267,15 +279,18 @@
           </div>
           <br>
         <div *ngIf="aktivnePrijaveRezerve">
-          <div class="col-12">
-            <mat-card class="box">
-                <mat-card-header>
-                  <mat-card-title style="font-size: 16px;">Rezervni termini</mat-card-title>
-                </mat-card-header> 
-                <div>V primeru sprostitve mesta na terminu boste prejeli sporočilo/klic</div>
-                <br>
-            </mat-card>
-        </div>
+          <div class="row">
+            <div class="col-11">
+              <mat-card class="box">
+                  <mat-card-header>
+                    <mat-card-title style="font-size: 16px;">Rezervni termini</mat-card-title>
+                  </mat-card-header> 
+                  <div>V primeru sprostitve mesta na terminu boste prejeli sporočilo/klic</div>
+                  <br>
+              </mat-card>
+            </div>
+          </div>
+
           <div class="row">
               <div class="col-11">
                 <table mat-table #outerSort="matSort" [dataSource]="dataSourceRezerve" matSort  multiTemplateDataRows class="mat-elevation-z8">  
@@ -294,7 +309,7 @@
                     <!-- Inštruktor Column -->
                     <ng-container matColumnDef="dan" >
                       <th mat-header-cell *matHeaderCellDef> Dan </th>
-                      <td mat-cell *matCellDef="let row" style="padding-left: unset; width: 20%;">
+                      <td mat-cell *matCellDef="let row" style="padding-left: unset; width: 25%;">
                           <div style="width: 100%; text-align:left; font-family:'Roboto';padding-top: 5px;">
                             <div style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
                               {{getDate(row.datum)}}
@@ -309,8 +324,8 @@
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Naziv </th>
                       <td mat-cell  *matCellDef="let row" style="width: 60%;">
                         <div  [style.background]="row.barva" style="text-align:left; font-family:'Roboto';padding-top: 5px;">
-                          <div  style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:12px;opacity: 0.7;">
-                            {{row.od}} - {{row.do}}<div class="float-right" style="margin-right: 10px;">{{row.mesto}}. Rezerva</div></div>
+                          <div  style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:15px;opacity: 0.7;">
+                            {{row.od}} - {{row.do}}<div class="float-right" style="margin-right: 10px;font-size: 13px;">{{row.mesto}}. Rezerva</div></div>
                           <div   style="color: black;font-weight: 600; margin-left:10px;margin-top:5px; font-size:14px ">{{row.naziv}}</div>
                           <div  style="margin-right: 10px;display: grid;text-align: end;;padding-bottom: 5px;">{{row.instruktor}}</div>
                        </div>
