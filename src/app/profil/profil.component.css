@@ -151,11 +151,19 @@ ul, li {
   user-select: none;
 }
 
+.prijavaBtn{
+  width: 80%;
+}
+
 @media(max-width: 600px) {
   :host  .mobile-label {
     width: 80px;
     display: inline-block;
         font-weight: bold;
+  }
+
+  .prijavaBtn{
+    width: 90%;
   }
 
   :host table {

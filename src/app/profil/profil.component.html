@@ -20,7 +20,7 @@
                       <mat-card class="box">
                         <div style="display: flex;justify-content: center;">
                           <div class="col-3 col-sm-5" style="margin-bottom: 1rem;text-align: center;display: block;">
-                            <button mat-button style="border-width: 1px;border-style: solid;width: 70%;" (click)="prikaziAktivnePrijave()" ><mat-icon style="color: #e83e8d; cursor: pointer; font-size: 2.35rem; margin-right: 1.4rem;padding-bottom: 1rem;">arrow_back</mat-icon>Nazaj</button>
+                            <button mat-button class="prijavaBtn"  style="border-width: 1px;border-style: solid;font-weight: bold;color: #e83e8d;font-size: 1.2rem; " (click)="prikaziAktivnePrijave()" ><mat-icon style="font-weight: bold; color: #e83e8d; cursor: pointer; font-size: 2.35rem; margin-right: 1.4rem;padding-bottom: 1rem;">arrow_back</mat-icon>NAZAJ</button>
                           </div>
                         </div>
                           <mat-card-header>
@@ -145,7 +145,7 @@
                             <th mat-header-cell *matHeaderCellDef class="akcije" style="width: 5% !important;padding-right: unset;" >Termin</th>
                                 <td mat-cell *matCellDef="let row"style="padding-right: unset;" >
                                   <div  *ngIf="row.status != 'odpovedan' && row.status !='zaseden'">
-                                    <button mat-button (click)="prijaviUporabnika(row.id);" style="font-weight: bold; color: green;"><mat-icon style="color: green; cursor: pointer; font-size: 1.35rem;">check_circle_outline</mat-icon> Prijava</button>
+                                    <button mat-button (click)="prijaviUporabnika(row.id);" style="font-weight: bold;"><mat-icon style="color: green; cursor: pointer; font-size: 1.35rem;">check_circle_outline</mat-icon> Prijava</button>
                                   </div>
                                   <div  *ngIf="row.status == 'odpovedan'" style="font-size:large; color: red; font-weight:600;font-family: monospace;">
                                      ODPOVEDAN
@@ -183,7 +183,7 @@
                     <mat-card class="box">
                       <div style="display: flex;justify-content: center;">
                         <div class="col-3 col-sm-5" style="margin-bottom: 1rem;text-align: center;display: block;">
-                          <button mat-button style="border-width: 1px;border-style: solid;width: 70%;" (click)="prikaziPrijavoNaTermin()" ><mat-icon style="color: #e83e8d; cursor: pointer; font-size: 2.35rem; margin-right: 1.4rem;padding-bottom: 1rem;">fitness_center</mat-icon>Prijava na termin</button>
+                          <button mat-button class="prijavaBtn" style="border-width: 1px;border-style: solid;font-weight: bold;color: #e83e8d;font-size: 1.2rem;" (click)="prikaziPrijavoNaTermin()" ><mat-icon style="color: #e83e8d; cursor: pointer; font-size: 2.35rem; margin-right: 1.4rem;padding-bottom: 1rem;">fitness_center</mat-icon>PRIJAVA NA TERMIN</button>
                         </div>
                       </div>
                         <mat-card-header>
