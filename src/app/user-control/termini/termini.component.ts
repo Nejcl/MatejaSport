@@ -63,6 +63,7 @@ export class TerminiComponent implements OnInit {
   minDate = null;
   odDate = new Date();
   result: string = '';
+  filter='';
   showOverlay = true;
   notification: number;
   terminiNotifikacije: Termin[]  = [];
@@ -76,6 +77,16 @@ export class TerminiComponent implements OnInit {
     'Ta Mesec': [moment().startOf('month'), moment().endOf('month')],
     'Naslednji Mesec': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')]
   }
+  dnevi:any = [
+    {name: 'Pon', completed: false, color: 'accent', value: 1},
+    {name: 'Tor', completed: false, color: 'accent', value: 2},
+    {name: 'Sre', completed: false, color: 'accent', value: 3},
+    {name: 'Čet', completed: false, color: 'accent', value: 4},
+    {name: 'Pet', completed: false, color: 'accent', value: 5},
+    {name: 'Sob', completed: false, color: 'accent', value: 6},
+    {name: 'Ned', completed: false, color: 'accent', value: 0}
+  ]
+
   constructor(private dbService: DatabaseService, private cd: ChangeDetectorRef, public dialog: MatDialog) {
  
    }
@@ -99,6 +110,40 @@ export class TerminiComponent implements OnInit {
           }
         });
   }
+
+  updateAllComplete() {
+    this.prikaziIzbraneDneve();
+  }
+
+  prikaziIzbraneDneve(){
+    let izbraniDnevi = [];
+    let posamezniDnevi =this.terminData;
+    this.dnevi.forEach(dan => {
+      if(dan.completed) {
+        izbraniDnevi.push(dan.value);
+      }
+    });
+
+    if(izbraniDnevi.length>0) {
+      posamezniDnevi = this.terminData.filter(i => izbraniDnevi.includes(new Date(i.datum).getDay()));
+    }
+    this.dataSource = new MatTableDataSource(posamezniDnevi);
+    this.dataSource.filter = this.filter.trim().toLowerCase();
+    this.dataSource.paginator = this.paginator;
+    this.paginator.firstPage();
+    this.dataSource.sort = this.sort;
+    if(this.dataSource.data.length < 1){
+      this.myText='Ni razpoložljivih terminov za izbrane dneve';
+       this.noData = true;
+     } else {
+       this.noData = false;
+     }
+  }
+
+
+
+
+
 
      /** The label for the checkbox on the passed row */
   checkboxLabel(row?: Prijavljeni): string {
@@ -206,6 +251,8 @@ export class TerminiComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Termin>(this.terminData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.applyFilter();
+        this.updateAllComplete();
         this.showOverlay = false;
         if(this.dataSource.data.length < 1){
          this.myText='Ni razpisanih terminov';
@@ -214,8 +261,8 @@ export class TerminiComponent implements OnInit {
       });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+  applyFilter() {
+    const filterValue =this.filter;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if(this.dataSource.filteredData.length < 1 && this.dataSource.filter.length > 0 ){
       this.noData = true;

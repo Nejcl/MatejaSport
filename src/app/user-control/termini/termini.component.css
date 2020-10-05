@@ -126,3 +126,14 @@
   width: 122px;
 }
 
+:host ul {
+  list-style-type: none;
+  margin-top: 4px;
+  padding:0;
+}
+:host ul, li {
+  display:inline;
+  margin-right: 8px;
+
+}
+

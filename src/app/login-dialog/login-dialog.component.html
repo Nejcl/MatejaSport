@@ -12,6 +12,9 @@
       <input matInput placeholder="Geslo"  type="password" [(ngModel)]="password">
     </mat-form-field>
     <div [hidden]="!show" style="color:red; font-size: 10px">Napačno uporabniško ime ali geslo!</div>
+
+
+
   </div>
 
 
@@ -19,4 +22,8 @@
     <button mat-stroked-button color="accent" (click)="onOkClick()" class="btn-block">Prijava</button>
   </div>     
   <a href="/registracija" class="registracija">Registracija</a>
+  <br>
+  <br>
+  <div  style="color:red; font-size: 10px">V primeru pozabljenega gesla se obrnite telefon ali email.</div>
+  <div  style="color:red; font-size: 10px">068 125 275 (SMS) ali info@matejasport.si</div>
 </div>

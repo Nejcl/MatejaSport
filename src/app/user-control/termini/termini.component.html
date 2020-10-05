@@ -21,7 +21,7 @@
         <div class="col-4">
           <mat-form-field style="width: 80%;">
             <mat-label>Filtriraj</mat-label>
-            <input matInput (keyup)="applyFilter($event)" autocomplete="off" #input>
+            <input matInput (keyup)="applyFilter()" autocomplete="off" [(ngModel)]="filter" #input>
           </mat-form-field>
         </div>
         <div class="col-3">
@@ -46,6 +46,21 @@
         </button>
         </div>
         <br>
+      </div>
+      <div class="row" style="justify-content: center;">
+        <section class="example-section">
+        <span class="example-list-section">
+          <ul>
+            <li *ngFor="let dan of dnevi">
+              <mat-checkbox [(ngModel)]="dan.completed"
+                            [color]="dan.color"
+                            (ngModelChange)="updateAllComplete()">
+                {{dan.name}}
+              </mat-checkbox>
+            </li>
+          </ul>
+        </span>
+      </section>
       </div>
     </mat-card>
     </div>

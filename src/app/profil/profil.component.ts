@@ -326,11 +326,16 @@ prikaziTrenutneRezerve() {
     let startTermina  = Number(time[0])*60;
     startTermina +=Number(time[1]);
     let jutranjiTermin = 11*60;
+    var termin1Vecer = 1170
     var minute15= 15*60; // odjava možna do 15:00 na dan termina
+    var minute16= 16*60; // odjava možna do 15:00 na dan termina
     var minute20=20*60; //odjava možna do 20 en dan pred terminom za jutranje vadbe
     var currentTime = t.getHours()*60 + t.getMinutes();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
     if(date.getTime() == today.getTime()) {
+      if(startTermina >= termin1Vecer && currentTime < minute16) {
+        return true;
+      }
       if(startTermina < jutranjiTermin || currentTime > minute15)
        return false;
     } 
