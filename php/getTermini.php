@@ -27,7 +27,7 @@ if(isset($postdata) && !empty($postdata))
   $od = mysqli_real_escape_string($conn, trim($input->startDate));
   $do = mysqli_real_escape_string($conn, trim($input->endDate));
 
-  $sql = "SELECT t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT(COUNT(pt.Id_uporabnik) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin WHERE t.datum BETWEEN '{$od}' AND '{$do}' GROUP BY t.ID_termin ORDER BY t.datum ";
+  $sql = "SELECT t.ID_termin,t.naziv,t.instruktor,t.barva,t.datum,t.od,t.do,CONCAT((SELECT COUNT(*) FROM prijaveNaTermin WHERE id_termin=t.ID_termin and Id_uporabnik != 0) , '/', t.st_mest) AS zasedenost,t.status,t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin =pt.Id_termin WHERE t.datum BETWEEN '{$od}' AND '{$do}' GROUP BY t.ID_termin ORDER BY t.datum ";
 
   $data = [];
   
@@ -46,7 +46,7 @@ if(isset($postdata) && !empty($postdata))
         $data[$cr]['barva'] = $row['barva'];
         $data[$cr]['status'] = $row['status'];
         $data[$cr]['st_mest'] = $row['st_mest'];
-        $sqlU = "SELECT  pt.Id,u.ID_uporabnik,ID_termin,ime, priimek,email,telefon,pt.prisotnost FROM prijaveNaTermin pt INNER JOIN uporabniki u ON pt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']}";
+        $sqlU = "SELECT  pt.Id,u.ID_uporabnik,ID_termin,ime, priimek,email,telefon,pt.prisotnost FROM prijaveNaTermin pt INNER JOIN uporabniki u ON pt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']} ORDER BY pt.Id";
         if($res = mysqli_query($conn,$sqlU)){
           $cru = 0;
           while($rowU = mysqli_fetch_assoc($res))
@@ -65,7 +65,7 @@ if(isset($postdata) && !empty($postdata))
             $data[$cr]['prijavljeni'] = 'ni prijav';
           } 
         }
-        $sqlR = "SELECT  rt.Id,rt.ID_termin,u.ID_uporabnik, ime, priimek,email,telefon FROM rezerveTermin rt INNER JOIN uporabniki u ON rt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']}";
+        $sqlR = "SELECT  rt.Id,rt.ID_termin,u.ID_uporabnik, ime, priimek,email,telefon,mesto FROM rezerveTermin rt INNER JOIN uporabniki u ON rt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']} ORDER BY rt.mesto";
         if($res = mysqli_query($conn,$sqlR)){
           $crr = 0;
           while($rowR = mysqli_fetch_assoc($res))
@@ -77,6 +77,7 @@ if(isset($postdata) && !empty($postdata))
             $data[$cr]['rezerve'][$crr]['priimek'] = $rowR['priimek'];
             $data[$cr]['rezerve'][$crr]['email'] = $rowR['email'];
             $data[$cr]['rezerve'][$crr]['telefon'] = $rowR['telefon'];
+            $data[$cr]['rezerve'][$crr]['mesto'] = $rowR['mesto'];
             $crr++;
           }
         }

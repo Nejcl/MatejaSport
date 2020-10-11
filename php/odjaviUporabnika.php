@@ -46,7 +46,7 @@ if(isset($postdata) && !empty($postdata))
           $sql2 ="UPDATE `termini` SET `status`='razpisan' WHERE `ID_termin`='{$id_termin}'";
           mysqli_query($conn, $sql2);
         }
-        if($row["status"] == 'zaseden' && $row["rezerve"] > 0){
+        if($row["status"] == 'zaseden' && $row["rezerve"] > 0 && $row["zasedenost"] < $row["st_mest"]){
           $sql4 = "UPDATE `termini` SET `notification`= 1 WHERE `ID_termin`='{$id_termin}'";
           mysqli_query($conn, $sql4);
         }

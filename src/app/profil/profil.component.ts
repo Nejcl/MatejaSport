@@ -295,6 +295,10 @@ prikaziTrenutneRezerve() {
 
   prikaziPrijavoNaTermin() {
     this.showOverlay = true;
+    this.filter="";
+    this.dnevi.forEach(element => {
+      element.completed= false;
+    });
     this.prikaziTermine();
     this.prijavaNaTermin = true;
     this.aktivnePrijave = false;
@@ -369,25 +373,30 @@ prikaziTrenutneRezerve() {
 
   prijaviUporabnika(id) {
     const data = {id_termin:id,id_uporabnik:this.user};
-    this.dbService.prijaviUporabnika(data)
-    .subscribe(
-      (data) => {
-        if(data['resp'] =="prijavljen"){
-          let message = "Prijava na termin uspešna";
-          let icon = "info";
-          const dialogData = new ConfirmDialogModel(false,icon,"Prijava  uspešna", message,'Ok');
-          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-              maxWidth: "400px",
-              data: dialogData
-          });
-           this.prijave.push(id);
-           this.osveziRazpolozljiveTermine();        
-          } else{
-          alert("Prišlo je do napake pri prijavi na termin");
-        }
-      },
-      (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
-    );
+    if (this.user != '0'){
+      this.dbService.prijaviUporabnika(data)
+      .subscribe(
+        (data) => {
+          if(data['resp'] =="prijavljen"){
+            let message = "Prijava na termin uspešna";
+            let icon = "info";
+            const dialogData = new ConfirmDialogModel(false,icon,"Prijava  uspešna", message,'Ok');
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                maxWidth: "400px",
+                data: dialogData
+            });
+             this.prijave.push(id);
+             this.osveziRazpolozljiveTermine();        
+            } else{
+            alert("Prišlo je do napake pri prijavi na termin");
+          }
+        },
+        (error) =>  alert("Prišlo je do napake prosimo preverite podatke \n" + error.message)
+      );
+    } else {
+      alert("Prišlo je do napake pri prijavi na termin prosimo, da se ponovno prijavite v vaš uporabniški račun");
+    }
+
   }
 
 

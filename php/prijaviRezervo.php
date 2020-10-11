@@ -42,17 +42,16 @@ if(isset($postdata) && !empty($postdata))
       'resp'    => 'prijavljen',
     ];
     echo json_encode($data);
-
+    $sql4 = "UPDATE `termini` SET `notification`= 0 WHERE `ID_termin`='{$id_termin}'";
+    mysqli_query($conn, $sql4);
     $sql1 = "SELECT COUNT(pt.Id_uporabnik) AS zasedenost, t.st_mest FROM termini t LEFT JOIN prijaveNaTermin pt ON t.ID_termin = pt.Id_termin WHERE  pt.Id_termin = '{$id_termin}' GROUP BY t.ID_termin"; 
     $result = mysqli_query($conn, $sql1);
     if (mysqli_num_rows($result) > 0) {
       // output data of each row
       while($row = mysqli_fetch_assoc($result)) {
-        if($row["zasedenost"] == $row["st_mest"]){
+        if($row["zasedenost"] >= $row["st_mest"]){
           $sql3 ="UPDATE `termini` SET `status`='zaseden' WHERE `ID_termin`='{$id_termin}'";
           mysqli_query($conn, $sql3);
-          $sql4 = "UPDATE `termini` SET `notification`= 0 WHERE `ID_termin`='{$id_termin}'";
-          mysqli_query($conn, $sql4);
         }
       }
     } else {

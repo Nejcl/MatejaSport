@@ -54,8 +54,8 @@ export class TerminiComponent implements OnInit {
   terminiActive = true;
   novTerminActive = false;
   columnsToDisplay = ['barva','naziv','instruktor', 'datum', 'od','zasedenost','actions','barva1'];
-  innerDisplayedColumns = ['select','ime', 'email','telefon','actions'];
-  innerDisplayedColumnsRezerve = ['ime', 'email','telefon','actions'];
+  innerDisplayedColumns = ['select','st','ime', 'email','telefon','actions'];
+  innerDisplayedColumnsRezerve = ['ime', 'email','telefon','mesto','actions'];
   setPrisotnost = false;
   dataSource = new MatTableDataSource<Termin>();
   terminData: Termin[] = [];
@@ -377,6 +377,31 @@ export class TerminiComponent implements OnInit {
       (data) => {
         if(data['resp'] =="odjavljen"){
           let message = "Odjava uporabnika uspešna";
+          let icon = "info";
+          const dialogData = new ConfirmDialogModel(false,icon,"Odjava  uspešna", message,'Ok');
+          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              maxWidth: "400px",
+              data: dialogData
+          }); 
+          this.showOverlay = false; 
+          dialogRef.afterClosed().subscribe(dialogResult => {
+          this.result = dialogResult;
+
+           });
+           this.getTerminiNotifikacije();
+          this.prikaziTermine(); 
+        }
+      }
+    );
+  }
+
+  odjaviRezervo(row): void {
+    let data = {id: row.Id};
+    this.showOverlay = true;
+    this.dbService.odjaviRezervo(data).subscribe(
+      (data) => {
+        if(data['resp'] =="odjavljen"){
+          let message = "Odjava rezerve uspešna";
           let icon = "info";
           const dialogData = new ConfirmDialogModel(false,icon,"Odjava  uspešna", message,'Ok');
           const dialogRef = this.dialog.open(ConfirmDialogComponent, {
