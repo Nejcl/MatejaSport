@@ -3,7 +3,7 @@
 
 <mat-form-field style="width: 60%;">
     <mat-label>Filtriraj uporabnike</mat-label>
-    <input matInput (keyup)="applyFilter($event)" autocomplete="off" #input>
+    <input matInput (keyup)="applyFilter($event)" autocomplete="off" #input [(ngModel)]="filter">
   </mat-form-field>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>

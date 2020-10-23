@@ -31,6 +31,10 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/resetGesla.php`,InData); 
   }
 
+  urediPodatkeUporabnika(InData: any):Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/editUserData.php`,InData); 
+  }
+
   readUrnik(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}/getdata.php`);
   }
@@ -99,6 +103,10 @@ export class DatabaseService {
 
   izbrisiUporabnika(id: any): Observable<any[]>{
     return this.http.post<any>(`${this.baseUrl}/izbrisiUporabnika.php`,id);
+  }
+
+  getUser(id: any): Observable<any[]>{
+    return this.http.post<any>(`${this.baseUrl}/getUser.php`,id);
   }
 
   getUsers(): Observable<any[]>{

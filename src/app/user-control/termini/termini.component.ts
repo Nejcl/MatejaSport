@@ -62,6 +62,7 @@ export class TerminiComponent implements OnInit {
   expandedElement: Termin | null;
   minDate = null;
   odDate = new Date();
+  savePrisotnost : number;
   result: string = '';
   filter='';
   showOverlay = true;
@@ -140,16 +141,12 @@ export class TerminiComponent implements OnInit {
      }
   }
 
-
-
-
-
-
      /** The label for the checkbox on the passed row */
   checkboxLabel(row?: Prijavljeni): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
+
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
  
@@ -164,6 +161,7 @@ export class TerminiComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.savePrisotnost = null ;
   }
 
   prikaziTermineNotifikacije(){
@@ -253,6 +251,7 @@ export class TerminiComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.applyFilter();
         this.updateAllComplete();
+        this.savePrisotnost = null ;
         this.showOverlay = false;
         if(this.dataSource.data.length < 1){
          this.myText='Ni razpisanih terminov';
@@ -327,6 +326,7 @@ export class TerminiComponent implements OnInit {
 
   toggleRow(element: Termin) {
     this.setPrisotnost = false;
+    this.savePrisotnost = null ;
     element.prijave && (element.prijave as MatTableDataSource<Prijavljeni>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
     this.cd.detectChanges();
     if(this.expandedElement){
@@ -343,6 +343,7 @@ export class TerminiComponent implements OnInit {
 
   openEditDialog(row): void {
     this.dialog.closeAll();
+    this.savePrisotnost = null ;
     const editDialogRef = this.dialog.open(EditTerminDialogComponent,{width:'500px' ,panelClass: 'mobile-width',  data: {
       dataKey: row
     }})
@@ -443,6 +444,7 @@ export class TerminiComponent implements OnInit {
 
 
   shraniPrisotnost(element){
+    this.savePrisotnost = null ;
     this.showOverlay = true;
     let prisotni =  [];   
     this.selection.selected.forEach(element => {
@@ -461,6 +463,7 @@ export class TerminiComponent implements OnInit {
              maxWidth: "400px",
              data: dialogData
          }); 
+         this.savePrisotnost = null ;
          this.showOverlay = false; 
         } else{
           alert("Prišlo je do napake pri dodajanju terminov");

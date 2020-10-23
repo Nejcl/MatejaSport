@@ -1,0 +1,51 @@
+<mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Sprememba podatkov</mat-card-title>
+    </mat-card-header>
+
+<form class="example-form" [formGroup]="changePwForm" (ngSubmit)="onSubmit()">
+    <div class="row" style="margin-left: 1rem;">
+      <mat-form-field class="example-full-width">
+        <input matInput name="fname" formControlName="firstName" placeholder="Ime"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+      </mat-form-field>
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">Prosim vnesite ime</div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-left: 1rem;">
+      <mat-form-field class="example-full-width">
+        <input matInput name="lname"placeholder="Priimek" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+      </mat-form-field>
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">Prosim vnesite priimek</div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-left: 1rem;">
+        <mat-form-field class="example-full-width">
+            <input matInput name="email" type="email" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" >
+          </mat-form-field>
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Prosim vnesite email</div>
+            <div *ngIf="f.email.errors.email">Prosim vnesite pravilni email naslov</div>
+          </div>
+    </div>
+    
+    <div class="row" style="margin-left: 1rem;">
+        <mat-form-field class="example-full-width">
+            <input matInput name="phone" minlength="9" maxlength="13" placeholder="Telefon" formControlName="phone" (keypress)="numberOnly($event)" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+          </mat-form-field>
+          <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+            <div *ngIf="f.phone.errors.required">Prosim vnesite telefon</div>
+          </div>
+    </div>
+    
+    <div class=" row form-group" style="margin-top: 1rem;">
+        <div class="offset-7 col-2">
+            <button mat-stroked-button color="accent" class="btn-block">Potrdi</button>
+
+        </div>
+    </div>  
+  </form>
+</mat-card>

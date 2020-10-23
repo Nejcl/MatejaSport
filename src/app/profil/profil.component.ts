@@ -6,7 +6,8 @@ import { MAT_MOMENT_DATE_FORMATS,MomentDateAdapter,MAT_MOMENT_DATE_ADAPTER_OPTIO
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDialog} from "@angular/material";
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { SpremembaGeslaDialogComponent } from './sprememba-gesla-dialog/sprememba-gesla-dialog.component'
+import { SpremembaGeslaDialogComponent } from './sprememba-gesla-dialog/sprememba-gesla-dialog.component';
+import {SpremembaPodatkovDialogComponent} from './sprememba-podatkov-dialog/sprememba-podatkov-dialog.component';
 import { Router} from '@angular/router';
 
 import moment from 'moment';
@@ -141,25 +142,42 @@ export class ProfilComponent implements OnInit,AfterViewInit {
 
 
 prikaziTrenutneTermine() {
-  this.prijave = [];
-  let item = {user: this.user}
-  this.dbService.geAktivniTermini(item).subscribe(
-    (data) => {
-      this.aktivniTermini = data;
-      this.aktivniTermini.forEach(element => {
-        this.prijave.push(element.id_termin)
-      });
-      this.sortirajAktivneTermine();
-      this.dataSourceTrenutni = new MatTableDataSource(this.aktivniTermini);
-      this.dataSourceTrenutni.filter = this.filterAktivni.trim().toLowerCase();
-      this.dataSourceTrenutni.paginator = this.paginator;
-      this.dataSourceTrenutni.sort = this.sort;
-      if(this.dataSourceTrenutni.data.length < 1){
-       this.myText='Ni aktivnih prijav na termine';
-        this.noActiveData = true;
-      }
-     }
-  );
+  if(this.user == null){
+    let message = "Potrebna ponovna prijava";
+    let icon = "info";
+    const dialogData = new ConfirmDialogModel(false,icon,"Prijava je potekla", message,'Ok');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        maxWidth: "400px",
+        data: dialogData
+    }); 
+    this.showOverlay = false; 
+    dialogRef.afterClosed().subscribe(dialogResult => {
+    this.result = dialogResult;
+      this.odjava();
+     });
+  } else {
+    this.noActiveData = false;
+    this.prijave = [];
+    let item = {user: this.user}
+    this.dbService.geAktivniTermini(item).subscribe(
+      (data) => {
+        this.aktivniTermini = data;
+        this.aktivniTermini.forEach(element => {
+          this.prijave.push(element.id_termin)
+        });
+        this.sortirajAktivneTermine();
+        this.dataSourceTrenutni = new MatTableDataSource(this.aktivniTermini);
+        this.dataSourceTrenutni.filter = this.filterAktivni.trim().toLowerCase();
+        this.dataSourceTrenutni.paginator = this.paginator;
+        this.dataSourceTrenutni.sort = this.sort;
+        if(this.dataSourceTrenutni.data.length < 1){
+         this.myText='Ni aktivnih prijav na termine';
+          this.noActiveData = true;
+        }
+       }
+    );
+  }
+
 }
 
 prikaziTrenutneRezerve() {
@@ -450,9 +468,18 @@ prikaziTrenutneRezerve() {
     this.router.navigateByUrl('/home');
   }
 
+  osvezi(){
+    location.reload();
+  }
+
   openEditDialog(): void {
     this.dialog.closeAll();
     this.dialog.open(SpremembaGeslaDialogComponent,{width:'300px' ,panelClass: 'mobile-width'})
+  }
+
+  openEditDataDialog(): void {
+    this.dialog.closeAll();
+    this.dialog.open(SpremembaPodatkovDialogComponent,{width:'350px' ,panelClass: 'mobile-width'})
   }
 
 }

@@ -5,14 +5,18 @@
   </div>
   <mat-card class="box" style="width: 100%; max-width: 880px;">
     <div style="line-height: 36px;">
-      {{ime}}<a style="padding: 0 1rem;font-size: initial !important;" href='javascript:void(0);' (click)="openEditDialog()">Ponastavi geslo </a>
+      {{ime}}<a style="padding: 0 1rem;font-size: initial !important;" href='javascript:void(0);' (click)="openEditDialog()">Ponastavi geslo </a><a style="padding: 0 1rem;font-size: initial !important;" href='javascript:void(0);' (click)="openEditDataDialog()">Uredi podatke </a>
       <button  class ="float-right" mat-button (click)="odjava()" ><mat-icon style="color: red; cursor: pointer; font-size: 1.35rem; margin-right: 0.4rem;">cancel</mat-icon>ODJAVA</button>
     </div>
     <br>
       <mat-card-header>
-        <mat-card-title>PROFIL</mat-card-title>
+        <mat-card-title>PROFIL
+          <button  class ="float-left" mat-button (click)="osvezi()" ><mat-icon style="color: green; cursor: pointer; font-size: 1.35rem; margin-right: 0.4rem;">refresh</mat-icon>Osveži</button>
+        </mat-card-title>
       </mat-card-header> 
-      <br><br><br>
+      <br><br>
+      <br>
+
       <div *ngIf="prijavaNaTermin">
           <div  style="padding-left: unset;">
               <div class="row">

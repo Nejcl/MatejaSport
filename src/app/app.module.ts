@@ -55,7 +55,9 @@ import { PrijavaNaTerminDialogComponent } from './user-control/termini/prijava-n
 import { DataService } from './data.service';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { PregledObiskovUporabnikaComponent } from './pregled-obiskov-uporabnika/pregled-obiskov-uporabnika.component';
-import { SpremembaGeslaDialogComponent } from './profil/sprememba-gesla-dialog/sprememba-gesla-dialog.component'  
+import { SpremembaGeslaDialogComponent } from './profil/sprememba-gesla-dialog/sprememba-gesla-dialog.component';
+import { SpremembaPodatkovDialogComponent } from './profil/sprememba-podatkov-dialog/sprememba-podatkov-dialog.component'  
+
 
 @NgModule({
   declarations: [
@@ -96,9 +98,7 @@ import { SpremembaGeslaDialogComponent } from './profil/sprememba-gesla-dialog/s
     ConfirmDialogComponent,
     PregledObiskovUporabnikaComponent,
     SpremembaGeslaDialogComponent,
-    
-
-
+    SpremembaPodatkovDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,6 +136,7 @@ import { SpremembaGeslaDialogComponent } from './profil/sprememba-gesla-dialog/s
     EditTerminDialogComponent,
     PrijavaNaTerminDialogComponent,
     SpremembaGeslaDialogComponent,
+    SpremembaPodatkovDialogComponent,
     InstruktorBoxComponent,
     DialogContent,
     DialogContent2,

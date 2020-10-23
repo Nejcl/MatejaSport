@@ -56,9 +56,7 @@ if(isset($postdata) && !empty($postdata))
         mysqli_query($conn, $sql2);
       }
     }
-  } else {
-    echo "0 results";
-  }
+  } 
 }
 else
 {

@@ -57,7 +57,7 @@ if ($conn->connect_error) {
             $data[$cr]['prijavljeni'] = 'ni prijav';
           } 
         }
-        $sqlR = "SELECT  rt.Id,rt.ID_termin,u.ID_uporabnik, ime, priimek,email,telefon FROM rezerveTermin rt INNER JOIN uporabniki u ON rt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']}";
+        $sqlR = "SELECT  rt.Id,rt.ID_termin,u.ID_uporabnik, ime, priimek,email,telefon,mesto FROM rezerveTermin rt INNER JOIN uporabniki u ON rt.Id_uporabnik = u.ID_uporabnik  WHERE ID_termin ={$row['ID_termin']}";
         if($res = mysqli_query($conn,$sqlR)){
           $crr = 0;
           while($rowR = mysqli_fetch_assoc($res))
@@ -69,6 +69,7 @@ if ($conn->connect_error) {
             $data[$cr]['rezerve'][$crr]['priimek'] = $rowR['priimek'];
             $data[$cr]['rezerve'][$crr]['email'] = $rowR['email'];
             $data[$cr]['rezerve'][$crr]['telefon'] = $rowR['telefon'];
+            $data[$cr]['rezerve'][$crr]['mesto'] = $rowR['mesto'];
             $crr++;
           }
         }

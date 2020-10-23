@@ -131,9 +131,13 @@
   margin-top: 4px;
   padding:0;
 }
-:host ul, li {
+ ul, li {
   display:inline;
   margin-right: 8px;
 
+}
+
+:host .mat-badge-medium.mat-badge-above .mat-badge-content {
+  top: -6px;
 }
 

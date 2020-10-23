@@ -22,6 +22,7 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
   uporabniki = [];
   termin: string;
   result: string = '';
+  filter: string = '';
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dbService: DatabaseService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -85,6 +86,7 @@ export class PrijavaNaTerminDialogComponent implements OnInit {
                 maxWidth: "400px",
                 data: dialogData
             });  
+            this.filter = '';
             this.prikaziUporabnike();
           } else{
             alert("Prišlo je do napake pri prijavi uporabnika");
