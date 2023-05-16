@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'individualnavadba', component: IndividualnavadbaComponent },
   { path: 'masaze', component: MasazeComponent },
   { path: 'rehabilitacija', component: RehabilitacijaComponent },
-  { path: 'rojstnodnevne', component: RojstnodnevneComponent },
+  //{ path: 'rojstnodnevne', component: RojstnodnevneComponent },
   { path: 'sestavatreninga', component: SestavatreningaComponent },
   { path: 'skupinskevadbe', component: SkupinskevadbeComponent },
   { path: 'registracija', component:RegistracijaComponent },
