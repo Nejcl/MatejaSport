@@ -22,11 +22,11 @@ export class ProfileCardComponent implements OnInit, AfterViewInit {
   <br><br>
   Ko sem prenehala trenirati odbojko sem iskala druge načine ohranjanja kondicije. Tako me je pot zanesla v Mateja šport, kjer sem pričela obiskovati  skupinske vadbe, ki so me povsem navdušile. Pojavila se je želja, ki se je z malo spodbude tudi uresničila in postala sem vaditeljica skupinskih vadb. Trenutno vodim IFT, Body shape in TNZ. V vodenju naravnost uživam in močno stremim k temu, da svoje znanje na tem področju čimbolj izpopolnim, saj vadečim želim zagotoviti kakovostno, dinamično in predvsem učinkovito vadbo, v kateri bodo uživali in se radi vračali na moje ure. Sčasoma sem ugotovila, da si tega ne želim početi le začasno in tako je užitek v vodenju prerasel v moj poklic, ki ga spremljata predvsem skrb in odgovornost za vadeče. Ti so tudi moja največja motivacija, da se na ure odpravljam z veseljem in nasmehom na obrazu.`;
 
-  AnitaOpis:string = `Sem mama dvema že skoraj odraslima otrokoma. Zadnjih 10 let se intenzivno posvečam svoji največji strasti – športu. Udeležujem se izobraževanj in preberem vsako čtivo, ki mi pride pod roke. Pridobila sem si inštruktorske nazive v fitnesu in pilatesu. Zagovarjam zdrav življenski slog. Verjamem, da gibanje varuje in krepi človeško zdravje, tako telesno kot duševno, zato uživam v treniranju vadečih in sebe. Dan brez gibanja se mi zdi izgubljen. Pozimi si oprtam smuči na nahrbtnik in odkorakam na najbližji dvatisočak. Vedno iščem najbolj deviški pršič. Poleti pa uživam v plezanju, trekingu, teku, kolesarjenju,… Sem tudi strastna bralka knjig. V Mateja Športu vam bom z največjim veseljem in strastjo podajala svoje znanje..`;
+  EvaOpis:string = `Šport me spremlja že od malih nog in predstavlja moj vir zadovoljstva, miru, sreče, energije, hkrati pa povezuje s podobnimi ljudmi in mi pomaga, če glava ni na pravem mestu. Začelo se je z atletiko v mladosti, nadaljevalo pa s tekmovalnimi plesi in tekom. Skupinske vadbe odlično združujejo segmente atletskih elementov in plesa, kar me navdušuje, zato sem se na tem področju hitro udomačila. Rada imam visoko intenzivne vadbe, kjer preizkušamo svoje meje in zmogljivost, aerobika in ples pa me vračata v stara plesna leta. Odkar sem mama dvema (sedaj) malčkoma, se rada posvečam tudi bolj umirjenim dejavnostim kot sta pilates in meditacija. Poleg športa pa se ukvarjam tudi s kozami ter mlečno predelavo.`;
 
   TinaOpis:string = `Sem velika ljubiteljica narave in aktivnega življenja, uživam v različnih športih, rada se izobražujem o zdravi prehrani ter biologiji človeka. Po izobrazbi sem biokemik, svoj doktorat sem pridobila z raziskavami na področju t.i. exercise biochemistry, kjer sem preučevala učinke redne vadbe na mehanizme v mišičnih celicah. Sem inštruktorica pilatesa, zadnja leta pa se precej posvečam tudi jogi. Že v najstniških letim sem pričela obiskovati skupinske vadbe in fitnes, zadnje leto pa začela tudi sama voditi vadbe, kar me veseli, prinaša nova znanja in izzive.`;
   SpelaOpis:string = `Sem trener aerobike. Pred leti sem veliko obiskovala fitnes in skupinske vadbe, ki so me kmalu popolnoma prevzele. Tako sem se odločila postati inštruktorica, saj neizmerno uživam ob zvokih dobre glasbe in delu z ljudmi. Trenutno vodim različne ure skupinskih vadb, na katerih skušam vse svoje znanje in energijo prenesti na vadeče. V času študija sem pridobila naziv trener aerobike, sem pa tudi učiteljica plavanja, nordijskega in alpskega smučanja. Redno se udeležujem različnih kongresov in izobraževanj s področja športa in zdravega načina življenja. Pridobila sem si tudi naziv Pilates MAT inštruktor. Gibanje je pomemben del mojega življenja, zato se trudim, da bi tudi vadeči vzljubili šport na prijeten in zdrav način. Rada poučujem tudi otroke, predvsem športno vadbo, smučanje in plavanje. Prosti čas pa najraje preživljam z družino nekje v naravi, kjer se napolnimo z novo energijo. `;
-  AnaOpis:string = `Sem Ana, študentka 3. letnika dentale medicine. Večino časa, ki mi ostane poleg študija preživim zunaj, pozimi smučam in hodim po hribih poleti pa plezam, tečem in kolesarim. Šport me spremlja že vse življenje. Kot otrok sem začela s treningi plavanja, tam vztrajala 5 let in potem preizkusila še tenis, atletiko in odbojko, ki me je prepričala v resno treniranje. Tekmovalno sem se z njo ukvarjala 6 let, poleti pa sem se udeleževala tudi turnirjev na mivki. Po končanem treniranju sem pridobila C licenco za trenerja odbojke in 2 leti sodelovala z Odbojkarskim klubom Triglav Kranj. Odbojka me je povezala z Matejo in navdušila nad skupinskimi vadbami. Kasneje sem opravila 1. stopnjo tečaja za vaditelja rekreacije in s tem dobila še dodatno motivacijo, da ljubezen do športa prenesem na ljudi.`;
+  AnaOpis:string = `Sem Ana, študentka 6. letnika dentale medicine. Večino časa, ki mi ostane poleg študija preživim zunaj, pozimi smučam in hodim po hribih poleti pa plezam, tečem in kolesarim. Šport me spremlja že vse življenje. Kot otrok sem začela s treningi plavanja, tam vztrajala 5 let in potem preizkusila še tenis, atletiko in odbojko, ki me je prepričala v resno treniranje. Tekmovalno sem se z njo ukvarjala 6 let, poleti pa sem se udeleževala tudi turnirjev na mivki. Po končanem treniranju sem pridobila C licenco za trenerja odbojke in 2 leti sodelovala z Odbojkarskim klubom Triglav Kranj. Odbojka me je povezala z Matejo in navdušila nad skupinskimi vadbami. Kasneje sem opravila 1. stopnjo tečaja za vaditelja rekreacije in s tem dobila še dodatno motivacijo, da ljubezen do športa prenesem na ljudi.`;
   MetaOpis:string = `Že od majhnih nog se aktivno ukvarjam s športom. V mladosti sem 7 let trenirala namizni tenis ter 5 let atletiko. V namiznem tenisu sem se preizkusila še med študijem, ko smo z ekipo igrale v prvi slovenski ligi. Ob koncu srednje šole sem začela obiskovati skupinske vadbe, v zadnjih nekaj letih pa mi je pilates prirasel k srcu, zato sem se odločila, da opravim tečaj in postanem inštruktorica pilatesa. Vodenje in poučevanje me zelo veseli in mi predstavlja nove izzive. Poleg pilatesa in drugih skupinskih vadb rada hodim v hribe, tečem, igram tenis in kolesarim.`;
 
   ZigaOpis:string = `Šport je bil od nekdaj prisoten v mojem življenju. Pred začetkom šole sem se  začel ukvarjati s smučanjem, s katerim sem se tekmovalno ukvarjal do 12 leta, ko sem  bele strmine zamenjal za nogometna igrišča. S študijem na Fakulteti šport sem z aktivnim igranjem nogometa prenehal.
@@ -45,30 +45,12 @@ export class ProfileCardComponent implements OnInit, AfterViewInit {
   - Mateja šport, 2014 – , kineziološka obravnava, individualni trening, funkcionalna vadba, masaža, kinesiotaping<br>
   `;
 
-  JakaOpis:string = `S športom sem se srečal v 1. razredu OŠ, ko sem začel obiskovati ure karateja in nogometa. Povečini
-  sem prosti čas preživljal športno, tudi za vikende, ko sem skupaj s starši zahajal v gorski svet. S tem se
-  je v meni ustvarila doživljenjska ljubezen do narave, ki postaja še močnejša. Treniral sem še košarko
-  in futsal.
-  <br><br>
-  Vse moje pretekle športne izkušnje so me pripeljale na fakulteto za šport, kjer sem dobil odgovor na
-  vprašanje, zakaj tako uživam v športu, zame je šport osnovna potreba.
-  <br><br>Športne službe, ki sem jih opravljal do sedaj:
-  - Fitnes osebni trener<br>
-  - vaditelj različnih vadb moči (pump, boot camp, funkcionalna vadba), pilatesa, nordijske hoje<br>
-  - animator otroških rojstnodnevnih zabav<br>
-  - maser<br>
-  - refleksoterapevt za stopala<br><br>
+  KatjaOpis:string = `Po izobrazbi pravnica, velika ljubiteljica športa in aktivnega načina življenja, ki je tekom študentskih let in prve zaposlitve, stopila na pot uresničitve svojega poslanstva v delu osebnega trenerja in vaditelja skupinskih vadb.<br>
+  S športom se ukvarjam že od malih nog. Trenirala sem atletiko, ples, jahanje, rokomet. V obdobju študentskih let sem redno začela obiskovati različne skupinske vadbe, ki so mi ob študiju omogočile gibanje in sprostitev. Tako se je počasi začela razvijati ideja in želja, da bi se tudi sama preizkusila v vlogi trenerja.  Občasne športne aktivnosti so kmalu prerasle v sam način življenja. Vse skupaj je rezultiralo v sprejemu odločitve za pridobitev licence za trenerja funkcionalne vadbe pri Fitnes zvezi Slovenije. Delam kot osebna trenerka in vaditeljica skupinskih vadb. Redno spremljam stroko, se izobražujem in nadgrajujem svoje znanje na različnih tečajih in seminarjih. Vodim funkcionalni/funkcionalno-intervalni trening, pilates, vadbo zdrave hrbtenice in PUMP. Pri sami sestavi treningov in vodenju skrbim, da so treningi vedno varni, raznoliki ter vključujejo različne gibalne vzorce za razvoj različnih gibalnih sposobnostih. Šport je področje na katerem želim delovati, se razvijati in se preko osebnega trenerstva in vodenja skupinskih vadb dotakniti ljudi ter jim pomagati, saj gre za področje dela v katerega sama verjamem in ga tudi živim.`;
 
-  V Mateja Športu sem si želel delati zaradi energije in atmosfere, ki ju ustvarjajo vadeči in zaposleni.
-  Moje poslanstvo je vadečim pomagati, da bi gibanje tudi za njih postalo osnovna potreba oziroma
-  navada, in da bi v njem uživali.`;
+  MajaOpis:string = `Od malih nog sem rada v gibanju. Otroštvo in najstništvo sem preplesala, kasneje pa sem začela obiskovati skupinske vadbe in prav v Mateja športu sem začela obiskovati ure pilatesa, ki so me navdušile. Matejina vzpodbuda mi je dala zagon, da sem znanje poglobila in nadgradila na inštruktorskem tečaju Fitnes zveze Slovenije in v vodenju vadb našla nov izziv in veselje.
 
-  DasaOpis:string = `Sem 21 letna Tržičanka, študentka kineziologije na Fakulteti za šport. S športom se ukvarjam že od
-  malih nog. Začela sem z rokometom, katerega sem trenirala 13 let. Po končani karieri pa se s športom
-  ukvarjam predvsem rekreativno. Najraje zahajam v gore, kolesarim, tečem in hodim v fitnes. Ker je
-  šport del mojega življenja, hkrati pa rada delam z ljudmi sem se odločila za študij na Fakulteti za
-  šport, ki mi prinaša znanja in kompetence, ki jih lahko uporabljam v praksi. Delo v Mateja športu pa
-  mi omogoča, da ljubezen do športa in svoje znanje delim z drugimi ljudmi.`;
+  Poučevanje me veseli. V prostem času se ukvarjam tudi z inštrukcijami matematike. Kot protiutež sedečemu načinu življenja in času preživetim za ekrani, za sprostitev in užitek obiščem kakšen hrib, obujem rolerje ali plesne čevlje, sedem na kolo ali zapnem vezi na boardu. Žogo pa poprimem le na urah pilatesa. Gibanje je privilegij, izkoristi ga.`;
 
   KajaOpis:string = `Diplomirana kineziologinja in študentka magistrskega programa Kinezioterapije na Fakulteti za šport, maserka
   Odkar pomnim se rada gibljem in ukvarjam s športom. V otroštvu sem preizkusila precej športov,
@@ -86,12 +68,12 @@ export class ProfileCardComponent implements OnInit, AfterViewInit {
     description:'inštruktorica, maserka, osebna in kondicijska trenerka',woman: true, show: false, opis:this.MatejaOpis},
 
     {src: '/assets/ins/tjasa.jpg', src2: '/assets/ins/tjasa2.jpg',name:'Tjaša Bergant',
-    job:'Dipl. profesorica biologije in kemije, trener športne rekreacije in skupinske fitnes vadbe',
+    job:'Mag. profesorica biologije in kemije, trenerka športne rekreacije in skupinske fitnes vadbe',
     description:'inštruktorica, receptorka',woman:true, show: false, opis:this.TjasaOpis},
 
-    {src: '/assets/ins/anita.jpg',src2: '/assets/ins/anita.jpg', name:'Anita Derlink',
-    job:'Ekonomski tehnik, inštruktorica fitnesa in pilatesa',
-    description:'inštruktorica',woman:true, show: false, opis:this.AnitaOpis},
+    {src: '/assets/ins/eva.jpg',src2: '/assets/ins/eva.jpg', name:'Eva Tomazin',
+    job:'Dipl. zootehnik in pedagog',
+    description:'inštruktorica',woman:true, show: false, opis:this.EvaOpis},
 
     {src: '/assets/ins/ziga.jpg', src2: '/assets/ins/ziga2.jpg', name:'Žiga Lipar',
     job:'Fizioterapevt, kineziolog',
@@ -101,17 +83,17 @@ export class ProfileCardComponent implements OnInit, AfterViewInit {
     job:'Študentka dentalne medicine, praktikantka',
     description:'inštruktorica, animatorka',woman:true, show: false, opis:this.AnaOpis},
 
-    {src: '/assets/ins/jaka.jpg',src2: '/assets/ins/jaka.jpg', name:'Jaka Blatnik Hajdinjak',
-    job:'diplomant kineziologije na Fakulteti za šport',
-    description:'inštruktor',woman:false, show: false, opis:this.JakaOpis},
+    {src: '/assets/ins/katja.jpg',src2: '/assets/ins/katja.jpg', name:'Katja Žaler',
+    job:'Magistrica prava, trenerka fitnes funkcionalne vadbe (FZS)',
+    description:'inštruktorica',woman:true, show: false, opis:this.KatjaOpis},
 
-    {src: '/assets/ins/Meta.JPG',src2: '/assets/ins/Meta.JPG', name:'Meta Vidic',
+    {src: '/assets/ins/Meta.jpg',src2: '/assets/ins/Meta.jpg', name:'Meta Vidic',
     job:'Univerzitetna diplomirana ekonomistka, inštruktorica pilatesa (GZS)',
     description:'inštruktorica',woman:true, show: false, opis:this.MetaOpis},
 
-    {src: '/assets/ins/dasa.jpg',src2: '/assets/ins/dasa.jpg', name:'Daša Žnidaršič',
+    {src: '/assets/ins/Maja.jpg',src2: '/assets/ins/Maja.jpg', name:'Maja Jurančič',
     job:'',
-    description:'animatorka',woman:true, show: false, opis:this.DasaOpis},
+    description:'animatorka',woman:true, show: false, opis:this.MajaOpis},
 
     {src: '/assets/ins/tina.jpg',src2: '/assets/ins/tina.jpg', name:'Tina Peternelj',
     job:'Doktorica biokemije, inštruktorica pilatesa',
