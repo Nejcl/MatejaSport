@@ -1,7 +1,18 @@
 <div id="top" style="position:absolute; top:-150px;"></div>
 <mat-card class="card" style="margin-bottom:30px;z-index: 2;">
     <img src="/assets/background4.png" style="width:10%; height: auto;float:right; right:10px">
-
+    <div style="margin-right:5%; padding-top:10px; padding-left: 20px; flex-grow:1; margin-bottom: 30px; flex: 400px">
+      <div>
+          <div class="header" [innerHTML]="Novica[id].naslov | safehtml" id="Novica[id].id"></div>
+          <div style="width: 80%;border-bottom: 2px solid black; margin-bottom: 30px; margin-top:5px;"> </div>
+      </div>
+          <div class="headertext"  [innerHTML]="Novica[id].vsebina | safehtml"></div>
+      </div>
+      <div class="center-container">
+        <a *ngIf="id > 0" class="novicelink" [routerLink]="['/novice']" [queryParams]="{ id: +id - 1 }" >Prejšna novica</a>
+        <a *ngIf="id < Novica.length - 1" class="novicelink" [routerLink]="['/novice']"  [queryParams]="{ id: +id + 1 }">Naslednja novica</a>
+      </div>
+<!--
     <div *ngFor="let item of Novica; let i = index" >
     <div style="margin-right:5%; padding-top:10px; padding-left: 20px; flex-grow:1; margin-bottom: 30px; flex: 400px">
         <div>
@@ -11,6 +22,7 @@
             <div class="headertext"  [innerHTML]="Novica[i].vsebina | safehtml"></div>
         </div>
   </div>
+  -->
 <!--
   <div style="margin-right:5%; padding-top:10px; padding-left: 20px; flex-grow:1; margin-bottom: 30px; flex: 400px">
     <div>

@@ -1,3 +1,26 @@
+.novicelink{
+    color: #00a7c0;
+    font-family: 'Roboto';
+    text-align: center;
+    font-size: 20px;
+    font-weight: 800;
+  
+  }
+  .novicelink:hover{
+    cursor: pointer;
+    color: #e83e8c;
+  }
+  
 
-
-
+/* Add this style to center the links */
+.center-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Your existing styles for novicelink */
+  .novicelink {
+    /* Add your existing styles for the links here */
+    margin: 10px; /* Adjust margin as needed */
+  }

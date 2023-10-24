@@ -12,7 +12,7 @@
       <span id="novice1tekst">NOVICE: </span><br>
       <ul>
 
-        <li *ngFor="let item of Novica; let i = index"><span class="novicetekst" [innerHTML]="Novica[i].naslovna | safehtml" ></span><a class="novicelink" style="margin-left: 30px;" routerLink="/novice" [state]="{id:Novica[i].id}" routerLinkActive="active-mat-list-item">Več... </a></li>
+        <li *ngFor="let item of Novica; let i = index"><span class="novicetekst" [innerHTML]="Novica[i].naslovna | safehtml" ></span><a class="novicelink" style="margin-left: 30px;" routerLink="/novice"  [queryParams]="{ id: i }" [state]="{id:Novica[i].id}" routerLinkActive="active-mat-list-item">Več... </a></li>
  <!--
         <li><span class="novicetekst">Z novo sezono vadb začnemo že v<span style="color: #e83e8c"> ponedeljek, 2.9.!</span> 10% popust na vse karte za skupinske vadbe!</span><a class="novicelink" style="padding-left: 30px;" routerLink="/novice" routerLinkActive="active-mat-list-item">Več... </a></li>
         <li><span class="novicetekst">Zbiramo prijave za trimesečni program zdravega hujšanja.</span><a class="novicelink" style="padding-left: 30px;" routerLink="/novice" routerLinkActive="active-mat-list-item">Več... </a></li>
