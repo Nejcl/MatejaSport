@@ -54,7 +54,6 @@ export class InstruktorjiComponent implements OnInit {
     {name:'Špela Kokalj',job:'TNZ, FIT PILATES, I.F.T.',description:'inštruktorica, osebna trenerka',woman:true, show: false},
     {name:'Ana Žontar',job:'TNZ, FIT PILATES, I.F.T.',description:'inštruktorica',woman:true, show: false},
     {name:'Meta Vidic',job:'TNZ, FIT PILATES, I.F.T.',description:'inštruktorica',woman:true, show: false},
-    {name:'Žiga Lipar',job:'TNZ, FIT PILATES, I.F.T.',description:'inštruktor, maser',woman:false, show: false},
     {name:'Matej Drinovec',job:'TNZ, FIT PILATES, I.F.T.',description:'fizioterapevt, maser',woman:false, show: false},
   ];
 

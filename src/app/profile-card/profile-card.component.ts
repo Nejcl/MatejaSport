@@ -75,10 +75,6 @@ export class ProfileCardComponent implements OnInit, AfterViewInit {
     job:'Dipl. zootehnik in pedagog',
     description:'inštruktorica',woman:true, show: false, opis:this.EvaOpis},
 
-    {src: '/assets/ins/ziga.jpg', src2: '/assets/ins/ziga2.jpg', name:'Žiga Lipar',
-    job:'Fizioterapevt, kineziolog',
-    description:'inštruktor, maser',woman:false, show: false, opis:this.ZigaOpis},
-
     {src: '/assets/ins/ana.jpg',src2: '/assets/ins/ana.jpg', name:'Ana Žontar',
     job:'Študentka dentalne medicine, praktikantka',
     description:'inštruktorica, animatorka',woman:true, show: false, opis:this.AnaOpis},
